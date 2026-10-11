@@ -1,0 +1,165 @@
+"use client";
+
+import { useMutation } from "@tanstack/react-query";
+import { Download, Loader2, Upload } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
+import { DataTable, type Column } from "@/components/shared/data-table/data-table";
+import { EmptyState } from "@/components/shared/states";
+import { StatusBadge } from "@/components/shared/status-badge";
+import { UnavailableAction } from "@/components/shared/unavailable-action";
+import { Button } from "@/components/ui/button";
+import { usePermissions } from "@/features/auth/hooks";
+import { useErrorMessage } from "@/hooks/use-error-message";
+import { formatDate } from "@/lib/format/dates";
+import { isOn } from "@/lib/format/localized";
+import { formatDecimal, formatMoney } from "@/lib/format/money";
+import { inventoryApi } from "../api";
+import { usePrefetchUnit, useUnits, useUnitsListState } from "../hooks";
+import type { UnitListItem } from "../types";
+import { UnitQuickSheet } from "./unit-quick-sheet";
+import { UnitStatusBadge } from "./unit-status-badge";
+import { UnitsFilters } from "./units-filters";
+import { useInventoryLookups } from "./use-lookups";
+
+/** Header actions: CSV export (reports.view) and import (S06, not built yet). */
+export function UnitsActions() {
+  const t = useTranslations();
+  const { can } = usePermissions();
+  const errorMessage = useErrorMessage();
+  const exportUnits = useMutation({
+    mutationFn: inventoryApi.exportUnits,
+    onError: (e) => toast.error(errorMessage(e)),
+  });
+
+  return (
+    <>
+      {can("inventory.import") && (
+        <UnavailableAction label={t("units.import")} reason={t("common.notInThisRelease")} icon={Upload} />
+      )}
+      {can("reports.view") && (
+        <Button variant="outline" onClick={() => exportUnits.mutate()} disabled={exportUnits.isPending}>
+          {exportUnits.isPending ? <Loader2 data-icon="inline-start" className="animate-spin" /> : <Download data-icon="inline-start" />}
+          {exportUnits.isPending ? t("common.exporting") : t("common.export")}
+        </Button>
+      )}
+    </>
+  );
+}
+
+// S03 — Units.
+export function UnitsView() {
+  const t = useTranslations();
+  const locale = useLocale();
+  const [state, setState] = useUnitsListState();
+  const units = useUnits(state);
+  const lookups = useInventoryLookups();
+  const prefetchUnit = usePrefetchUnit();
+  const [selected, setSelected] = useState<UnitListItem | null>(null);
+
+  const columns: Column<UnitListItem>[] = [
+    {
+      id: "number",
+      header: t("units.columns.number"),
+      sortKey: "unit_number",
+      cell: (u) => (
+        <div className="flex flex-col">
+          <span className="num font-medium">{u.unit_number ?? `#${u.id}`}</span>
+          {u.unit_code && <span className="text-xs text-muted-foreground">{u.unit_code}</span>}
+        </div>
+      ),
+    },
+    {
+      id: "location",
+      header: t("units.columns.location"),
+      cell: (u) => (
+        <div className="flex flex-col">
+          <span>{lookups.projectName(u.project_id) || "—"}</span>
+          <span className="text-xs text-muted-foreground">{lookups.buildingName(u.building_id)}</span>
+        </div>
+      ),
+    },
+    {
+      id: "type",
+      header: t("units.columns.type"),
+      cell: (u) => (
+        <div className="flex items-center gap-2">
+          <span>{lookups.typeName(u.unit_type_id) || "—"}</span>
+          {(u.unit_type_id === null || !isOn(u.active)) && <StatusBadge tone="warning">{t("units.hiddenFromApp")}</StatusBadge>}
+        </div>
+      ),
+    },
+    { id: "status", header: t("units.columns.status"), sortKey: "status", cell: (u) => <UnitStatusBadge status={u.status} /> },
+    { id: "rooms", header: t("units.columns.rooms"), align: "end", cell: (u) => <span className="num">{u.rooms ?? "—"}</span> },
+    {
+      id: "area",
+      header: t("units.columns.area"),
+      align: "end",
+      cell: (u) => <span className="num">{formatDecimal(u.total_area, locale)}</span>,
+    },
+    {
+      id: "price",
+      header: t("units.columns.price"),
+      align: "end",
+      sortKey: "price_in_tax",
+      cell: (u) => <span className="num">{formatMoney(u.price_in_tax, locale)}</span>,
+    },
+    {
+      id: "updated",
+      header: t("units.columns.updated"),
+      sortKey: "updated_at",
+      cell: (u) => <span className="num text-muted-foreground">{formatDate(u.updated_at, locale)}</span>,
+    },
+  ];
+
+  return (
+    <>
+      <UnitsFilters state={state} setState={setState} />
+      <DataTable
+        caption={t("units.title")}
+        columns={columns}
+        rows={units.data?.items}
+        getRowId={(u) => u.id}
+        getRowLabel={(u) => t("units.quick.title", { number: u.unit_number ?? `#${u.id}` })}
+        isLoading={units.isLoading}
+        isFetching={units.isFetching}
+        error={units.error}
+        onRetry={() => units.refetch()}
+        onRowClick={setSelected}
+        onRowIntent={(u) => prefetchUnit(u.id)}
+        sort={{ value: state.sort, onChange: (sort) => setState({ sort, page: 1 }) }}
+        pagination={
+          units.data
+            ? {
+                page: units.data.meta.page,
+                pageSize: units.data.meta.pageSize,
+                total: units.data.meta.total,
+                onPageChange: (page) => setState({ page }),
+                onPageSizeChange: (pageSize) => setState({ pageSize, page: 1 }),
+              }
+            : undefined
+        }
+        empty={
+          <EmptyState
+            compact
+            title={t("units.empty")}
+            description={t("units.emptyHint")}
+            action={
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setState({ q: null, project: null, building: null, status: null, type: null, priceMin: null, priceMax: null, active: null, page: 1 })
+                }
+              >
+                {t("common.reset")}
+              </Button>
+            }
+          />
+        }
+      />
+      <UnitQuickSheet unit={selected} onClose={() => setSelected(null)} />
+    </>
+  );
+}
