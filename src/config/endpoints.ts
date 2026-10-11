@@ -113,6 +113,17 @@ export const staffEndpoints = {
   },
 
   exports: (what: "units" | "sales" | "payments" | "service-requests") => `/exports/${what}`,
+  documents: "/documents",
+
+  permissions: "/permissions",
+  roles: "/roles",
+  role: (id: Id) => `/roles/${id}`,
+  users: "/users",
+  user: (id: Id) => `/users/${id}`,
+  auditLogs: "/audit-logs",
+  integrationEvents: "/integration-events",
+  integrationEventRetry: (id: Id) => `/integration-events/${id}/retry`,
+  externalRefs: "/external-refs",
 } as const;
 
 /**

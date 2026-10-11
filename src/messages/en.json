@@ -407,6 +407,12 @@
       "manage_leases": "Leases",
       "collect_rent": "Rent",
       "inspections": "Inspections"
+    },
+    "integrationEvent": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "failed": "Failed",
+      "dead": "Dead"
     }
   },
   "dashboard": {
@@ -1815,5 +1821,207 @@
     "period": "{from} → {to}",
     "generatedAt": "Generated {date}",
     "empty": "No statements yet for this mandate."
+  },
+  "data": {
+    "title": "Exports and documents",
+    "subtitle": "Download CSV exports and browse private documents. Files open through a short-lived signed link.",
+    "exportsTitle": "CSV exports",
+    "exports": {
+      "units": "Units",
+      "sales": "Sales",
+      "payments": "Payments",
+      "service-requests": "Service requests"
+    },
+    "download": "Download",
+    "downloading": "Downloading…",
+    "exportsNote": "Exports have fixed columns and no contact details. Cells that start with = + - @ are escaped by the server.",
+    "documentsTitle": "Documents",
+    "documentsEmpty": "No documents match these filters.",
+    "sources": {
+      "sale": "Sale",
+      "service_request": "Service request"
+    },
+    "columns": {
+      "source": "Source",
+      "record": "Record",
+      "type": "Type",
+      "file": "File",
+      "size": "Size",
+      "added": "Added",
+      "open": "Open"
+    },
+    "filters": {
+      "source": "Source",
+      "type": "Type (e.g. contract)"
+    }
+  },
+  "roles": {
+    "title": "Roles and permissions",
+    "subtitle": "A role is a set of permissions. Changes apply to everyone holding the role.",
+    "new": "New role",
+    "editTitle": "Edit role",
+    "created": "Role created.",
+    "saved": "Role saved.",
+    "empty": "No roles yet.",
+    "allPermissions": "All permissions",
+    "permissionCount": "{count, plural, one {# permission} other {# permissions}}",
+    "fullAccess": "Full access (*)",
+    "fullAccessHint": "Grants every permission, including ones added later. Untick to choose permissions one by one.",
+    "pickOne": "Choose at least one permission.",
+    "bothConfirmWarning": "This role holds both first and second payment confirmation. People with it still cannot approve their own confirmation, but four-eyes is weaker if few people hold other roles.",
+    "deactivate": "Deactivate role",
+    "deactivateTitle": "Deactivate this role?",
+    "deactivateBody": "Everyone holding this role loses its access right away.",
+    "columns": {
+      "name": "Role (EN / AR)",
+      "permissions": "Permissions",
+      "active": "Active"
+    },
+    "fields": {
+      "nameEn": "Name (English)",
+      "nameAr": "Name (Arabic)",
+      "permissions": "Permissions",
+      "active": "Active"
+    },
+    "areas": {
+      "inventory": "Inventory",
+      "pricing": "Pricing",
+      "sales": "Sales",
+      "finance": "Finance",
+      "handover": "Handover",
+      "ownership": "Ownership",
+      "warranty": "Warranty",
+      "service": "Service",
+      "maint": "Maintenance",
+      "facility": "Facilities",
+      "rental": "Rentals",
+      "reports": "Reports",
+      "audit": "Audit",
+      "admin": "Administration",
+      "integrations": "Integrations",
+      "notifications": "Notifications"
+    }
+  },
+  "users": {
+    "title": "Staff users",
+    "subtitle": "Invite and manage staff. Deactivating a user ends their sessions immediately.",
+    "new": "New user",
+    "editTitle": "Edit user",
+    "created": "User created. Share the initial password with them securely; it is not shown again.",
+    "saved": "User saved.",
+    "empty": "No users match these filters.",
+    "never": "Never",
+    "emailInvalid": "Enter a valid email address.",
+    "emailFixed": "The email cannot be changed here.",
+    "passwordShort": "Use at least {min} characters.",
+    "passwordHint": "At least {min} characters. It is never shown again after saving.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "deactivate": "Deactivate user",
+    "deactivateTitle": "Deactivate {name}?",
+    "deactivateBody": "Their sessions end now and they can no longer sign in.",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "lastActive": "Last active",
+      "active": "Active"
+    },
+    "filters": {
+      "role": "Role",
+      "active": "Active"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "branch": "Branch number",
+      "password": "Initial password",
+      "resetPassword": "New password (leave empty to keep)",
+      "active": "Active"
+    }
+  },
+  "audit": {
+    "title": "Audit log",
+    "subtitle": "Who did what to which record, and when. Request bodies and contact details are never shown.",
+    "empty": "No entries match these filters.",
+    "emptyHint": "Pages are capped at 100 rows; narrow the filters to find older entries.",
+    "before": "Before",
+    "after": "After",
+    "source": "Source",
+    "correlation": "Correlation id",
+    "columns": {
+      "when": "When",
+      "actor": "Actor",
+      "action": "Action",
+      "entity": "Record",
+      "change": "Before → After"
+    },
+    "filters": {
+      "entityType": "Record type",
+      "entityId": "Record id",
+      "action": "Action (e.g. unit.status)",
+      "actor": "Actor id"
+    }
+  },
+  "integrations": {
+    "title": "Integrations",
+    "subtitle": "Outgoing events to partner systems and the external ids that link records to partner records.",
+    "health": "Integration health",
+    "kpi": {
+      "pending": "Pending",
+      "sent": "Sent",
+      "failed": "Failed",
+      "dead": "Dead"
+    },
+    "oldestPending": "Oldest pending: {date}",
+    "noneConfigured": "No partner system is configured",
+    "noneConfiguredBody": "Nothing is sent until an administrator configures a partner system on the server.",
+    "tabs": {
+      "events": "Events",
+      "refs": "External ids"
+    },
+    "retry": "Retry",
+    "retried": "Event #{id} is back in the queue.",
+    "eventsEmpty": "No events match these filters.",
+    "refsEmpty": "No external ids match these filters.",
+    "link": "Link external id",
+    "linkTitle": "Link an external id",
+    "linkBody": "Connect a platform record to its id in a partner system.",
+    "linked": "External id linked.",
+    "refConflict": "This partner id is already linked to another record. Records are never merged automatically.",
+    "entityTypes": {
+      "client": "Client",
+      "unit": "Unit",
+      "reservation": "Reservation",
+      "sale": "Sale",
+      "payment_transaction": "Payment",
+      "project": "Project"
+    },
+    "columns": {
+      "id": "#",
+      "system": "System",
+      "event": "Event",
+      "status": "Status",
+      "attempts": "Attempts",
+      "lastError": "Last error",
+      "when": "Next try / sent",
+      "actions": "Actions",
+      "entity": "Record",
+      "externalId": "External id",
+      "linkedAt": "Linked"
+    },
+    "filters": {
+      "status": "Status",
+      "system": "System",
+      "entityType": "Record type",
+      "entityId": "Record id"
+    },
+    "fields": {
+      "system": "System",
+      "entityType": "Record type",
+      "entityId": "Record id",
+      "externalId": "External id"
+    }
   }
 }

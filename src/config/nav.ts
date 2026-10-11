@@ -126,15 +126,15 @@ export const NAV: NavGroup[] = [
   },
   {
     key: "data",
-    items: [{ key: "exports", href: "/data", icon: Download, permissions: ["reports.view", "sales.docs"], ready: false }],
+    items: [{ key: "exports", href: "/data", icon: Download, permissions: ["reports.view", "sales.docs"], ready: true }],
   },
   {
     key: "administration",
     items: [
-      { key: "roles", href: "/admin/roles", icon: KeyRound, permissions: ["admin.roles"], ready: false },
-      { key: "users", href: "/admin/users", icon: Users, permissions: ["admin.users"], ready: false },
-      { key: "audit", href: "/admin/audit", icon: ScrollText, permissions: ["audit.view"], ready: false },
-      { key: "integrations", href: "/admin/integrations", icon: Plug, permissions: ["integrations.manage"], ready: false },
+      { key: "roles", href: "/admin/roles", icon: KeyRound, permissions: ["admin.roles"], ready: true },
+      { key: "users", href: "/admin/users", icon: Users, permissions: ["admin.users"], ready: true },
+      { key: "audit", href: "/admin/audit", icon: ScrollText, permissions: ["audit.view"], ready: true },
+      { key: "integrations", href: "/admin/integrations", icon: Plug, permissions: ["integrations.manage"], ready: true },
     ],
   },
 ];

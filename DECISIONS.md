@@ -53,6 +53,12 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | B24 | S08 project status is free text with suggestions: the docs only show `ongoing`. Project search and city filters from the wireframe are omitted (no documented filter fields). |
 | B25 | S10 lookup tabs use the types facade, finishing, view, parking (wireframe). Unknown types return an empty list. |
 | B26 | S23 warranty policy category and duration are editable only on create; the wireframe locks the duration of existing policies. |
+| B27 | S24 service desk sorts by `-priority` (default), `sla_due_at` or `-id`. Sorting by SLA is assumed allowed (not in the documented sort list); a 422 shows the normal error state. |
+| B28 | S31–S35 a mandate in `full_management` mode is treated as holding every capability; `services_only` needs the capability listed. The server still decides (`MANDATE_SCOPE`), and the UI shows that refusal as a read-only banner. |
+| B29 | S37 the permission checklist is built only from `GET /permissions` (unknown names are rejected). The `*` (full access) option appears only on roles that already hold it, since creating new `*` roles is not documented. |
+| B30 | S37/S38 deactivating a role or user asks for confirmation but not a reason: `PATCH /roles/{id}` and `PATCH /users/{id}` take no reason field, and the audit log records the change. |
+| B31 | S38 branch is a number field: no branches endpoint is documented. The user list shows role names only when the viewer also holds `admin.roles`; otherwise it shows the role number. |
+| B32 | S36 a document opens through its own signed link: `sale:{docId}` with `owner_id` = sale id → `/sales/{owner_id}/documents/{docId}/link`; `service:{attId}` → `/service-attachments/{attId}/link`. Other sources show no open action. |
 
 ## Docs vs API (API wins)
 
@@ -77,6 +83,10 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | D17 | `GET /sales/{id}/installments` | lists have paging meta | `meta` carries money totals `{total, paid}` (numbers) | Read them as totals, not paging |
 | D18 | Duplicates (S07) | — | Only class `deferred` is documented | Other classes shown as-is; KPIs: deferred = needs a decision |
 | D19 | Admin account `admin.dev@example.test` | — | Signs in but `permissions: []` (role 1) → every screen answers 403 | Backend: grant `*` to the role or run `php artisan v2:create-admin` |
+| D20 | Recorded examples | lists | Long lists are shortened with a trailing "… N items in total" string (capabilities, permissions, roles) | Such strings are dropped when reading; real data has none |
+| D21 | `GET /leases/{id}` | inspection `items` is a list | Returned as a JSON string | Parsed on read; sent as an array |
+| D22 | `GET /audit-logs` | — | `before`/`after` are JSON strings, `entity_id` is a string | Parsed for display; unparsable values shown raw |
+| D23 | `POST /external-refs` | not in the idempotency list | create-style request | Sends `Idempotency-Key` anyway (harmless if ignored) |
 
 ## Environment
 
