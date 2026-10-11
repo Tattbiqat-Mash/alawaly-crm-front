@@ -52,6 +52,11 @@ export const staffEndpoints = {
   paymentsInitiate: "/payments/initiate",
   payment: (id: Id) => `/payments/${id}`,
   paymentTransactions: "/payment-transactions",
+  confirmOffline: "/payments/confirm-offline",
+  approveTransaction: (id: Id) => `/payment-transactions/${id}/approve`,
+  rejectTransaction: (id: Id) => `/payment-transactions/${id}/reject`,
+  refundTransaction: (id: Id) => `/payment-transactions/${id}/refund`,
+  reconcile: "/payments/reconcile",
 
   reports: {
     inventorySummary: "/reports/inventory-summary",

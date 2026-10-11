@@ -79,16 +79,16 @@ export const NAV: NavGroup[] = [
   {
     key: "finance",
     items: [
-      { key: "transactions", href: "/payments", icon: CreditCard, permissions: ["finance.view"], ready: false },
+      { key: "transactions", href: "/payments", icon: CreditCard, permissions: ["finance.view"], ready: true },
       {
         key: "confirmations",
         href: "/payments/confirmations",
         icon: ClipboardCheck,
         permissions: ["finance.confirm", "finance.confirm.second"],
-        ready: false,
+        ready: true,
       },
-      { key: "refunds", href: "/payments/refunds", icon: RotateCcw, permissions: ["finance.refund"], ready: false },
-      { key: "reconciliation", href: "/payments/reconcile", icon: Scale, permissions: ["finance.reconcile"], ready: false },
+      { key: "refunds", href: "/payments/refunds", icon: RotateCcw, permissions: ["finance.refund"], ready: true },
+      { key: "reconciliation", href: "/payments/reconcile", icon: Scale, permissions: ["finance.reconcile"], ready: true },
     ],
   },
   {
