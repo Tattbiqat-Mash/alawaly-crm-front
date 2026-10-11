@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alawaly — staff app and owner portal
 
-## Getting Started
+Next.js 16 (App Router, Cache Components) frontend for the Alawaly REST API (`/api/v2`).
+Staff app at `/…`, owner portal at `/owner/…`. Arabic first (RTL), English at `/en/…`.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local      # API_BASE_URL=https://system.alawaly.tattbiqat.com
+pnpm dev                        # real API
+pnpm dev:mock                   # recorded Frontend Guide examples, no backend needed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Check
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm typecheck && pnpm lint && pnpm test   # types, lint, unit tests
+pnpm build                                  # production build
+pnpm exec playwright test                   # end-to-end (builds, then runs in mock mode)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`pnpm cf:build` / `pnpm deploy` (Cloudflare via OpenNext) — run in WSL or Linux CI; see DECISIONS.md.
 
-## Learn More
+## How it fits together
 
-To learn more about Next.js, take a look at the following resources:
+```
+Browser ──► /bff/staff/*  ─┐  httpOnly cookie → Authorization: Bearer
+        └─► /bff/owner/*  ─┴► ${API_BASE_URL}/api/v2/*      (src/app/bff, src/lib/bff)
+UI → feature hook (TanStack Query) → feature api → shared client (src/lib/api)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/features/<domain>` — api, hooks, types, components per business area
+- `src/components/shared` — states (S41), data table, form kit, dialogs, file upload
+- `src/lib/api` — error normalisation, envelopes, list params, idempotency, signed files
+- `src/lib/format` — money (no floats), dates (no zone shift), bilingual fields
+- `src/messages/{ar,en}.json` — all UI text (typed keys)
+- `api-spec/` — 168 endpoints / 220 recorded examples extracted from the Frontend Guide (`pnpm api:extract <guide.html>`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Decisions and doc/API mismatches: [DECISIONS.md](DECISIONS.md). Project rules: [rules/](rules/).
