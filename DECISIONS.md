@@ -59,6 +59,13 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | B30 | S37/S38 deactivating a role or user asks for confirmation but not a reason: `PATCH /roles/{id}` and `PATCH /users/{id}` take no reason field, and the audit log records the change. |
 | B31 | S38 branch is a number field: no branches endpoint is documented. The user list shows role names only when the viewer also holds `admin.roles`; otherwise it shows the role number. |
 | B32 | S36 a document opens through its own signed link: `sale:{docId}` with `owner_id` = sale id → `/sales/{owner_id}/documents/{docId}/link`; `service:{attId}` → `/service-attachments/{attId}/link`. Other sources show no open action. |
+| B33 | O06 is reached from a link (`/owner/reserve/{unitId}`): the API has no owner catalogue. Availability is checked first; one Idempotency-Key per visit. |
+| B34 | O08: the owner can start a payment only for a reservation fee (`POST /owner/payments/initiate` takes `reservation_id`), as `offline` until a gateway is chosen. The installment page shows the server-verified state (polled every 30 s until paid), offline instructions, and a disabled card button. |
+| B35 | O12: paid and facility requests need `eligibility.after_sales`; warranty claims need `eligibility.warranty` and go to `/owner/warranty-claims` (no priority). The photo uploads after the request exists; if it fails, the request stays and the owner can add the photo from O14. |
+| B36 | O13 chips: Open = the open service statuses; Completed = completed, closed, rejected. |
+| B37 | O15: a tap marks the notification read; `service.*` with `service_id` opens that request, `warranty.*` opens warranties, others only mark read. |
+| B38 | O16: statements load when the mandate lists `view_statements` or is `full_management`; otherwise (or on `MANDATE_SCOPE`) a short explanation shows. |
+| B39 | O07 cancel and O10 accept ask for confirmation without a reason: both endpoints take no body and the owner is acting on their own record. |
 
 ## Docs vs API (API wins)
 
@@ -87,6 +94,8 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | D21 | `GET /leases/{id}` | inspection `items` is a list | Returned as a JSON string | Parsed on read; sent as an array |
 | D22 | `GET /audit-logs` | — | `before`/`after` are JSON strings, `entity_id` is a string | Parsed for display; unparsable values shown raw |
 | D23 | `POST /external-refs` | not in the idempotency list | create-style request | Sends `Idempotency-Key` anyway (harmless if ignored) |
+| D24 | O10 | — | `GET /owner/sales/{id}/handover` answers 404 both for "no handover yet" and for another owner's sale | Both read as "not scheduled yet" |
+| D25 | O07 / O14 | `CANCEL_NEEDS_STAFF`, `FEEDBACK_ALREADY_GIVEN` | Not in the guide's error list | Handled on their screens; anything else shows the generic message |
 
 ## Environment
 

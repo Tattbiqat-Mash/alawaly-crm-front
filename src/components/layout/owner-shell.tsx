@@ -9,13 +9,13 @@ import { LocaleSwitch } from "./locale-switch";
 
 type Tab = { key: "home" | "units" | "requests" | "alerts" | "more"; href: string; icon: LucideIcon; ready: boolean };
 
-// Bottom tabs from the owner wireframes. Tabs whose screens arrive in Phase D stay visible but
-// inert and say so, rather than linking to nothing.
+// Bottom tabs from the owner wireframes. A tab whose screen is not built stays visible but inert
+// and says so, rather than linking to nothing.
 const TABS: Tab[] = [
   { key: "home", href: "/owner", icon: Home, ready: true },
-  { key: "units", href: "/owner/units", icon: LayoutGrid, ready: false },
-  { key: "requests", href: "/owner/requests", icon: Wrench, ready: false },
-  { key: "alerts", href: "/owner/notifications", icon: Bell, ready: false },
+  { key: "units", href: "/owner/units", icon: LayoutGrid, ready: true },
+  { key: "requests", href: "/owner/requests", icon: Wrench, ready: true },
+  { key: "alerts", href: "/owner/notifications", icon: Bell, ready: true },
   { key: "more", href: "/owner/more", icon: Menu, ready: true },
 ];
 

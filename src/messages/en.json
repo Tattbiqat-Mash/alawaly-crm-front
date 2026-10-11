@@ -2023,5 +2023,175 @@
       "entityId": "Record id",
       "externalId": "External id"
     }
+  },
+  "ownerPortal": {
+    "titles": {
+      "units": "My units",
+      "unit": "Unit",
+      "reserve": "Reserve a unit",
+      "reservations": "My reservations",
+      "reservationPay": "Pay the reservation fee",
+      "payment": "Payment",
+      "purchase": "My purchase",
+      "handover": "Handover",
+      "warranties": "My warranties",
+      "newRequest": "New request",
+      "requests": "My requests",
+      "request": "Request",
+      "notifications": "Notifications",
+      "rentals": "Rentals"
+    },
+    "units": {
+      "empty": "No units are recorded in your name yet.",
+      "missingHint": "Missing a unit? Contact Alawaly: units bought before this platform may not be recorded yet.",
+      "ownedSince": "owned since {date}",
+      "ownedSinceLabel": "Owned since",
+      "area": "Area",
+      "sqm": "m²",
+      "rooms": "Rooms",
+      "baths": "{count, plural, one {# bathroom} other {# bathrooms}}",
+      "floor": "Floor",
+      "purchase": "Purchase",
+      "viewPurchase": "Purchase and installments",
+      "viewHandover": "Handover",
+      "services": "After-sales and warranty",
+      "requestService": "Request a service",
+      "warrantyClaim": "Warranty claim",
+      "resaleNote": "Warranty after a resale depends on the warranty policy."
+    },
+    "reserve": {
+      "whatNext": "After you reserve, pay the fee within the hold time to keep the unit.",
+      "submit": "Reserve now",
+      "done": "Unit reserved. Pay the fee to keep it.",
+      "taken": "Someone just reserved this unit."
+    },
+    "reservations": {
+      "empty": "You have no reservations.",
+      "payWithin": "Pay {amount} {when}",
+      "feePaid": "Fee paid",
+      "pay": "Pay",
+      "cancel": "Cancel reservation",
+      "cancelTitle": "Cancel this reservation?",
+      "cancelBody": "The unit is released and someone else can reserve it.",
+      "cancelled": "Reservation cancelled.",
+      "contactToCancel": "This reservation is paid. Contact Alawaly to cancel it."
+    },
+    "pay": {
+      "reservationFee": "Reservation fee · Unit {unit}",
+      "howTitle": "How to pay",
+      "offlineHowTo": "Pay by bank transfer or at an Alawaly branch, then keep your receipt. Alawaly confirms the payment.",
+      "startOffline": "Show how to pay",
+      "staffConfirms": "Uploading a receipt never marks a payment as paid; Alawaly staff confirm it. This page updates by itself.",
+      "transaction": "Payment #{id}",
+      "transactions": "Payments recorded",
+      "alreadyPaid": "This is already paid. Thank you.",
+      "paidAt": "Paid on {date}",
+      "card": "Pay online by card",
+      "cardSoon": "Online card payment is not available yet."
+    },
+    "purchase": {
+      "contractedOn": "Contract signed {date}",
+      "installments": "Installments",
+      "noInstallments": "No installment schedule yet."
+    },
+    "handover": {
+      "none": "No handover scheduled yet",
+      "noneBody": "Alawaly will schedule the handover and you will be notified.",
+      "date": "Handover date",
+      "snags": "{count, plural, =0 {Inspection notes} one {# item found} other {# items found}}",
+      "noSnags": "No items were found at inspection.",
+      "waitInspection": "You can accept the handover after the inspection.",
+      "acceptNote": "By accepting you confirm you received the unit. Open items stay on record and will be fixed.",
+      "accept": "Accept handover",
+      "acceptWithOpen": "Accept with open items",
+      "confirmTitle": "Accept the handover?",
+      "confirmBody": "You confirm you received the unit. Your warranty starts today.",
+      "confirmBodyOpen": "You confirm you received the unit. {count, plural, one {# open item stays} other {# open items stay}} on record and will be fixed. Your warranty starts today.",
+      "acceptedTitle": "Handover accepted",
+      "warrantyStarts": "Your warranty started on {date}."
+    },
+    "warranties": {
+      "title": "My warranties",
+      "empty": "No active warranty.",
+      "active": "Active",
+      "inactive": "Not active",
+      "claim": "Make a claim",
+      "reminder": "We will notify you 30 days before a warranty expires."
+    },
+    "requests": {
+      "filter": "Show",
+      "filters": {
+        "all": "All",
+        "open": "Open",
+        "done": "Completed"
+      },
+      "new": "New request",
+      "empty": "No requests here.",
+      "emptyHint": "Tap “New request” to ask for a service or make a warranty claim."
+    },
+    "newRequest": {
+      "step1": "1. Unit and kind",
+      "step2": "2. Details",
+      "step3": "3. Photo (optional)",
+      "unit": "Unit",
+      "pickUnit": "Choose a unit",
+      "kind": "Kind of request",
+      "kindNotAllowed": "This unit is not eligible for this kind of request.",
+      "category": "Category",
+      "priority": "Priority",
+      "title": "Title",
+      "description": "Description",
+      "submit": "Send request",
+      "sent": "Request sent.",
+      "photoFailed": "The request was sent, but the photo did not upload. You can add it from the request.",
+      "notEligible": "This unit is not eligible:",
+      "noUnits": "You need a recorded unit to request a service."
+    },
+    "photo": {
+      "prompt": "Add a photo",
+      "hint": "JPG or PNG, up to 10 MB",
+      "remove": "Remove photo",
+      "tooLarge": "The photo is larger than 10 MB.",
+      "wrongType": "Only JPG or PNG photos."
+    },
+    "request": {
+      "visit": "Visit",
+      "noVisit": "Not scheduled yet",
+      "created": "Request created",
+      "uploadPhoto": "Upload photo",
+      "photoAdded": "Photo added.",
+      "rateTitle": "Rate the service",
+      "rating": "Rating",
+      "stars": "{count, plural, one {# star} other {# stars}}",
+      "comment": "Comment (optional)",
+      "sendRating": "Send rating",
+      "thanks": "Thank you for your rating.",
+      "alreadyRated": "You have already rated this request.",
+      "yourRating": "Your rating",
+      "reopen": "Reopen request",
+      "reopenTitle": "Reopen this request?",
+      "reopenBody": "Tell us what is still wrong. The request goes back to the team.",
+      "reopened": "Request reopened."
+    },
+    "notifications": {
+      "empty": "You are all caught up.",
+      "new": "New",
+      "read": "Read",
+      "newer": "Newer",
+      "older": "Older"
+    },
+    "rentals": {
+      "empty": "No rental mandates.",
+      "emptyHint": "If Alawaly manages the rental of your unit, the mandate and its statements appear here.",
+      "statements": "Statements",
+      "noStatements": "Statements are not part of this mandate.",
+      "statementsEmpty": "No statements yet.",
+      "statementsError": "Statements could not be loaded."
+    },
+    "more": {
+      "reservations": "My reservations",
+      "warranties": "My warranties",
+      "rentals": "Rentals"
+    }
   }
 }
