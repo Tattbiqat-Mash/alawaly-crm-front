@@ -70,8 +70,8 @@ export const NAV: NavGroup[] = [
   {
     key: "sales",
     items: [
-      { key: "reservations", href: "/reservations", icon: CalendarClock, permissions: ["sales.view"], ready: false },
-      { key: "sales", href: "/sales", icon: Handshake, permissions: ["sales.view"], ready: false },
+      { key: "reservations", href: "/reservations", icon: CalendarClock, permissions: ["sales.view"], ready: true },
+      { key: "sales", href: "/sales", icon: Handshake, permissions: ["sales.view"], ready: true },
       { key: "handovers", href: "/handovers", icon: KeyRound, permissions: ["sales.view"], ready: false },
       { key: "ownership", href: "/ownership", icon: UserSquare, permissions: ["ownership.manage", "sales.view"], ready: false },
     ],

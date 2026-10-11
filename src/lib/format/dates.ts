@@ -32,3 +32,30 @@ export function formatDateTime(value: string | null | undefined, locale: string)
 
 /** Today as "YYYY-MM-DD" (for date inputs and "not in the future" checks). */
 export const todayIso = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * Server timestamps carry no zone. For countdowns we need the real instant, so we assume the
+ * server runs on Saudi time (UTC+3) — confirm per environment (see DECISIONS.md).
+ */
+export const SERVER_UTC_OFFSET_MINUTES = 180;
+
+export function serverTimeToEpoch(value: string | null | undefined): number | null {
+  const wallClock = parseApiDate(value);
+  return wallClock ? wallClock.getTime() - SERVER_UTC_OFFSET_MINUTES * 60_000 : null;
+}
+
+/** "in 5 hours" / "2 days ago" relative to now; null when the value is missing. */
+export function formatRelative(value: string | null | undefined, locale: string, now = Date.now()): string | null {
+  const at = serverTimeToEpoch(value);
+  if (at === null) return null;
+  const diff = at - now;
+  const rtf = new Intl.RelativeTimeFormat(locale === "ar" ? "ar-u-nu-latn" : "en", { numeric: "auto" });
+  const minutes = Math.round(diff / 60_000);
+  if (Math.abs(minutes) < 60) return rtf.format(minutes, "minute");
+  const hours = Math.round(diff / 3_600_000);
+  if (Math.abs(hours) < 48) return rtf.format(hours, "hour");
+  return rtf.format(Math.round(diff / 86_400_000), "day");
+}
+
+/** Local datetime-input value ("2027-12-20T10:00") → API timestamp ("2027-12-20 10:00:00"). */
+export const inputToApiTimestamp = (value: string) => (value ? `${value.replace("T", " ")}:00` : "");

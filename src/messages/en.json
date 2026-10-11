@@ -62,7 +62,14 @@
     "active": "Active",
     "inactive": "Inactive",
     "updated": "Updated",
-    "crmOverwrite": "Master data also comes from the CRM. A later CRM update can overwrite changes made here."
+    "crmOverwrite": "Master data also comes from the CRM. A later CRM update can overwrite changes made here.",
+    "clientId": "Client number",
+    "unitSearch": "Search a unit (number, code or CRM id)",
+    "noMatches": "No matching units",
+    "notes": "Notes",
+    "open": "Open",
+    "id": "#",
+    "notAvailableApi": "Not available in the API yet."
   },
   "table": {
     "rowsPerPage": "Rows per page",
@@ -290,6 +297,31 @@
       "accepted": "Accepted",
       "accepted_with_snags": "Accepted with open items",
       "closed": "Closed"
+    },
+    "payment": {
+      "initiated": "Initiated",
+      "pending": "Pending",
+      "pending_second_approval": "Waiting for second approval",
+      "succeeded": "Paid",
+      "failed": "Failed",
+      "review": "Needs review",
+      "refunded": "Refunded",
+      "recorded": "Recorded"
+    },
+    "paymentType": {
+      "payment": "Payment",
+      "refund": "Refund"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bank transfer",
+      "cash": "Cash",
+      "cheque": "Cheque"
+    },
+    "documentType": {
+      "contract": "Contract",
+      "annex": "Annex",
+      "id": "ID",
+      "other": "Other"
     }
   },
   "dashboard": {
@@ -710,5 +742,344 @@
   "validation": {
     "required": "This field is required.",
     "wholeNumber": "Enter a whole number."
+  },
+  "reservations": {
+    "title": "Reservations",
+    "subtitle": "Units held for a client until the reservation fee is paid or the hold ends.",
+    "new": "New reservation",
+    "columns": {
+      "id": "#",
+      "unit": "Unit",
+      "client": "Client",
+      "state": "State",
+      "fee": "Fee",
+      "expires": "Expires",
+      "actions": "Actions"
+    },
+    "filters": {
+      "state": "State",
+      "client": "Client number",
+      "unit": "Unit number (id)"
+    },
+    "noExpiry": "No hold time",
+    "expired": "Expired",
+    "expiresIn": "in {time}",
+    "empty": "No reservations match these filters.",
+    "extend": "Extend",
+    "extendTitle": "Extend the hold",
+    "extendBody": "Adds hours to the hold of reservation #{id}.",
+    "hours": "Hours",
+    "hoursInvalid": "Enter between 1 and 720 hours.",
+    "extended": "Hold extended.",
+    "cancel": "Cancel",
+    "cancelTitle": "Cancel reservation #{id}?",
+    "cancelBody": "The unit is released and can be reserved by someone else. Any fee already paid is not refunded automatically.",
+    "cancelled": "Reservation cancelled.",
+    "detailTitle": "Reservation #{id}",
+    "fields": {
+      "unit": "Unit",
+      "client": "Client",
+      "state": "State",
+      "fee": "Fee",
+      "paymentStatus": "Payment",
+      "expires": "Expires",
+      "notes": "Notes",
+      "created": "Created",
+      "cancelReason": "Cancellation reason"
+    }
+  },
+  "newReservation": {
+    "title": "New reservation",
+    "subtitle": "Hold a unit for a client. The reservation fee is then recorded as a payment.",
+    "unit": "Unit",
+    "client": "Client number",
+    "clientHint": "The API has no client search yet; enter the client's number from the CRM.",
+    "clientInvalid": "Enter the client's number.",
+    "unitRequired": "Choose an available unit.",
+    "summary": "Summary",
+    "submit": "Reserve unit",
+    "submitting": "Reserving…",
+    "created": "Unit reserved: reservation #{id}.",
+    "result": "Reservation #{id} is {state}.",
+    "expiresAt": "Hold ends {date}.",
+    "noHold": "No hold time is configured, so the reservation does not expire.",
+    "recordPayment": "Record the fee (offline)",
+    "recordPaymentHint": "Creates the payment for the reservation fee. Staff confirm it in Confirmations once the money arrives.",
+    "paymentCreated": "Payment #{id} created for {amount}.",
+    "onlinePayment": "Online card payment",
+    "onlinePaymentSoon": "No payment gateway is chosen yet.",
+    "another": "Reserve another unit",
+    "openList": "Open reservations"
+  },
+  "sales": {
+    "title": "Sales",
+    "subtitle": "A sale starts from a reservation or directly from an available unit.",
+    "new": "New sale",
+    "columns": {
+      "id": "#",
+      "unit": "Unit",
+      "client": "Client",
+      "status": "Status",
+      "price": "Agreed price",
+      "next": "Next step",
+      "sold": "Sold"
+    },
+    "filters": {
+      "status": "Status",
+      "unit": "Unit number (id)",
+      "client": "Client number"
+    },
+    "empty": "No sales yet. A sale starts from a reservation or an available unit.",
+    "next": {
+      "draft": "Upload the contract, then mark contracted",
+      "contracted": "Collect the installments",
+      "paid_up": "Hand over the unit",
+      "handed_over": "Complete",
+      "cancelled": "—"
+    },
+    "totals": {
+      "count": "Sales",
+      "value": "Value",
+      "collected": "Collected",
+      "outstanding": "Installments outstanding"
+    }
+  },
+  "newSale": {
+    "title": "New sale",
+    "subtitle": "Turn a reservation (or an available unit) into a sale. The unit becomes sold.",
+    "steps": {
+      "source": "1. Reservation or unit",
+      "terms": "2. Client and price",
+      "confirm": "3. Confirm"
+    },
+    "fromReservation": "From a reservation",
+    "direct": "Directly from a unit",
+    "reservation": "Open reservation",
+    "noOpenReservations": "No pending or active reservations.",
+    "price": "Agreed price (SAR)",
+    "priceInvalid": "Enter an amount such as 575000 or 575000.50.",
+    "priceHint": "Unit list price: {price}",
+    "basis": "Price basis",
+    "basisHint": "Set by the business policy when installments are generated.",
+    "confirmText": "Create a sale for unit {unit} and client {client} at {price}?",
+    "submit": "Create sale",
+    "submitting": "Creating…",
+    "created": "Sale #{id} created."
+  },
+  "sale": {
+    "title": "Sale #{id}",
+    "steps": {
+      "draft": "Draft",
+      "contracted": "Contracted",
+      "paid_up": "Paid up",
+      "handed_over": "Handed over"
+    },
+    "advance": {
+      "contracted": "Mark contracted",
+      "paid_up": "Mark paid up",
+      "handed_over": "Mark handed over"
+    },
+    "advanced": "Sale moved to {status}.",
+    "cancel": "Cancel sale",
+    "cancelTitle": "Cancel sale #{id}?",
+    "cancelBody": "The sale is cancelled and the unit is released. Money already paid is not refunded automatically: it is listed for a refund review.",
+    "cancelled": "Sale cancelled.",
+    "refundReview": "Paid so far, to review for a refund: {amount}.",
+    "cancelledInfo": "Cancelled on {date}. Reason: {reason}",
+    "fields": {
+      "unit": "Unit",
+      "client": "Client",
+      "reservation": "Reservation",
+      "price": "Agreed price",
+      "basis": "Price basis",
+      "sold": "Sold",
+      "contracted": "Contracted"
+    },
+    "tabs": {
+      "installments": "Installments",
+      "documents": "Documents",
+      "handover": "Handover",
+      "warranty": "Warranty",
+      "payments": "Payments"
+    },
+    "installments": {
+      "generate": "Generate schedule",
+      "generated": "Installment schedule generated.",
+      "regenerateBlocked": "The schedule cannot be regenerated once an installment is paid.",
+      "empty": "No installments yet. Generate the schedule from the business policy.",
+      "columns": {
+        "title": "Installment",
+        "due": "Due",
+        "amount": "Amount",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "total": "Total {total} · Paid {paid}",
+      "changeDate": "Change date",
+      "changeDateTitle": "Change the due date",
+      "newDate": "New due date",
+      "dateSaved": "Due date changed.",
+      "recordPayment": "Record payment",
+      "recordTitle": "Record a payment for {title}",
+      "recordBody": "Creates an offline payment for {amount}. It counts as paid only after two different staff members confirm it.",
+      "recorded": "Payment #{id} created; it now waits for confirmation.",
+      "waive": "Waive",
+      "waiveSoon": "Waiving an installment is not available in the API yet."
+    },
+    "documents": {
+      "type": "Document type",
+      "upload": "Upload",
+      "uploading": "Uploading…",
+      "uploaded": "Document uploaded.",
+      "empty": "No documents yet. Upload the signed contract to mark the sale contracted.",
+      "columns": {
+        "type": "Type",
+        "version": "Version",
+        "file": "File",
+        "size": "Size",
+        "added": "Added",
+        "open": "Open"
+      },
+      "superseded": "Superseded",
+      "openFile": "Open",
+      "drop": {
+        "prompt": "Choose or drop a file",
+        "hint": "PDF, JPG or PNG, up to 10 MB",
+        "remove": "Remove file",
+        "tooLarge": "The file is larger than 10 MB.",
+        "wrongType": "Only PDF, JPG or PNG files."
+      }
+    },
+    "handover": {
+      "schedule": "Schedule handover",
+      "when": "Date and time",
+      "notes": "Notes for the handover team",
+      "scheduled": "Handover scheduled.",
+      "needsContract": "A handover can be scheduled once the sale is contracted.",
+      "exists": "A handover exists for this sale. Its inspection and owner acceptance are managed from Handovers."
+    },
+    "warranty": {
+      "apply": "Apply selected policies",
+      "applied": "{count, plural, one {# warranty applied} other {# warranties applied}}.",
+      "empty": "No warranty policies exist yet. Create them in Warranty.",
+      "months": "{months} months",
+      "transferable": {
+        "yes": "Transferable",
+        "no": "Not transferable",
+        "undecided": "Transfer undecided"
+      },
+      "noPermission": "Applying warranties needs the warranty permission."
+    },
+    "payments": {
+      "empty": "No payments recorded for this sale.",
+      "noPermission": "Payments are visible to finance staff."
+    }
+  },
+  "payments": {
+    "title": "Payment transactions",
+    "subtitle": "Every payment and refund. Only transactions with status Paid count as money received.",
+    "columns": {
+      "id": "#",
+      "type": "Type",
+      "provider": "Provider",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "verifiedBy": "Verified by",
+      "for": "For",
+      "date": "Date",
+      "reference": "Reference"
+    },
+    "filters": {
+      "status": "Status",
+      "provider": "Provider",
+      "type": "Type",
+      "sale": "Sale number"
+    },
+    "providers": {
+      "offline": "Offline",
+      "generic_hmac": "Gateway"
+    },
+    "empty": "No transactions match these filters.",
+    "reviewHint": "Needs review: the provider and our records disagree.",
+    "detailTitle": "Transaction #{id}",
+    "forReservation": "Reservation #{id}",
+    "forInstallment": "Installment #{id}",
+    "forSale": "Sale #{id}",
+    "verified": "First check by {first}; second approval by {second}.",
+    "awaiting": "Waiting for a second approval.",
+    "refund": "Record refund",
+    "note": "Note"
+  },
+  "confirmations": {
+    "title": "Payment confirmations",
+    "subtitle": "Offline payments need two different people: one records the payment, another approves it. Nothing counts as paid before the second approval.",
+    "ownBanner": "You cannot approve a payment you recorded yourself.",
+    "record": "Record a payment",
+    "recordTitle": "Record an offline payment",
+    "recordBody": "This is the first check. The payment counts as paid only after a different person approves it.",
+    "target": "Payment for",
+    "targets": {
+      "installment": "Installment",
+      "reservation": "Reservation fee"
+    },
+    "targetId": "Number",
+    "targetIdHint": "The installment number (from the sale) or the reservation number.",
+    "amount": "Amount received (SAR)",
+    "amountHint": "Must equal the amount due.",
+    "method": "Method",
+    "reference": "Bank or receipt reference",
+    "recorded": "Payment #{id} recorded. It now waits for a second approval.",
+    "tabs": {
+      "waiting": "Waiting for approval",
+      "mine": "Recorded by me",
+      "rejected": "Rejected"
+    },
+    "recordedBy": "Recorded by",
+    "approveTitle": "Approve payment #{id}?",
+    "approveBody": "{amount} by {method} (ref. {reference}) will count as paid and the installment or reservation is updated. This is recorded under your name as the second approver.",
+    "approved": "Payment approved and counted as paid.",
+    "rejectTitle": "Reject payment #{id}?",
+    "rejectBody": "The payment is marked failed and does not count as paid. The person who recorded it will see your reason.",
+    "rejected": "Payment rejected.",
+    "empty": "Nothing waiting for approval.",
+    "emptyMine": "You have not recorded any payments.",
+    "emptyRejected": "No rejected payments."
+  },
+  "refunds": {
+    "title": "Refunds",
+    "subtitle": "Record a refund against a paid transaction. This only records it: the money is returned outside the system.",
+    "pick": "Choose a paid transaction to refund.",
+    "empty": "No paid transactions to refund.",
+    "formTitle": "Refund for transaction #{id}",
+    "paid": "Paid",
+    "alreadyRefunded": "Already refunded",
+    "refundable": "Refundable",
+    "amount": "Refund amount (SAR)",
+    "amountInvalid": "Enter an amount up to {max}.",
+    "recordOnly": "Recording a refund does not send money. Make the transfer through your bank as usual.",
+    "submit": "Record refund",
+    "recorded": "Refund recorded.",
+    "notPaid": "Only paid payments can be refunded."
+  },
+  "reconcile": {
+    "title": "Reconciliation",
+    "subtitle": "Compare a provider report with our transactions. Read-only: nothing is changed.",
+    "provider": "Provider",
+    "pasteLabel": "Provider report (CSV: provider_ref, amount, status)",
+    "pasteHint": "Up to 5,000 rows per comparison.",
+    "missingColumns": "The first line must include provider_ref, amount and status.",
+    "tooMany": "Too many rows ({count}). The limit is 5,000.",
+    "compare": "Compare",
+    "comparing": "Comparing…",
+    "buckets": {
+      "matched": "Matched",
+      "missing_local": "Missing in our records",
+      "missing_remote": "Missing at the provider",
+      "amount_mismatch": "Amount mismatch",
+      "status_mismatch": "Status mismatch"
+    },
+    "exportBucket": "Export",
+    "noneInBucket": "None"
   }
 }

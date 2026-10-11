@@ -157,3 +157,16 @@ export const useUnitEligibility = (id: number, clientId: number | null) =>
 
 export const useUnitAvailability = (id: number) =>
   useGatedQuery(["sales.view", "inventory.view"], inventoryKeys.availability(id), () => inventoryApi.availability(id));
+
+/** Unit search for pickers (number, code or CRM id), optionally limited to some statuses. */
+export function useUnitSearch(q: string, statuses: readonly string[] = []) {
+  const term = q.trim();
+  const params = { page: 1, pageSize: 8, sort: "unit_number", filter: { status: statuses.length ? statuses : null }, extra: { q: term } };
+  return useQuery({
+    queryKey: ["units", "search", params],
+    queryFn: () => inventoryApi.listUnits(params),
+    enabled: term.length > 0,
+    placeholderData: keepPreviousData,
+    staleTime: 15_000,
+  });
+}

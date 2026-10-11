@@ -21,3 +21,14 @@ describe("API dates", () => {
     expect(text).not.toMatch(/[٠-٩]/);
   });
 });
+
+describe("server time", () => {
+  it("treats zone-less server timestamps as Saudi time for countdowns", async () => {
+    const { serverTimeToEpoch, formatRelative, inputToApiTimestamp } = await import("./dates");
+    expect(new Date(serverTimeToEpoch("2026-10-12 18:00:00")!).toISOString()).toBe("2026-10-12T15:00:00.000Z");
+    const now = Date.parse("2026-10-12T12:00:00Z"); // 15:00 Riyadh
+    expect(formatRelative("2026-10-12 18:00:00", "en", now)).toBe("in 3 hours");
+    expect(formatRelative("2026-10-12 14:00:00", "en", now)).toBe("1 hour ago");
+    expect(inputToApiTimestamp("2027-12-20T10:00")).toBe("2027-12-20 10:00:00");
+  });
+});

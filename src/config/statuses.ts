@@ -80,3 +80,54 @@ export const OPEN_SERVICE_REQUEST_STATUSES = [
 export const HANDOVER_STATUSES = ["scheduled", "inspected", "accepted", "accepted_with_snags", "closed"] as const;
 export type HandoverStatus = (typeof HANDOVER_STATUSES)[number];
 export const isHandoverStatus = (v: unknown): v is HandoverStatus => HANDOVER_STATUSES.includes(v as HandoverStatus);
+
+export const RESERVATION_STATES = ["pending", "active", "converted", "expired", "cancelled"] as const;
+export type ReservationState = (typeof RESERVATION_STATES)[number];
+export const isReservationState = (v: unknown): v is ReservationState => RESERVATION_STATES.includes(v as ReservationState);
+export const reservationStateTone: Record<ReservationState, Tone> = {
+  pending: "warning",
+  active: "info",
+  converted: "success",
+  expired: "neutral",
+  cancelled: "danger",
+};
+/** Staff can extend or cancel only open reservations. */
+export const OPEN_RESERVATION_STATES = ["pending", "active"] as const satisfies readonly ReservationState[];
+
+export const PAYMENT_STATUSES = [
+  "initiated",
+  "pending",
+  "pending_second_approval",
+  "succeeded",
+  "failed",
+  "review",
+  "refunded",
+  "recorded",
+] as const;
+export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
+export const isPaymentStatus = (v: unknown): v is PaymentStatus => PAYMENT_STATUSES.includes(v as PaymentStatus);
+/** Only `succeeded` is money received; everything else is shown as not (yet) paid. */
+export const paymentStatusTone: Record<PaymentStatus, Tone> = {
+  initiated: "neutral",
+  pending: "warning",
+  pending_second_approval: "warning",
+  succeeded: "success",
+  failed: "danger",
+  review: "warning",
+  refunded: "info",
+  recorded: "info",
+};
+
+export const PAYMENT_METHODS = ["bank_transfer", "cash", "cheque"] as const;
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+export const isPaymentMethod = (v: unknown): v is PaymentMethod => PAYMENT_METHODS.includes(v as PaymentMethod);
+
+export const DOCUMENT_TYPES = ["contract", "annex", "id", "other"] as const;
+export type DocumentType = (typeof DOCUMENT_TYPES)[number];
+export const isDocumentType = (v: unknown): v is DocumentType => DOCUMENT_TYPES.includes(v as DocumentType);
+
+/** Forward path of a sale (cancelled is a side exit). */
+export const SALE_FLOW = ["draft", "contracted", "paid_up", "handed_over"] as const satisfies readonly SaleStatus[];
+
+export const installmentTone = (status: string, state: string | null): Tone =>
+  state === "overdue" ? "danger" : state === "waived" || state === "refunded" ? "neutral" : status === "paid" ? "success" : status === "canceled" ? "neutral" : "warning";

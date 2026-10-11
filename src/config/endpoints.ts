@@ -28,6 +28,29 @@ export const staffEndpoints = {
   unitType: (id: Id) => `/unit-types/${id}`,
   lookups: (type: string) => `/lookups/${type}`,
 
+  reservations: "/reservations",
+  reservation: (id: Id) => `/reservations/${id}`,
+  extendReservation: (id: Id) => `/reservations/${id}/extend`,
+  cancelReservation: (id: Id) => `/reservations/${id}/cancel`,
+
+  sales: "/sales",
+  sale: (id: Id) => `/sales/${id}`,
+  saleTransition: (id: Id) => `/sales/${id}/transition`,
+  saleCancel: (id: Id) => `/sales/${id}/cancel`,
+  saleInstallments: (id: Id) => `/sales/${id}/installments`,
+  generateInstallments: (id: Id) => `/sales/${id}/installments/generate`,
+  installment: (id: Id) => `/installments/${id}`,
+  saleDocuments: (id: Id) => `/sales/${id}/documents`,
+  saleDocumentLink: (id: Id, docId: Id) => `/sales/${id}/documents/${docId}/link`,
+  saleHandover: (id: Id) => `/sales/${id}/handover`,
+  saleWarranties: (id: Id) => `/sales/${id}/warranties`,
+  warrantyPolicies: "/warranty-policies",
+  warrantyPolicy: (id: Id) => `/warranty-policies/${id}`,
+  warranties: "/warranties",
+  handovers: "/handovers",
+
+  paymentsInitiate: "/payments/initiate",
+  payment: (id: Id) => `/payments/${id}`,
   paymentTransactions: "/payment-transactions",
 
   reports: {
