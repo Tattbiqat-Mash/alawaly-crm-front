@@ -69,6 +69,8 @@ export function useUnits(state: UnitsListState) {
   });
 }
 
+export const useDuplicates = () => useQuery({ queryKey: ["units-duplicates"], queryFn: inventoryApi.duplicates });
+
 export const useProjects = () =>
   useQuery({ queryKey: inventoryKeys.projects, queryFn: inventoryApi.projects, staleTime: LOOKUP_STALE });
 export const useBuildings = () =>

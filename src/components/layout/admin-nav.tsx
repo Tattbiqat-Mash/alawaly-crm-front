@@ -10,7 +10,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useEndSide } from "@/hooks/use-end-side";
 import { cn } from "@/lib/utils";
 
-const isActive = (pathname: string, href: string) =>
+const matches = (pathname: string, href: string) =>
   href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
 type Props = { collapsed?: boolean; onNavigate?: () => void };
@@ -42,9 +42,16 @@ function AdminNavLinks({ collapsed, onNavigate }: Props) {
 
   if (!ready) return <NavSkeleton />;
 
+  const groups = visibleNav(can);
+  // Only the most specific match is active (/units/import highlights "Import", not "Units").
+  const activeHref = groups
+    .flatMap((g) => g.items.map((i) => i.href))
+    .filter((href) => matches(pathname, href))
+    .sort((a, b) => b.length - a.length)[0];
+
   return (
     <nav aria-label={t("label")} className="flex flex-col gap-4 p-3">
-      {visibleNav(can).map((group) => (
+      {groups.map((group) => (
         <div key={group.key} className="flex flex-col gap-0.5">
           {!collapsed && (
             <p className="px-2.5 pb-1 text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
@@ -52,7 +59,7 @@ function AdminNavLinks({ collapsed, onNavigate }: Props) {
             </p>
           )}
           {group.items.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active = item.href === activeHref;
             const label = t(`items.${item.key}`);
             const link = (
               <Link

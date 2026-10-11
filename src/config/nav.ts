@@ -59,12 +59,12 @@ export const NAV: NavGroup[] = [
     key: "inventory",
     items: [
       { key: "units", href: "/units", icon: Home, permissions: ["inventory.view"], ready: true },
-      { key: "priceApprovals", href: "/price-changes", icon: BadgeCheck, permissions: ["pricing.approve"], ready: false },
-      { key: "importUnits", href: "/units/import", icon: Upload, permissions: ["inventory.import"], ready: false },
-      { key: "duplicates", href: "/units/duplicates", icon: Copy, permissions: ["inventory.admin"], ready: false },
-      { key: "projects", href: "/projects", icon: Building2, permissions: ["inventory.view"], ready: false },
-      { key: "buildings", href: "/buildings", icon: Building, permissions: ["inventory.view"], ready: false },
-      { key: "unitTypes", href: "/unit-types", icon: Tags, permissions: ["inventory.view"], ready: false },
+      { key: "priceApprovals", href: "/price-changes", icon: BadgeCheck, permissions: ["pricing.approve"], ready: true },
+      { key: "importUnits", href: "/units/import", icon: Upload, permissions: ["inventory.import"], ready: true },
+      { key: "duplicates", href: "/units/duplicates", icon: Copy, permissions: ["inventory.admin"], ready: true },
+      { key: "projects", href: "/projects", icon: Building2, permissions: ["inventory.view"], ready: true },
+      { key: "buildings", href: "/buildings", icon: Building, permissions: ["inventory.view"], ready: true },
+      { key: "unitTypes", href: "/unit-types", icon: Tags, permissions: ["inventory.view"], ready: true },
     ],
   },
   {

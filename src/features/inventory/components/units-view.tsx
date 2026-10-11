@@ -8,10 +8,10 @@ import { toast } from "sonner";
 import { DataTable, type Column } from "@/components/shared/data-table/data-table";
 import { EmptyState } from "@/components/shared/states";
 import { StatusBadge } from "@/components/shared/status-badge";
-import { UnavailableAction } from "@/components/shared/unavailable-action";
 import { Button } from "@/components/ui/button";
 import { usePermissions } from "@/features/auth/hooks";
 import { useErrorMessage } from "@/hooks/use-error-message";
+import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/format/dates";
 import { isOn } from "@/lib/format/localized";
 import { formatDecimal, formatMoney } from "@/lib/format/money";
@@ -36,7 +36,12 @@ export function UnitsActions() {
   return (
     <>
       {can("inventory.import") && (
-        <UnavailableAction label={t("units.import")} reason={t("common.notInThisRelease")} icon={Upload} />
+        <Button variant="outline" asChild>
+          <Link href="/units/import">
+            <Upload data-icon="inline-start" />
+            {t("units.import")}
+          </Link>
+        </Button>
       )}
       {can("reports.view") && (
         <Button variant="outline" onClick={() => exportUnits.mutate()} disabled={exportUnits.isPending}>

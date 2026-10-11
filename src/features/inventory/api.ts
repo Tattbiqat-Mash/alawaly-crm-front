@@ -7,6 +7,7 @@ import { idempotencyHeader } from "@/lib/api/idempotency";
 import { MAX_PAGE_SIZE, toSearchParams, type ListParams } from "@/lib/api/params";
 import type {
   Availability,
+  DuplicateGroup,
   Building,
   Eligibility,
   OwnershipRecord,
@@ -77,6 +78,9 @@ export const inventoryApi = {
   projects: () => list<Project>(ep.projects, { pageSize: MAX_PAGE_SIZE }).then((p) => p.items),
   buildings: () => list<Building>(ep.buildings, { pageSize: MAX_PAGE_SIZE }).then((p) => p.items),
   unitTypes: () => list<UnitType>(ep.unitTypes, { pageSize: MAX_PAGE_SIZE }).then((p) => p.items),
+
+  /** One page of 100 groups covers the report; KPIs use meta.total. */
+  duplicates: () => list<DuplicateGroup>(ep.unitsDuplicates, { pageSize: MAX_PAGE_SIZE }),
 
   exportUnits: () => downloadFile(staffApi, ep.exports("units"), "units.csv"),
 };

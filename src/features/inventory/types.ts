@@ -81,6 +81,9 @@ export type Project = {
   city_id: number | null;
   display_order: number | null;
   updated_at: string;
+  // Returned by GET /projects/{id} (and create/update); may be absent in list rows.
+  developing_percentage?: number | null;
+  featured?: Flag | null;
 };
 
 export type Building = {
@@ -92,6 +95,8 @@ export type Building = {
   floors_count: number | null;
   active: Flag;
   updated_at: string;
+  addressAr?: string | null;
+  addressEn?: string | null;
 };
 
 export type UnitType = {
@@ -170,3 +175,9 @@ export type Availability = {
   reservation_amount: string | null;
   hold_hours: number | null;
 };
+
+/** GET /units-duplicates: units sharing a CRM id. class "deferred" = conflicting statuses. */
+export type DuplicateGroup = { crm_unit_id: string; members: number; class: string; unit_ids: number[] };
+
+/** GET /lookups/{type}: read-only CRM lookup values. */
+export type LookupValue = { id: number; crm_id: string | null; nameAr: string | null; nameEn: string | null; data_type: string; active: Flag };

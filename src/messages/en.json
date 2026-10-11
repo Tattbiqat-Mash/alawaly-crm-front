@@ -44,7 +44,25 @@
     "expandMenu": "Expand menu",
     "skipToContent": "Skip to content",
     "breadcrumbs": "Breadcrumbs",
-    "dash": "—"
+    "dash": "—",
+    "create": "Create",
+    "edit": "Edit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "view": "View",
+    "next": "Next",
+    "startOver": "Start over",
+    "optional": "optional",
+    "unitRef": "Unit #{id}",
+    "clientRef": "Client #{id}",
+    "staffRef": "Staff #{id}",
+    "nameAr": "Name (Arabic)",
+    "nameEn": "Name (English)",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "updated": "Updated",
+    "crmOverwrite": "Master data also comes from the CRM. A later CRM update can overwrite changes made here."
   },
   "table": {
     "rowsPerPage": "Rows per page",
@@ -147,7 +165,18 @@
       "FIELD_NOT_WRITABLE": "Some fields cannot be changed here.",
       "UPSTREAM_UNAVAILABLE": "The service is not reachable right now. Please try again shortly.",
       "CODE_SESSION_EXPIRED": "Your code request expired. Please request a new code.",
-      "NETWORK_ERROR": "You appear to be offline. Check your connection."
+      "NETWORK_ERROR": "You appear to be offline. Check your connection.",
+      "ALREADY_DECIDED": "This request was already decided by someone else.",
+      "RESERVATION_MISMATCH": "The reservation does not match this unit or client.",
+      "UNIT_ALREADY_SOLD": "This unit is already sold.",
+      "PAYMENTS_OUTSTANDING": "Payments are still outstanding for this sale.",
+      "HANDOVER_NOT_ACCEPTED": "The owner has not accepted the handover yet.",
+      "ALREADY_PAID": "This is already paid.",
+      "REFUND_EXCEEDS_PAYMENT": "The refund is more than what can be refunded.",
+      "OPEN_SNAGS": "Some handover items are still open.",
+      "NO_CURRENT_OWNER": "This unit has no current owner.",
+      "SAME_OWNER": "The new owner is the same as the current owner.",
+      "ALREADY_APPLIED": "This import was already applied."
     },
     "generic": "Something went wrong.",
     "correlation": "Reference: {id}",
@@ -517,5 +546,169 @@
       "notificationPrefs": "Notification preferences",
       "notificationPrefsSoon": "Not available yet"
     }
+  },
+  "priceApprovals": {
+    "title": "Price approvals",
+    "subtitle": "A second person reviews requested price changes. Nothing changes on a unit until it is approved.",
+    "ownRequestBanner": "You cannot approve your own request. Another person with approval rights must decide it.",
+    "columns": {
+      "unit": "Unit",
+      "field": "Field",
+      "old": "Current",
+      "new": "Requested",
+      "reason": "Reason",
+      "requestedBy": "Requested by",
+      "source": "Source",
+      "effective": "Effective",
+      "decision": "Decision"
+    },
+    "you": "You",
+    "ownRequest": "Your request",
+    "historyOnly": "CRM change (history only)",
+    "empty": "No price changes in this view.",
+    "approveTitle": "Approve this price change?",
+    "approveBody": "The unit's {field} changes from {old} to {new}. This is recorded under your name.",
+    "rejectTitle": "Reject this price change?",
+    "rejectBody": "The unit keeps its current price. The requester will see the request as rejected.",
+    "approved": "Price change approved.",
+    "rejected": "Price change rejected."
+  },
+  "unitImport": {
+    "title": "Import units",
+    "subtitle": "Update existing units in bulk. A dry run checks every row first; only a clean file can be committed. Prices cannot be imported.",
+    "steps": {
+      "add": "1. Add rows",
+      "check": "2. Check (dry run)",
+      "commit": "3. Commit"
+    },
+    "pasteLabel": "Paste CSV (first line = column names)",
+    "pasteHint": "Required column: crm_unit_id. Up to 1,000 rows. You can also choose a .csv file.",
+    "chooseFile": "Choose CSV file",
+    "rowsParsed": "{count, plural, one {# row ready} other {# rows ready}}",
+    "tooMany": "Too many rows ({count}). The limit is 1,000 per import.",
+    "missingCrmId": "The first line must include a crm_unit_id column.",
+    "noRows": "Add at least one row.",
+    "priceColumnsRemoved": "Price columns were removed (prices change only through approvals): {columns}",
+    "runCheck": "Run dry run",
+    "checking": "Checking…",
+    "summary": {
+      "valid": "Valid rows",
+      "invalid": "Invalid rows",
+      "skipped": "Skipped",
+      "ambiguous": "Ambiguous matches"
+    },
+    "columns": {
+      "row": "Row",
+      "crmId": "CRM id",
+      "result": "Result"
+    },
+    "allValid": "Every row passed the check.",
+    "commitBlocked": "Fix the invalid rows and run the check again before committing.",
+    "commit": "Commit {count, plural, one {# valid row} other {# valid rows}}",
+    "committing": "Committing…",
+    "applied": "{count, plural, one {# unit updated} other {# units updated}}.",
+    "ambiguousNote": "Ambiguous matches: the unit with the lowest id is updated.",
+    "fileError": "That file could not be read as CSV text."
+  },
+  "duplicates": {
+    "title": "Duplicate units",
+    "subtitle": "Units that share a CRM id. Resolving them is a controlled data operation, not a button.",
+    "kpi": {
+      "groups": "Groups",
+      "resolvable": "Resolvable",
+      "decision": "Need a decision"
+    },
+    "columns": {
+      "crmId": "CRM id",
+      "members": "Units",
+      "class": "Class",
+      "unitIds": "Unit ids"
+    },
+    "classes": {
+      "deferred": "Needs a business decision"
+    },
+    "deferredHint": "Deferred: the units have conflicting statuses, so a business decision is needed before merging.",
+    "empty": "No duplicates. Every CRM id belongs to one unit."
+  },
+  "projects": {
+    "title": "Projects",
+    "new": "New project",
+    "editTitle": "Edit project",
+    "columns": {
+      "name": "Name",
+      "status": "Status",
+      "availability": "Availability",
+      "complete": "Complete",
+      "active": "Active",
+      "updated": "Updated"
+    },
+    "fields": {
+      "status": "Status",
+      "availability": "Availability",
+      "displayOrder": "Display order",
+      "featured": "Featured",
+      "active": "Active",
+      "complete": "Completion %"
+    },
+    "statusHint": "Use the status values your CRM uses, e.g. ongoing.",
+    "empty": "No projects yet.",
+    "saved": "Project saved.",
+    "created": "Project created.",
+    "percentInvalid": "Enter a number from 0 to 100."
+  },
+  "buildings": {
+    "title": "Buildings",
+    "new": "New building",
+    "editTitle": "Edit building",
+    "columns": {
+      "code": "Code",
+      "project": "Project",
+      "floors": "Floors",
+      "address": "Address",
+      "active": "Active"
+    },
+    "fields": {
+      "project": "Project",
+      "code": "Building code",
+      "floors": "Floors",
+      "addressAr": "Address (Arabic)",
+      "addressEn": "Address (English)",
+      "active": "Active"
+    },
+    "empty": "No buildings match these filters.",
+    "saved": "Building saved.",
+    "created": "Building created.",
+    "projectRequired": "Choose a project."
+  },
+  "unitTypes": {
+    "title": "Unit types and lookups",
+    "typesTab": "Unit types",
+    "new": "New type",
+    "editTitle": "Edit unit type",
+    "columns": {
+      "name": "Name",
+      "crm": "CRM value",
+      "active": "Active"
+    },
+    "empty": "No unit types yet.",
+    "saved": "Unit type saved.",
+    "created": "Unit type created.",
+    "lookups": {
+      "facade": "Facades",
+      "finishing": "Finishing",
+      "view": "Views",
+      "parking": "Parking"
+    },
+    "lookupColumns": {
+      "crmId": "CRM id",
+      "arabic": "Arabic",
+      "english": "English"
+    },
+    "lookupReadOnly": "Lookup lists come from the CRM and are read-only.",
+    "lookupEmpty": "No values in this list."
+  },
+  "validation": {
+    "required": "This field is required.",
+    "wholeNumber": "Enter a whole number."
   }
 }
