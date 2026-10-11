@@ -48,6 +48,13 @@ export const staffEndpoints = {
   warrantyPolicy: (id: Id) => `/warranty-policies/${id}`,
   warranties: "/warranties",
   handovers: "/handovers",
+  handover: (id: Id) => `/handovers/${id}`,
+  inspectHandover: (id: Id) => `/handovers/${id}/inspect`,
+  handoverItems: (id: Id) => `/handovers/${id}/items`,
+  handoverItem: (id: Id) => `/handover-items/${id}`,
+  closeHandover: (id: Id) => `/handovers/${id}/close`,
+  ownerships: "/ownerships",
+  transferOwnership: (unitId: Id) => `/units/${unitId}/ownership/transfer`,
 
   paymentsInitiate: "/payments/initiate",
   payment: (id: Id) => `/payments/${id}`,

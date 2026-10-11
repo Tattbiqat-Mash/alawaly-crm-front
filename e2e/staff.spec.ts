@@ -21,7 +21,7 @@ test("S01 → S02 → S03 → S04: sign in, browse units, open a unit", async ({
   await expect(page.getByText("الوحدات حسب الحالة")).toBeVisible();
 
   // Units list with paging meta
-  await page.getByRole("navigation", { name: "التنقل الرئيسي" }).getByRole("link", { name: "الوحدات" }).click();
+  await page.getByRole("navigation", { name: "التنقل الرئيسي" }).getByRole("link", { name: "الوحدات", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1, name: "الوحدات" })).toBeVisible();
   const row = page.getByRole("row", { name: "الوحدة 108" });
   await expect(row).toBeVisible();

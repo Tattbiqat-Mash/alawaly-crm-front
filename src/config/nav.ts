@@ -72,8 +72,8 @@ export const NAV: NavGroup[] = [
     items: [
       { key: "reservations", href: "/reservations", icon: CalendarClock, permissions: ["sales.view"], ready: true },
       { key: "sales", href: "/sales", icon: Handshake, permissions: ["sales.view"], ready: true },
-      { key: "handovers", href: "/handovers", icon: KeyRound, permissions: ["sales.view"], ready: false },
-      { key: "ownership", href: "/ownership", icon: UserSquare, permissions: ["ownership.manage", "sales.view"], ready: false },
+      { key: "handovers", href: "/handovers", icon: KeyRound, permissions: ["sales.view"], ready: true },
+      { key: "ownership", href: "/ownership", icon: UserSquare, permissions: ["ownership.manage", "sales.view"], ready: true },
     ],
   },
   {
@@ -95,7 +95,7 @@ export const NAV: NavGroup[] = [
     key: "afterSales",
     items: [
       { key: "serviceDesk", href: "/service-requests", icon: Wrench, permissions: ["service.view", "service.manage"], ready: false },
-      { key: "warranty", href: "/warranty", icon: ShieldCheck, permissions: ["warranty.manage"], ready: false },
+      { key: "warranty", href: "/warranty", icon: ShieldCheck, permissions: ["warranty.manage"], ready: true },
       { key: "teams", href: "/maintenance", icon: HardHat, permissions: ["maint.manage"], ready: false },
       {
         key: "notificationTemplates",

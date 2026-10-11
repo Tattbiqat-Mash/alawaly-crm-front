@@ -322,6 +322,16 @@
       "annex": "Annex",
       "id": "ID",
       "other": "Other"
+    },
+    "severity": {
+      "minor": "Minor",
+      "major": "Major",
+      "critical": "Critical"
+    },
+    "snag": {
+      "open": "Open",
+      "fixed": "Fixed",
+      "waived": "Waived"
     }
   },
   "dashboard": {
@@ -1081,5 +1091,141 @@
     },
     "exportBucket": "Export",
     "noneInBucket": "None"
+  },
+  "handovers": {
+    "title": "Handovers",
+    "subtitle": "Handovers are scheduled from a contracted sale. Only the owner can accept, in the owner portal.",
+    "columns": {
+      "id": "#",
+      "sale": "Sale",
+      "scheduled": "Scheduled",
+      "status": "Status",
+      "accepted": "Accepted"
+    },
+    "filters": {
+      "status": "Status",
+      "sale": "Sale number"
+    },
+    "empty": "No handovers yet. They are scheduled from a contracted sale."
+  },
+  "handover": {
+    "title": "Handover #{id}",
+    "sale": "Sale #{id}",
+    "steps": {
+      "scheduled": "Scheduled",
+      "inspected": "Inspected",
+      "accepted": "Accepted",
+      "closed": "Closed"
+    },
+    "waitingOwner": "Waiting for the owner to accept in the owner portal. Staff cannot accept on the owner's behalf.",
+    "acceptedBy": "Accepted by client #{id} on {date}.",
+    "reschedule": "Reschedule",
+    "rescheduleTitle": "Reschedule the handover",
+    "rescheduled": "Handover rescheduled.",
+    "inspect": "Record inspection",
+    "inspectTitle": "Record the inspection",
+    "inspectBody": "List any snags found. The owner then sees them and accepts the handover in the owner portal.",
+    "inspectionNotes": "Inspection notes",
+    "inspected": "Inspection recorded.",
+    "addSnagRow": "Add snag",
+    "removeSnagRow": "Remove",
+    "close": "Close handover",
+    "closeTitle": "Close handover #{id}?",
+    "closeBody": "Closing ends the handover. It is allowed only after the owner accepted and every snag is fixed or waived.",
+    "closed": "Handover closed.",
+    "closeBlocked": "Close becomes available when the owner has accepted and every snag is fixed or waived.",
+    "snags": "Snags",
+    "noSnags": "No snags recorded.",
+    "columns": {
+      "area": "Area",
+      "description": "Snag",
+      "severity": "Severity",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "area": "Area",
+    "description": "Description",
+    "severity": "Severity",
+    "addSnag": "Add a snag",
+    "snagAdded": "Snag added.",
+    "markFixed": "Mark fixed",
+    "waive": "Waive",
+    "snagUpdated": "Snag updated.",
+    "notes": "Notes",
+    "inspectedAt": "Inspected {date}"
+  },
+  "ownership": {
+    "title": "Ownership and transfers",
+    "subtitle": "Who owns each unit, since when, and how (sale or transfer).",
+    "legacyBanner": "Legacy sold units without a sale record have no owner here yet.",
+    "columns": {
+      "unit": "Unit",
+      "owner": "Owner",
+      "since": "Since",
+      "until": "Until",
+      "source": "Source"
+    },
+    "filters": {
+      "unit": "Unit number (id)",
+      "client": "Client number",
+      "source": "Source"
+    },
+    "current": "Current",
+    "empty": "No ownership records match these filters.",
+    "transfer": "Record a transfer",
+    "transferTitle": "Record an ownership transfer (resale)",
+    "transferBody": "The current owner's record ends today and the new owner's starts. Warranties follow each policy's transfer rule.",
+    "unitId": "Unit number (id)",
+    "newOwner": "New owner (client number)",
+    "note": "Note (e.g. resale agreement number)",
+    "transferred": "Ownership transferred."
+  },
+  "warranty": {
+    "title": "Warranty",
+    "subtitle": "Warranty policies and the warranties applied to sales.",
+    "tabs": {
+      "policies": "Policies",
+      "warranties": "Warranties"
+    },
+    "newPolicy": "New policy",
+    "editPolicy": "Edit policy",
+    "columns": {
+      "category": "Category",
+      "name": "Name",
+      "months": "Months",
+      "transferable": "Transferable",
+      "active": "Active",
+      "unit": "Unit",
+      "sale": "Sale",
+      "policy": "Policy",
+      "starts": "Starts",
+      "expires": "Expires"
+    },
+    "fields": {
+      "category": "Category",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "months": "Duration (months)",
+      "transferable": "Transfer after resale",
+      "termsAr": "Terms (Arabic)",
+      "termsEn": "Terms (English)",
+      "active": "Active"
+    },
+    "transferable": {
+      "yes": "Yes",
+      "no": "No",
+      "undecided": "Undecided"
+    },
+    "undecidedHint": "Undecided: the warranty does not cover a new owner after resale until this is decided.",
+    "durationLocked": "The duration of an existing policy cannot be changed.",
+    "monthsInvalid": "Enter a whole number of months (1 or more).",
+    "saved": "Policy saved.",
+    "created": "Policy created.",
+    "emptyPolicies": "No warranty policies yet.",
+    "emptyWarranties": "No warranties match these filters.",
+    "filters": {
+      "unit": "Unit number (id)",
+      "sale": "Sale number"
+    }
   }
 }

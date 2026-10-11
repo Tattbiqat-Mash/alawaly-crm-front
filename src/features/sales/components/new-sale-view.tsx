@@ -45,7 +45,8 @@ export function NewSaleView() {
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [unit, setUnit] = useState<UnitListItem | null>(null);
   const [client, setClient] = useState("");
-  const [price, setPrice] = useState("");
+  // null = use the unit's list price; any edit replaces it.
+  const [priceDraft, setPriceDraft] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -54,6 +55,7 @@ export function NewSaleView() {
   const unitId = source === "reservation" ? reservation?.unit_id : unit?.id;
   const clientId = source === "reservation" ? reservation?.client_id : client ? Number(client) : null;
   const listPrice = source === "reservation" ? reservedUnit.data?.unit.price_in_tax : unit?.price_in_tax;
+  const price = priceDraft ?? normalise(listPrice);
 
   const priceError = submitted && !AMOUNT.test(price.trim()) ? t("newSale.priceInvalid") : undefined;
   const clientError = submitted && source === "direct" && !/^\d+$/.test(client) ? t("newReservation.clientInvalid") : undefined;
@@ -136,7 +138,7 @@ export function NewSaleView() {
               onValueChange={(v) => {
                 const r = reservations.data?.items.find((x) => String(x.id) === v) ?? null;
                 setReservation(r);
-                setPrice("");
+                setPriceDraft(null);
                 setConfirming(false);
               }}
             >
@@ -161,7 +163,7 @@ export function NewSaleView() {
                 value={unit}
                 onChange={(u) => {
                   setUnit(u);
-                  setPrice("");
+                  setPriceDraft(null);
                   setConfirming(false);
                 }}
                 statuses={["available"]}
@@ -196,9 +198,8 @@ export function NewSaleView() {
                 dir="ltr"
                 value={price}
                 placeholder={normalise(listPrice)}
-                onFocus={() => !price && listPrice && setPrice(normalise(listPrice))}
                 onChange={(e) => {
-                  setPrice(e.target.value.replace(/[^\d.]/g, ""));
+                  setPriceDraft(e.target.value.replace(/[^\d.]/g, ""));
                   setConfirming(false);
                 }}
               />

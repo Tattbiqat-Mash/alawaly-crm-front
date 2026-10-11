@@ -43,6 +43,16 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | B15 | Lookups for filters (projects, buildings, unit types) load one page of 100. Fine for the current data; add search-as-you-type selects if any list grows past 100. |
 | B16a | First visit follows the browser language (next-intl detection, Arabic when no match); the AR | EN switch is remembered in a cookie. |
 | B16 | Brand wordmark stays in Latin ("ALAWALY") in both languages until an official Arabic mark is supplied. |
+| B17 | Phase B lists that open a full page (sales, handovers) navigate on row click instead of opening a drawer: their detail needs steps and tabs. Simple records (projects, buildings, unit types, policies, reservations, transactions) open in a side sheet. |
+| B18 | **No client search API** exists, so reservations, sales and transfers ask for the client number (from the CRM). Revisit when a clients endpoint exists. |
+| B19 | Reservation countdowns assume the server runs on Saudi time (UTC+3) because timestamps carry no zone (`SERVER_UTC_OFFSET_MINUTES` in lib/format/dates). Confirm on the live server. |
+| B20 | "Record payment" on a reservation or installment calls `POST /payments/initiate` (offline). Money counts as paid only after `confirm-offline` + a second approver (S17). Online card payment is shown disabled: no gateway is chosen. |
+| B21 | Installment waiving has no documented API, so the button is disabled with an explanation. |
+| B22 | S17 "Recorded by me" is taken from the latest 100 offline transactions, filtered by `verified_by` in the browser: no `verified_by` filter is documented. |
+| B23 | S18 refunds start from the list of paid transactions (the API refunds a transaction id); "already refunded" sums refunds whose reference is `refund-of-{id}` (recorded example). The server bounds the amount anyway (`REFUND_EXCEEDS_PAYMENT`). |
+| B24 | S08 project status is free text with suggestions: the docs only show `ongoing`. Project search and city filters from the wireframe are omitted (no documented filter fields). |
+| B25 | S10 lookup tabs use the types facade, finishing, view, parking (wireframe). Unknown types return an empty list. |
+| B26 | S23 warranty policy category and duration are editable only on create; the wireframe locks the duration of existing policies. |
 
 ## Docs vs API (API wins)
 
@@ -64,6 +74,9 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | D14 | O09 | route `/owner/sales/:id` | no `GET /owner/sales/{id}` | Derive from the list |
 | D15 | O10 | route uses `saleId` | accept uses the handover id | Read handover by sale, accept by its id |
 | D16 | S01 | — | Login can return `permissions: ["*"]` | `*` grants everything |
+| D17 | `GET /sales/{id}/installments` | lists have paging meta | `meta` carries money totals `{total, paid}` (numbers) | Read them as totals, not paging |
+| D18 | Duplicates (S07) | — | Only class `deferred` is documented | Other classes shown as-is; KPIs: deferred = needs a decision |
+| D19 | Admin account `admin.dev@example.test` | — | Signs in but `permissions: []` (role 1) → every screen answers 403 | Backend: grant `*` to the role or run `php artisan v2:create-admin` |
 
 ## Environment
 
