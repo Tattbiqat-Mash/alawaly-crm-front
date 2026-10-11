@@ -109,9 +109,9 @@ export const NAV: NavGroup[] = [
   {
     key: "facilities",
     items: [
-      { key: "facilities", href: "/facilities", icon: Boxes, permissions: ["facility.manage"], ready: false },
-      { key: "maintenancePlan", href: "/maintenance-plan", icon: ListChecks, permissions: ["facility.manage"], ready: false },
-      { key: "incidents", href: "/incidents", icon: Siren, permissions: ["facility.manage"], ready: false },
+      { key: "facilities", href: "/facilities", icon: Boxes, permissions: ["facility.manage"], ready: true },
+      { key: "maintenancePlan", href: "/maintenance-plan", icon: ListChecks, permissions: ["facility.manage"], ready: true },
+      { key: "incidents", href: "/incidents", icon: Siren, permissions: ["facility.manage"], ready: true },
     ],
   },
   {

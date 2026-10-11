@@ -349,6 +349,23 @@
       "on_site": "في الموقع",
       "done": "منجزة",
       "cancelled": "ملغاة"
+    },
+    "asset": {
+      "in_service": "في الخدمة",
+      "out_of_service": "خارج الخدمة",
+      "retired": "مستبعد"
+    },
+    "task": {
+      "open": "مفتوحة",
+      "in_progress": "قيد التنفيذ",
+      "done": "منجزة",
+      "skipped": "متجاوزة"
+    },
+    "incident": {
+      "open": "مفتوح",
+      "investigating": "قيد التحقيق",
+      "resolved": "تم الحل",
+      "closed": "مغلق"
     }
   },
   "dashboard": {
@@ -1422,5 +1439,138 @@
     "created": "تم إنشاء القالب.",
     "empty": "لا توجد قوالب بعد.",
     "keyInvalid": "استخدم حروفًا إنجليزية صغيرة وأرقامًا ونقاطًا وشرطات سفلية."
+  },
+  "facilities": {
+    "title": "المرافق والأصول",
+    "subtitle": "المرافق المشتركة (المسابح والنوادي والمصاعد…) والمعدات الموجودة فيها.",
+    "newFacility": "مرفق جديد",
+    "newAsset": "أصل جديد",
+    "editFacility": "تعديل المرفق",
+    "editAsset": "الأصل",
+    "facilitiesHeading": "المرافق",
+    "assetsHeading": "الأصول",
+    "assetsFor": "الأصول في {name}",
+    "pickFacility": "اختر مرفقًا لعرض أصوله.",
+    "showRetired": "عرض المستبعدة",
+    "columns": {
+      "name": "المرفق",
+      "location": "المشروع / المبنى",
+      "type": "النوع",
+      "active": "مفعّل",
+      "asset": "الأصل",
+      "category": "الفئة",
+      "serial": "الرقم التسلسلي",
+      "installed": "تاريخ التركيب",
+      "status": "الحالة"
+    },
+    "fields": {
+      "project": "المشروع",
+      "building": "المبنى (اختياري)",
+      "nameAr": "الاسم (عربي)",
+      "nameEn": "الاسم (إنجليزي)",
+      "type": "النوع",
+      "typeHint": "مثل pool أو gym أو lift أو parking",
+      "active": "مفعّل",
+      "facility": "المرفق",
+      "name": "الاسم",
+      "category": "الفئة",
+      "serial": "الرقم التسلسلي",
+      "installed": "تاريخ التركيب",
+      "status": "الحالة"
+    },
+    "history": {
+      "title": "السجل",
+      "tasks": "مهام الصيانة",
+      "incidents": "البلاغات",
+      "empty": "لا يوجد سجل بعد."
+    },
+    "saved": "تم الحفظ.",
+    "created": "تم الإنشاء.",
+    "empty": "لا توجد مرافق بعد.",
+    "emptyAssets": "لا توجد أصول في هذا المرفق."
+  },
+  "maintenancePlan": {
+    "title": "خطة الصيانة",
+    "subtitle": "الصيانة الوقائية. تُنشأ المهام تلقائيًا من الجداول ولا تُنشأ يدويًا.",
+    "tabs": {
+      "tasks": "المهام",
+      "schedules": "الجداول"
+    },
+    "overdueOnly": "المتأخرة فقط",
+    "columns": {
+      "due": "الاستحقاق",
+      "asset": "الأصل",
+      "task": "المهمة",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "title": "الجدول",
+      "frequency": "كل",
+      "nextDue": "الاستحقاق التالي",
+      "team": "الفريق",
+      "active": "مفعّل"
+    },
+    "everyDays": "{days, plural, one {يوم واحد} two {يومين} few {# أيام} many {# يومًا} other {# يوم}}",
+    "start": "بدء",
+    "complete": "إنجاز",
+    "skip": "تجاوز",
+    "completeTitle": "إنجاز المهمة رقم {id}",
+    "skipTitle": "تجاوز المهمة رقم {id}",
+    "notes": "ملاحظات",
+    "notesRequired": "أضف ملاحظة.",
+    "done": "تم تحديث المهمة.",
+    "newSchedule": "جدول جديد",
+    "editSchedule": "تعديل الجدول",
+    "fields": {
+      "asset": "الأصل",
+      "title": "العنوان",
+      "frequency": "التكرار (بالأيام)",
+      "nextDue": "الاستحقاق التالي",
+      "team": "الفريق (اختياري)",
+      "active": "مفعّل (الإيقاف يمنع إنشاء مهام جديدة وتبقى الحالية)"
+    },
+    "frequencyInvalid": "أدخل عددًا صحيحًا من الأيام (1 أو أكثر).",
+    "saved": "تم حفظ الجدول.",
+    "created": "تم إنشاء الجدول.",
+    "pause": "إيقاف",
+    "resume": "استئناف",
+    "paused": "موقوف",
+    "empty": "لا توجد مهام مطابقة لعوامل التصفية.",
+    "emptySchedules": "لا توجد جداول بعد."
+  },
+  "incidents": {
+    "title": "البلاغات",
+    "subtitle": "الأعطال والحوادث في المرافق من الإبلاغ حتى الإغلاق.",
+    "report": "الإبلاغ عن عطل",
+    "columns": {
+      "id": "#",
+      "title": "العنوان",
+      "where": "المرفق / الأصل",
+      "severity": "الدرجة",
+      "status": "الحالة",
+      "reported": "تاريخ البلاغ",
+      "actions": "الإجراءات"
+    },
+    "filters": {
+      "status": "الحالة",
+      "severity": "الدرجة",
+      "facility": "المرفق"
+    },
+    "fields": {
+      "facility": "المرفق",
+      "asset": "الأصل (اختياري)",
+      "title": "العنوان",
+      "description": "الوصف",
+      "severity": "الدرجة"
+    },
+    "investigate": "تحقيق",
+    "resolve": "حل",
+    "close": "إغلاق",
+    "resolveTitle": "حل البلاغ رقم {id}",
+    "resolution": "ما الذي تم",
+    "resolutionRequired": "صف طريقة الحل.",
+    "reported": "تم تسجيل البلاغ.",
+    "updated": "تم تحديث البلاغ.",
+    "empty": "لا توجد بلاغات مطابقة لعوامل التصفية.",
+    "assetMismatch": "يجب أن يتبع الأصل المرفق المختار."
   }
 }

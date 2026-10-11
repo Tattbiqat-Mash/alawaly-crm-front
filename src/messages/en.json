@@ -349,6 +349,23 @@
       "on_site": "On site",
       "done": "Done",
       "cancelled": "Cancelled"
+    },
+    "asset": {
+      "in_service": "In service",
+      "out_of_service": "Out of service",
+      "retired": "Retired"
+    },
+    "task": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "done": "Done",
+      "skipped": "Skipped"
+    },
+    "incident": {
+      "open": "Open",
+      "investigating": "Investigating",
+      "resolved": "Resolved",
+      "closed": "Closed"
     }
   },
   "dashboard": {
@@ -1422,5 +1439,138 @@
     "created": "Template created.",
     "empty": "No templates yet.",
     "keyInvalid": "Use lowercase letters, numbers, dots and underscores."
+  },
+  "facilities": {
+    "title": "Facilities and assets",
+    "subtitle": "Shared facilities (pools, gyms, lifts…) and the equipment inside them.",
+    "newFacility": "New facility",
+    "newAsset": "New asset",
+    "editFacility": "Edit facility",
+    "editAsset": "Asset",
+    "facilitiesHeading": "Facilities",
+    "assetsHeading": "Assets",
+    "assetsFor": "Assets in {name}",
+    "pickFacility": "Choose a facility to see its assets.",
+    "showRetired": "Show retired",
+    "columns": {
+      "name": "Facility",
+      "location": "Project / building",
+      "type": "Type",
+      "active": "Active",
+      "asset": "Asset",
+      "category": "Category",
+      "serial": "Serial",
+      "installed": "Installed",
+      "status": "Status"
+    },
+    "fields": {
+      "project": "Project",
+      "building": "Building (optional)",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "type": "Type",
+      "typeHint": "e.g. pool, gym, lift, parking",
+      "active": "Active",
+      "facility": "Facility",
+      "name": "Name",
+      "category": "Category",
+      "serial": "Serial number",
+      "installed": "Installed on",
+      "status": "Status"
+    },
+    "history": {
+      "title": "History",
+      "tasks": "Maintenance tasks",
+      "incidents": "Incidents",
+      "empty": "No history yet."
+    },
+    "saved": "Saved.",
+    "created": "Created.",
+    "empty": "No facilities yet.",
+    "emptyAssets": "No assets in this facility."
+  },
+  "maintenancePlan": {
+    "title": "Maintenance plan",
+    "subtitle": "Preventive maintenance. Tasks are generated from schedules; they are never created by hand.",
+    "tabs": {
+      "tasks": "Tasks",
+      "schedules": "Schedules"
+    },
+    "overdueOnly": "Overdue only",
+    "columns": {
+      "due": "Due",
+      "asset": "Asset",
+      "task": "Task",
+      "status": "Status",
+      "actions": "Actions",
+      "title": "Schedule",
+      "frequency": "Every",
+      "nextDue": "Next due",
+      "team": "Team",
+      "active": "Active"
+    },
+    "everyDays": "{days, plural, one {# day} other {# days}}",
+    "start": "Start",
+    "complete": "Complete",
+    "skip": "Skip",
+    "completeTitle": "Complete task #{id}",
+    "skipTitle": "Skip task #{id}",
+    "notes": "Notes",
+    "notesRequired": "Add a note.",
+    "done": "Task updated.",
+    "newSchedule": "New schedule",
+    "editSchedule": "Edit schedule",
+    "fields": {
+      "asset": "Asset",
+      "title": "Title",
+      "frequency": "Frequency (days)",
+      "nextDue": "Next due on",
+      "team": "Team (optional)",
+      "active": "Active (pausing stops new tasks; existing ones remain)"
+    },
+    "frequencyInvalid": "Enter a whole number of days (1 or more).",
+    "saved": "Schedule saved.",
+    "created": "Schedule created.",
+    "pause": "Pause",
+    "resume": "Resume",
+    "paused": "Paused",
+    "empty": "No tasks match these filters.",
+    "emptySchedules": "No schedules yet."
+  },
+  "incidents": {
+    "title": "Incidents",
+    "subtitle": "Faults and accidents in facilities, from report to closing.",
+    "report": "Report incident",
+    "columns": {
+      "id": "#",
+      "title": "Title",
+      "where": "Facility / asset",
+      "severity": "Severity",
+      "status": "Status",
+      "reported": "Reported",
+      "actions": "Actions"
+    },
+    "filters": {
+      "status": "Status",
+      "severity": "Severity",
+      "facility": "Facility"
+    },
+    "fields": {
+      "facility": "Facility",
+      "asset": "Asset (optional)",
+      "title": "Title",
+      "description": "Description",
+      "severity": "Severity"
+    },
+    "investigate": "Investigate",
+    "resolve": "Resolve",
+    "close": "Close",
+    "resolveTitle": "Resolve incident #{id}",
+    "resolution": "What was done",
+    "resolutionRequired": "Describe the resolution.",
+    "reported": "Incident reported.",
+    "updated": "Incident updated.",
+    "empty": "No incidents match these filters.",
+    "assetMismatch": "The asset must belong to the chosen facility."
   }
 }

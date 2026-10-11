@@ -76,6 +76,18 @@ export const staffEndpoints = {
   notificationTemplates: "/notification-templates",
   notificationTemplate: (id: Id) => `/notification-templates/${id}`,
 
+  facilities: "/facilities",
+  facility: (id: Id) => `/facilities/${id}`,
+  assets: "/assets",
+  asset: (id: Id) => `/assets/${id}`,
+  assetHistory: (id: Id) => `/assets/${id}/history`,
+  pmSchedules: "/pm-schedules",
+  pmSchedule: (id: Id) => `/pm-schedules/${id}`,
+  pmTasks: "/pm-tasks",
+  pmTaskAction: (id: Id, action: "start" | "complete" | "skip") => `/pm-tasks/${id}/${action}`,
+  incidents: "/incidents",
+  incidentAction: (id: Id, action: "investigate" | "resolve" | "close") => `/incidents/${id}/${action}`,
+
   reports: {
     inventorySummary: "/reports/inventory-summary",
     salesSummary: "/reports/sales-summary",
