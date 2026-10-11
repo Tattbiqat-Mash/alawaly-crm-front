@@ -21,6 +21,8 @@ export function TablePagination({ page, pageSize, total, onPageChange, onPageSiz
   const locale = useLocale();
   const pages = Math.max(1, Math.ceil(total / pageSize));
   const current = Math.min(page, pages);
+  // Keep a size that came from the URL or the API selectable even if it is not a preset.
+  const sizes = PAGE_SIZES.includes(pageSize) ? PAGE_SIZES : [...PAGE_SIZES, pageSize].sort((a, b) => a - b);
 
   return (
     <nav
@@ -40,7 +42,7 @@ export function TablePagination({ page, pageSize, total, onPageChange, onPageSiz
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {PAGE_SIZES.map((size) => (
+              {sizes.map((size) => (
                 <SelectItem key={size} value={String(size)}>
                   {formatCount(size, locale)}
                 </SelectItem>

@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // The dashboard (S02) lives at "/" per the wireframes; /dashboard is a friendly alias.
+  async redirects() {
+    return [
+      { source: "/dashboard", destination: "/", permanent: false },
+      { source: "/:locale(ar|en)/dashboard", destination: "/:locale", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {
