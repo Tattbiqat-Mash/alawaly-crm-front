@@ -1,0 +1,52 @@
+// All API paths in one place (relative to /api/v2). Paths only, no request logic.
+type Id = string | number;
+
+/** Staff API: everything outside /owner/*. Called through the staff BFF (/bff/staff). */
+export const staffEndpoints = {
+  login: "/auth/login",
+  logout: "/auth/logout",
+  me: "/me",
+
+  units: "/units",
+  unit: (id: Id) => `/units/${id}`,
+  unitStatus: (id: Id) => `/units/${id}/status`,
+  unitStatusHistory: (id: Id) => `/units/${id}/status-history`,
+  unitPriceChanges: (id: Id) => `/units/${id}/price-changes`,
+  unitOwnershipHistory: (id: Id) => `/units/${id}/ownership-history`,
+  unitEligibility: (id: Id) => `/units/${id}/eligibility`,
+  unitAvailability: (id: Id) => `/units/${id}/availability`,
+  priceChanges: "/price-changes",
+  projects: "/projects",
+  buildings: "/buildings",
+  unitTypes: "/unit-types",
+  lookups: (type: string) => `/lookups/${type}`,
+
+  paymentTransactions: "/payment-transactions",
+
+  reports: {
+    inventorySummary: "/reports/inventory-summary",
+    salesSummary: "/reports/sales-summary",
+    serviceWorkload: "/reports/service-workload",
+    facilitiesSummary: "/reports/facilities-summary",
+    integrations: "/reports/integrations",
+  },
+
+  exports: (what: "units" | "sales" | "payments" | "service-requests") => `/exports/${what}`,
+} as const;
+
+/**
+ * Owner API: only /owner/*. Called through the owner BFF (/bff/owner), which adds the
+ * /owner prefix, so these paths are relative to /api/v2/owner.
+ */
+export const ownerEndpoints = {
+  requestCode: "/auth/code",
+  verify: "/auth/verify",
+  logout: "/auth/logout",
+
+  units: "/units",
+  sales: "/sales",
+  saleInstallments: (saleId: Id) => `/sales/${saleId}/installments`,
+  saleHandover: (saleId: Id) => `/sales/${saleId}/handover`,
+  serviceRequests: "/service-requests",
+  notifications: "/notifications",
+} as const;

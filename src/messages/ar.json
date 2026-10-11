@@ -1,0 +1,521 @@
+{
+  "app": {
+    "name": "Alawaly",
+    "description": "منصة Alawaly العقارية",
+    "adminArea": "الموظفون",
+    "ownerArea": "بوابة الملّاك"
+  },
+  "common": {
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ…",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "retry": "إعادة المحاولة",
+    "reload": "إعادة التحميل",
+    "back": "رجوع",
+    "search": "بحث",
+    "filters": "عوامل التصفية",
+    "reset": "مسح عوامل التصفية",
+    "loading": "جارٍ التحميل…",
+    "confirm": "تأكيد",
+    "signOut": "تسجيل الخروج",
+    "language": "اللغة",
+    "switchLanguage": "English",
+    "theme": "المظهر",
+    "themeLight": "فاتح",
+    "themeDark": "داكن",
+    "themeSystem": "حسب الجهاز",
+    "openFullView": "فتح الصفحة الكاملة",
+    "details": "التفاصيل",
+    "actions": "الإجراءات",
+    "all": "الكل",
+    "any": "أي",
+    "yes": "نعم",
+    "no": "لا",
+    "refresh": "تحديث",
+    "export": "تصدير CSV",
+    "exporting": "جارٍ التصدير…",
+    "reason": "السبب",
+    "reasonRequired": "يرجى كتابة السبب.",
+    "comingSoon": "قريبًا",
+    "notInThisRelease": "تتوفر هذه الشاشة في إصدار لاحق.",
+    "menu": "القائمة",
+    "collapseMenu": "طيّ القائمة",
+    "expandMenu": "توسيع القائمة",
+    "skipToContent": "الانتقال إلى المحتوى",
+    "breadcrumbs": "مسار التنقل",
+    "dash": "—"
+  },
+  "table": {
+    "rowsPerPage": "عدد الصفوف",
+    "pageOf": "الصفحة {page} من {pages}",
+    "total": "{total, plural, =0 {لا توجد نتائج} one {نتيجة واحدة} two {نتيجتان} few {# نتائج} many {# نتيجة} other {# نتيجة}}",
+    "first": "الصفحة الأولى",
+    "previous": "الصفحة السابقة",
+    "next": "الصفحة التالية",
+    "last": "الصفحة الأخيرة",
+    "sortAscending": "مرتب تصاعديًا",
+    "sortDescending": "مرتب تنازليًا",
+    "sortBy": "الترتيب حسب {column}"
+  },
+  "nav": {
+    "label": "التنقل الرئيسي",
+    "groups": {
+      "overview": "نظرة عامة",
+      "inventory": "المخزون",
+      "sales": "المبيعات",
+      "finance": "المالية",
+      "afterSales": "خدمات ما بعد البيع",
+      "facilities": "المرافق",
+      "rentals": "التأجير",
+      "data": "البيانات",
+      "administration": "الإدارة"
+    },
+    "items": {
+      "dashboard": "لوحة المعلومات",
+      "units": "الوحدات",
+      "priceApprovals": "اعتماد الأسعار",
+      "importUnits": "استيراد الوحدات",
+      "duplicates": "الوحدات المكررة",
+      "projects": "المشاريع",
+      "buildings": "المباني",
+      "unitTypes": "أنواع الوحدات",
+      "reservations": "الحجوزات",
+      "sales": "المبيعات",
+      "handovers": "التسليم",
+      "ownership": "الملكية",
+      "transactions": "العمليات المالية",
+      "confirmations": "تأكيد المدفوعات",
+      "refunds": "المبالغ المستردة",
+      "reconciliation": "المطابقة",
+      "serviceDesk": "مكتب الخدمة",
+      "warranty": "الضمان",
+      "teams": "الفرق والفنيون",
+      "notificationTemplates": "قوالب الإشعارات",
+      "facilities": "المرافق والأصول",
+      "maintenancePlan": "خطة الصيانة",
+      "incidents": "البلاغات",
+      "mandates": "التفويضات",
+      "tenants": "المستأجرون",
+      "leases": "عقود الإيجار",
+      "rentCollection": "تحصيل الإيجار",
+      "statements": "كشوف الحساب",
+      "exports": "التصدير والمستندات",
+      "roles": "الأدوار",
+      "users": "المستخدمون",
+      "audit": "سجل التدقيق",
+      "integrations": "التكاملات"
+    },
+    "searchUnits": "ابحث عن وحدة بالرقم أو الرمز أو رقم CRM",
+    "userMenu": "قائمة الحساب"
+  },
+  "auth": {
+    "title": "دخول الموظفين",
+    "subtitle": "سجّل الدخول ببريد العمل.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "submitting": "جارٍ تسجيل الدخول…",
+    "invalidEmail": "أدخل بريدًا إلكترونيًا صحيحًا.",
+    "passwordRequired": "أدخل كلمة المرور.",
+    "ownerLink": "هل أنت مالك وحدة؟ انتقل إلى بوابة الملّاك"
+  },
+  "errors": {
+    "codes": {
+      "IDEMPOTENCY_KEY_REQUIRED": "تعذّر إرسال الطلب بأمان. يرجى المحاولة مرة أخرى.",
+      "UNAUTHENTICATED": "انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.",
+      "INVALID_CREDENTIALS": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "INVALID_CODE": "الرمز غير صحيح أو انتهت صلاحيته.",
+      "FORBIDDEN": "ليست لديك صلاحية لهذا الإجراء. تواصل مع مسؤول النظام.",
+      "MANDATE_SCOPE": "تفويض الإيجار لا يسمح بهذا الإجراء.",
+      "NOT_FOUND": "لم نعثر على هذا السجل.",
+      "UNIT_NOT_AVAILABLE": "هذه الوحدة لم تعد متاحة.",
+      "VERSION_CONFLICT": "عدّل شخص آخر هذا السجل أثناء تعديلك له.",
+      "POLICY_NOT_CONFIGURED": "لم يتم ضبط هذا الإعداد بعد.",
+      "INVALID_STATE": "الحالة الحالية لهذا السجل لا تسمح بهذا الإجراء.",
+      "PROVIDER_NOT_CONFIGURED": "الدفع الإلكتروني غير متاح بعد.",
+      "IDEMPOTENCY_CONFLICT": "تغيّر هذا النموذج بعد إرساله أول مرة. راجعه ثم أرسله من جديد.",
+      "VALIDATION_FAILED": "يرجى تصحيح الحقول المحددة.",
+      "NOT_ELIGIBLE": "غير مؤهل.",
+      "INVALID_TRANSITION": "هذا التغيير غير مسموح من الحالة الحالية.",
+      "FOUR_EYES_REQUIRED": "يجب أن يعتمد هذا الإجراء شخص آخر.",
+      "AMOUNT_MISMATCH": "المبلغ لا يطابق المبلغ المستحق.",
+      "RATE_LIMITED": "محاولات كثيرة. يرجى الانتظار قليلًا ثم المحاولة مرة أخرى.",
+      "SERVER_ERROR": "حدث خطأ من جهتنا.",
+      "CONTRACT_DOCUMENT_REQUIRED": "ارفع العقد الموقّع أولًا.",
+      "MANDATE_DOCUMENT_REQUIRED": "ارفع مستند التفويض الموقّع أولًا.",
+      "FIELD_NOT_WRITABLE": "بعض الحقول لا يمكن تعديلها من هنا.",
+      "UPSTREAM_UNAVAILABLE": "الخدمة غير متاحة حاليًا. يرجى المحاولة بعد قليل.",
+      "CODE_SESSION_EXPIRED": "انتهت صلاحية طلب الرمز. يرجى طلب رمز جديد.",
+      "NETWORK_ERROR": "يبدو أنك غير متصل بالإنترنت. تحقق من الاتصال."
+    },
+    "generic": "حدث خطأ ما.",
+    "correlation": "الرقم المرجعي: {id}",
+    "forbidden": {
+      "title": "لا توجد صلاحية",
+      "body": "دورك لا يتضمن هذه الصلاحية. تواصل مع مسؤول النظام إذا احتجت إليها."
+    },
+    "notConfigured": {
+      "title": "لم يُضبط بعد",
+      "body": "هذه الميزة بانتظار إعداد لم تُتخذ فيه قرار بعد. تواصل مع مسؤول النظام.",
+      "policy": "الإعداد: {policy}",
+      "decision": "القرار: {decision}"
+    },
+    "notFound": {
+      "title": "غير موجود",
+      "body": "هذا السجل غير موجود أو غير متاح لك."
+    },
+    "conflict": {
+      "title": "عدّله شخص آخر",
+      "body": "حُدّثت هذه الوحدة أثناء تعديلك. أعد التحميل لرؤية أحدث نسخة؛ تبقى تعديلاتك لتتمكن من تطبيقها مجددًا.",
+      "changed": "ما تغيّر منذ فتحتها:",
+      "reload": "تحميل أحدث نسخة",
+      "dismiss": "متابعة التعديل"
+    },
+    "page": {
+      "title": "تعذّر عرض هذه الصفحة",
+      "body": "حدث خطأ غير متوقع. حاول مرة أخرى أو عد إلى البداية."
+    },
+    "home": "العودة إلى البداية"
+  },
+  "states": {
+    "empty": "لا يوجد شيء هنا بعد",
+    "noResults": "لا توجد نتائج مطابقة لعوامل التصفية"
+  },
+  "statuses": {
+    "unit": {
+      "planned": "مخطط",
+      "available": "متاحة",
+      "reserved": "محجوزة",
+      "sold": "مباعة",
+      "unavailable": "غير متاحة",
+      "hidden": "مخفية",
+      "completed": "مكتملة",
+      "unknown": "بدون حالة"
+    },
+    "construction": {
+      "planned": "مخطط",
+      "under_construction": "تحت الإنشاء",
+      "completed": "مكتمل"
+    },
+    "availability": {
+      "available": "التطبيق وCRM",
+      "app_only": "التطبيق فقط",
+      "crm_only": "CRM فقط"
+    },
+    "sale": {
+      "draft": "مسودة",
+      "contracted": "متعاقد",
+      "paid_up": "مسدد بالكامل",
+      "handed_over": "تم التسليم",
+      "cancelled": "ملغى"
+    },
+    "reservation": {
+      "pending": "بانتظار الدفع",
+      "active": "نشط",
+      "converted": "تحوّل إلى بيع",
+      "expired": "منتهي",
+      "cancelled": "ملغى"
+    },
+    "installment": {
+      "pending": "مستحقة",
+      "paid": "مدفوعة",
+      "canceled": "ملغاة",
+      "overdue": "متأخرة",
+      "waived": "معفاة",
+      "refunded": "مستردة"
+    },
+    "priceChange": {
+      "pending": "بانتظار الاعتماد",
+      "approved": "معتمد",
+      "rejected": "مرفوض"
+    },
+    "ownershipSource": {
+      "sale": "بيع",
+      "transfer": "نقل ملكية",
+      "import": "استيراد"
+    },
+    "statusSource": {
+      "staff": "موظف",
+      "crm": "CRM",
+      "bitrix": "CRM",
+      "reservation": "حجز",
+      "sale": "بيع",
+      "system": "النظام"
+    },
+    "serviceRequest": {
+      "new": "جديد",
+      "triaged": "تم الفرز",
+      "approved": "معتمد",
+      "assigned": "تم الإسناد",
+      "scheduled": "مجدول",
+      "in_progress": "قيد التنفيذ",
+      "completed": "مكتمل",
+      "closed": "مغلق",
+      "rejected": "مرفوض",
+      "reopened": "أعيد فتحه"
+    },
+    "handover": {
+      "scheduled": "مجدول",
+      "inspected": "تم الفحص",
+      "accepted": "مقبول",
+      "accepted_with_snags": "مقبول مع ملاحظات مفتوحة",
+      "closed": "مغلق"
+    }
+  },
+  "dashboard": {
+    "title": "لوحة المعلومات",
+    "updated": "تتحدث الأرقام عند عودتك إلى هذه الصفحة.",
+    "kpi": {
+      "units": "الوحدات",
+      "available": "المتاحة",
+      "salesInProgress": "مبيعات قيد الإجراء",
+      "collected": "المحصّل",
+      "openRequests": "طلبات خدمة مفتوحة"
+    },
+    "charts": {
+      "unitsByStatus": "الوحدات حسب الحالة",
+      "salesByStatus": "المبيعات حسب الحالة",
+      "salesCount": "{count, plural, =0 {لا مبيعات} one {بيع واحد} two {بيعان} few {# مبيعات} many {# بيعًا} other {# بيع}}"
+    },
+    "needsAction": {
+      "title": "بحاجة إلى إجراء",
+      "secondApprovals": "مدفوعات بانتظار معتمِد ثانٍ",
+      "slaBreached": "طلبات خدمة تجاوزت المدة المحددة",
+      "overdueMaintenance": "مهام صيانة متأخرة",
+      "deadEvents": "أحداث تكامل توقفت محاولاتها",
+      "allClear": "لا شيء يحتاج إلى انتباهك الآن."
+    },
+    "noWidgets": "لا يتضمن دورك أرقامًا في لوحة المعلومات. استخدم القائمة للوصول إلى عملك."
+  },
+  "units": {
+    "title": "الوحدات",
+    "subtitle": "تُنشأ الوحدات عبر مزامنة CRM؛ عدّل التفاصيل والحالة من هنا.",
+    "import": "استيراد الوحدات",
+    "filters": {
+      "search": "الرقم أو الرمز أو رقم CRM",
+      "project": "المشروع",
+      "building": "المبنى",
+      "status": "الحالة",
+      "type": "النوع",
+      "priceFrom": "السعر من",
+      "priceTo": "السعر إلى",
+      "active": "التفعيل",
+      "activeOnly": "مفعّلة",
+      "inactiveOnly": "غير مفعّلة"
+    },
+    "columns": {
+      "number": "الرقم",
+      "location": "المشروع / المبنى",
+      "type": "النوع",
+      "status": "الحالة",
+      "rooms": "الغرف",
+      "area": "المساحة م²",
+      "price": "السعر شامل الضريبة",
+      "updated": "آخر تحديث"
+    },
+    "hiddenFromApp": "مخفية من التطبيق",
+    "empty": "لا توجد وحدات مطابقة لعوامل التصفية",
+    "emptyHint": "جرّب إزالة أحد عوامل التصفية أو البحث برقم آخر.",
+    "buildingLabel": "مبنى {code}",
+    "quick": {
+      "title": "الوحدة {number}"
+    },
+    "detail": {
+      "titleNumber": "الوحدة {number}",
+      "changeStatus": "تغيير الحالة",
+      "requestPrice": "طلب تغيير السعر",
+      "linkedReservation": "هذه الوحدة محجوزة. تتوفر شاشة الحجز في إصدار لاحق.",
+      "linkedSale": "هذه الوحدة مباعة. تتوفر شاشة البيع في إصدار لاحق.",
+      "crm": "رقم CRM {id}",
+      "code": "الرمز {code}",
+      "version": "النسخة {version}"
+    },
+    "tabs": {
+      "details": "التفاصيل",
+      "statusHistory": "سجل الحالة",
+      "prices": "الأسعار",
+      "ownership": "الملكية",
+      "eligibility": "الأهلية"
+    },
+    "form": {
+      "status": "الحالة",
+      "type": "نوع الوحدة",
+      "rooms": "الغرف",
+      "bathrooms": "دورات المياه",
+      "area": "المساحة الإجمالية (م²)",
+      "priceInTax": "السعر شامل الضريبة",
+      "priceExTax": "السعر بدون الضريبة",
+      "reservationFee": "رسوم الحجز",
+      "version": "النسخة",
+      "comments": "ملاحظات",
+      "constructionStatus": "حالة الإنشاء",
+      "displayOrder": "ترتيب العرض",
+      "active": "مفعّلة (تظهر في التطبيق)",
+      "readOnlyHint": "لتغيير الحالة أو الأسعار استخدم الإجراءات في الأعلى.",
+      "noChanges": "لا توجد تغييرات للحفظ.",
+      "saved": "تم حفظ الوحدة.",
+      "notWritable": "لا يمكن تعديل هذا الحقل من هنا.",
+      "wholeNumber": "أدخل عددًا صحيحًا.",
+      "decimal": "أدخل رقمًا، مثل 142.5."
+    },
+    "statusDialog": {
+      "title": "تغيير حالة الوحدة",
+      "description": "حالتا «محجوزة» و«مباعة» تُضبطان عبر الحجوزات والمبيعات. يمكنك هنا جعل الوحدة متاحة أو غير متاحة أو مخفية.",
+      "target": "الحالة الجديدة",
+      "reasonPlaceholder": "لماذا تتغير الحالة؟",
+      "fromSold": "هذه الوحدة مباعة. تغيير حالتها يتجاوز سجل البيع ويُسجَّل في سجل التدقيق.",
+      "fromSoldNoPermission": "هذه الوحدة مباعة. يمكن تغييرها فقط لمن يملك صلاحية تجاوز الحالة.",
+      "submit": "تغيير الحالة",
+      "done": "تم تغيير الحالة إلى {status}."
+    },
+    "priceDialog": {
+      "title": "طلب تغيير السعر",
+      "description": "لن يتغير شيء حتى يعتمد الطلب شخص آخر.",
+      "field": "حقل السعر",
+      "fields": {
+        "price_in_tax": "السعر شامل الضريبة",
+        "price_ex_tax": "السعر بدون الضريبة",
+        "price_total": "السعر الإجمالي",
+        "promotion_price": "سعر العرض",
+        "reservation_amount": "رسوم الحجز"
+      },
+      "current": "الحالي: {value}",
+      "newValue": "القيمة الجديدة (ريال)",
+      "invalidAmount": "أدخل مبلغًا مثل 598000 أو 598000.50.",
+      "reasonPlaceholder": "لماذا يجب تغيير السعر؟",
+      "effectiveFrom": "يسري من (اختياري)",
+      "submit": "إرسال للاعتماد",
+      "done": "أُرسل الطلب، وهو الآن بانتظار اعتماد شخص آخر."
+    },
+    "history": {
+      "when": "التاريخ",
+      "change": "التغيير",
+      "source": "المصدر",
+      "reason": "السبب",
+      "by": "بواسطة",
+      "staffId": "الموظف #{id}",
+      "empty": "لا توجد تغييرات حالة مسجلة بعد."
+    },
+    "prices": {
+      "field": "الحقل",
+      "old": "القديم",
+      "new": "الجديد",
+      "status": "الحالة",
+      "requestedBy": "طلبه",
+      "effective": "يسري من",
+      "requested": "تاريخ الطلب",
+      "empty": "لا توجد طلبات تغيير سعر لهذه الوحدة."
+    },
+    "ownership": {
+      "client": "المالك",
+      "clientId": "العميل #{id}",
+      "since": "منذ",
+      "until": "حتى",
+      "current": "حالي",
+      "source": "المصدر",
+      "empty": "لا يوجد مالك مسجل. الوحدات المباعة قديمًا دون سجل بيع ليس لها مالك هنا بعد."
+    },
+    "eligibility": {
+      "noOwner": "لا يوجد مالك مسجل، لذا لا تنطبق أهلية خدمات ما بعد البيع.",
+      "afterSales": "خدمات ما بعد البيع",
+      "warranty": "الضمان",
+      "eligible": "مؤهل",
+      "notEligible": "غير مؤهل",
+      "warranties": "الضمانات",
+      "until": "حتى {date}",
+      "reasons": {
+        "NO_RECORDED_OWNER": "لا يوجد مالك مسجل",
+        "NOT_CURRENT_OWNER": "ليس المالك الحالي",
+        "NO_ALAWALY_SALE_RECORD": "لا يوجد سجل بيع من Alawaly",
+        "NO_ACTIVE_WARRANTY": "لا يوجد ضمان ساري",
+        "WARRANTY_TRANSFER_UNDECIDED": "لم يُحسم انتقال الضمان بعد إعادة البيع",
+        "WARRANTY_NOT_TRANSFERABLE": "الضمان غير قابل للنقل"
+      },
+      "categories": {
+        "structural": "إنشائي",
+        "finishing": "تشطيبات",
+        "plumbing": "سباكة",
+        "electrical": "كهرباء",
+        "hvac": "تكييف",
+        "appliances": "أجهزة",
+        "other": "أخرى"
+      }
+    },
+    "availability": {
+      "title": "الإتاحة",
+      "available": "يمكن حجزها",
+      "notAvailable": "لا يمكن حجزها",
+      "fee": "رسوم الحجز",
+      "hold": "مدة الحجز",
+      "holdHours": "{hours, plural, one {ساعة واحدة} two {ساعتان} few {# ساعات} many {# ساعة} other {# ساعة}}",
+      "reasons": {
+        "UNIT_INACTIVE": "الوحدة غير مفعّلة",
+        "ACTIVE_RESERVATION_EXISTS": "يوجد حجز نشط"
+      }
+    }
+  },
+  "owner": {
+    "title": "بوابة الملّاك",
+    "tabs": {
+      "label": "تنقل المالك",
+      "home": "الرئيسية",
+      "units": "وحداتي",
+      "requests": "الطلبات",
+      "alerts": "التنبيهات",
+      "more": "المزيد"
+    },
+    "signIn": {
+      "title": "مرحبًا بك",
+      "subtitle": "سجّل الدخول برقم الجوال المسجل لدى Alawaly.",
+      "phone": "رقم الجوال",
+      "phonePlaceholder": "05X XXX XXXX",
+      "invalidPhone": "أدخل رقم جوال سعوديًا، مثل 05X XXX XXXX.",
+      "hint": "سنرسل إليك رمزًا من 6 أرقام عبر رسالة نصية.",
+      "submit": "إرسال الرمز",
+      "submitting": "جارٍ الإرسال…",
+      "staffLink": "دخول الموظفين"
+    },
+    "verify": {
+      "title": "أدخل الرمز",
+      "subtitle": "أرسلنا رمزًا من 6 أرقام إلى {phone}.",
+      "subtitleNoPhone": "أرسلنا رمزًا من 6 أرقام إلى جوالك.",
+      "code": "رمز من 6 أرقام",
+      "note": "الرمز صالح لمدة 10 دقائق ويُستخدم مرة واحدة.",
+      "submit": "تحقق",
+      "submitting": "جارٍ التحقق…",
+      "resend": "إعادة إرسال الرمز",
+      "resendIn": "إعادة الإرسال بعد {time}",
+      "resent": "رمز جديد في الطريق إليك.",
+      "changeNumber": "استخدام رقم آخر"
+    },
+    "home": {
+      "hello": "مرحبًا، {name}",
+      "helloNoName": "مرحبًا",
+      "nextInstallment": "الدفعة القادمة",
+      "due": "تستحق في {date}",
+      "noInstallments": "لا توجد دفعات مستحقة.",
+      "myUnits": "وحداتي",
+      "unitsCount": "{count, plural, =0 {لا توجد وحدات بعد} one {وحدة واحدة} two {وحدتان} few {# وحدات} many {# وحدة} other {# وحدة}}",
+      "openRequests": "الطلبات المفتوحة",
+      "requestsCount": "{count, plural, =0 {لا توجد طلبات مفتوحة} one {طلب مفتوح واحد} two {طلبان مفتوحان} few {# طلبات مفتوحة} many {# طلبًا مفتوحًا} other {# طلب مفتوح}}",
+      "handover": "التسليم",
+      "handoverWaiting": "بانتظار موافقتك",
+      "handoverScheduled": "مجدول في {date}",
+      "notifications": "أحدث الإشعارات",
+      "noNotifications": "لا جديد لديك.",
+      "newBadge": "جديد",
+      "welcomeTitle": "مرحبًا بك في Alawaly",
+      "welcomeBody": "ستظهر هنا وحداتك ومدفوعاتك وطلبات الخدمة بمجرد تسجيلها.",
+      "comingNext": "تُفتح في التحديث القادم"
+    },
+    "more": {
+      "title": "المزيد",
+      "language": "اللغة",
+      "theme": "المظهر",
+      "signOut": "تسجيل الخروج",
+      "notificationPrefs": "تفضيلات الإشعارات",
+      "notificationPrefsSoon": "غير متاحة بعد"
+    }
+  }
+}

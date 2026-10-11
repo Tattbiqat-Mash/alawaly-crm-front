@@ -1,0 +1,521 @@
+{
+  "app": {
+    "name": "Alawaly",
+    "description": "Alawaly real-estate platform",
+    "adminArea": "Staff",
+    "ownerArea": "Owner portal"
+  },
+  "common": {
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "retry": "Try again",
+    "reload": "Reload",
+    "back": "Back",
+    "search": "Search",
+    "filters": "Filters",
+    "reset": "Reset filters",
+    "loading": "Loading…",
+    "confirm": "Confirm",
+    "signOut": "Sign out",
+    "language": "Language",
+    "switchLanguage": "العربية",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "openFullView": "Open full view",
+    "details": "Details",
+    "actions": "Actions",
+    "all": "All",
+    "any": "Any",
+    "yes": "Yes",
+    "no": "No",
+    "refresh": "Refresh",
+    "export": "Export CSV",
+    "exporting": "Exporting…",
+    "reason": "Reason",
+    "reasonRequired": "Please give a reason.",
+    "comingSoon": "Coming soon",
+    "notInThisRelease": "This screen arrives in a later release.",
+    "menu": "Menu",
+    "collapseMenu": "Collapse menu",
+    "expandMenu": "Expand menu",
+    "skipToContent": "Skip to content",
+    "breadcrumbs": "Breadcrumbs",
+    "dash": "—"
+  },
+  "table": {
+    "rowsPerPage": "Rows per page",
+    "pageOf": "Page {page} of {pages}",
+    "total": "{total, plural, =0 {No results} one {# result} other {# results}}",
+    "first": "First page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "last": "Last page",
+    "sortAscending": "Sorted ascending",
+    "sortDescending": "Sorted descending",
+    "sortBy": "Sort by {column}"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "groups": {
+      "overview": "Overview",
+      "inventory": "Inventory",
+      "sales": "Sales",
+      "finance": "Finance",
+      "afterSales": "After-sales",
+      "facilities": "Facilities",
+      "rentals": "Rentals",
+      "data": "Data",
+      "administration": "Administration"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "units": "Units",
+      "priceApprovals": "Price approvals",
+      "importUnits": "Import units",
+      "duplicates": "Duplicates",
+      "projects": "Projects",
+      "buildings": "Buildings",
+      "unitTypes": "Unit types",
+      "reservations": "Reservations",
+      "sales": "Sales",
+      "handovers": "Handovers",
+      "ownership": "Ownership",
+      "transactions": "Transactions",
+      "confirmations": "Confirmations",
+      "refunds": "Refunds",
+      "reconciliation": "Reconciliation",
+      "serviceDesk": "Service desk",
+      "warranty": "Warranty",
+      "teams": "Teams & technicians",
+      "notificationTemplates": "Notification templates",
+      "facilities": "Facilities & assets",
+      "maintenancePlan": "Maintenance plan",
+      "incidents": "Incidents",
+      "mandates": "Mandates",
+      "tenants": "Tenants",
+      "leases": "Leases",
+      "rentCollection": "Rent collection",
+      "statements": "Statements",
+      "exports": "Exports & documents",
+      "roles": "Roles",
+      "users": "Users",
+      "audit": "Audit log",
+      "integrations": "Integrations"
+    },
+    "searchUnits": "Search units by number, code or CRM id",
+    "userMenu": "Account menu"
+  },
+  "auth": {
+    "title": "Staff sign in",
+    "subtitle": "Sign in with your work email.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invalidEmail": "Enter a valid email address.",
+    "passwordRequired": "Enter your password.",
+    "ownerLink": "Are you a property owner? Go to the owner portal"
+  },
+  "errors": {
+    "codes": {
+      "IDEMPOTENCY_KEY_REQUIRED": "The request could not be sent safely. Please try again.",
+      "UNAUTHENTICATED": "Your session has ended. Please sign in again.",
+      "INVALID_CREDENTIALS": "The email or password is not correct.",
+      "INVALID_CODE": "That code is not valid or has expired.",
+      "FORBIDDEN": "You do not have access to this. Ask an administrator.",
+      "MANDATE_SCOPE": "The rental mandate does not allow this action.",
+      "NOT_FOUND": "We could not find this record.",
+      "UNIT_NOT_AVAILABLE": "This unit is not available any more.",
+      "VERSION_CONFLICT": "Someone else changed this record while you were editing.",
+      "POLICY_NOT_CONFIGURED": "This setting has not been configured yet.",
+      "INVALID_STATE": "This record's current state does not allow that action.",
+      "PROVIDER_NOT_CONFIGURED": "Online payment is not available yet.",
+      "IDEMPOTENCY_CONFLICT": "This form changed after it was first sent. Please review it and submit again.",
+      "VALIDATION_FAILED": "Please correct the highlighted fields.",
+      "NOT_ELIGIBLE": "This is not eligible.",
+      "INVALID_TRANSITION": "That change is not allowed from the current status.",
+      "FOUR_EYES_REQUIRED": "A different person must approve this.",
+      "AMOUNT_MISMATCH": "The amount does not match what is due.",
+      "RATE_LIMITED": "Too many attempts. Please wait a moment and try again.",
+      "SERVER_ERROR": "Something went wrong on our side.",
+      "CONTRACT_DOCUMENT_REQUIRED": "Upload the signed contract first.",
+      "MANDATE_DOCUMENT_REQUIRED": "Upload the signed mandate document first.",
+      "FIELD_NOT_WRITABLE": "Some fields cannot be changed here.",
+      "UPSTREAM_UNAVAILABLE": "The service is not reachable right now. Please try again shortly.",
+      "CODE_SESSION_EXPIRED": "Your code request expired. Please request a new code.",
+      "NETWORK_ERROR": "You appear to be offline. Check your connection."
+    },
+    "generic": "Something went wrong.",
+    "correlation": "Reference: {id}",
+    "forbidden": {
+      "title": "No access",
+      "body": "Your role does not include this. Ask an administrator if you need it."
+    },
+    "notConfigured": {
+      "title": "Not configured yet",
+      "body": "This feature waits for a business setting that has not been decided yet. Ask an administrator.",
+      "policy": "Setting: {policy}",
+      "decision": "Decision: {decision}"
+    },
+    "notFound": {
+      "title": "Not found",
+      "body": "This record does not exist or is not available to you."
+    },
+    "conflict": {
+      "title": "Changed by someone else",
+      "body": "This unit was updated while you were editing. Reload to see the latest version; your edits are kept so you can apply them again.",
+      "changed": "Changed since you opened it:",
+      "reload": "Reload latest",
+      "dismiss": "Keep editing"
+    },
+    "page": {
+      "title": "This page could not be shown",
+      "body": "An unexpected error happened. Try again, or go back to the start."
+    },
+    "home": "Go to start"
+  },
+  "states": {
+    "empty": "Nothing here yet",
+    "noResults": "No results match these filters"
+  },
+  "statuses": {
+    "unit": {
+      "planned": "Planned",
+      "available": "Available",
+      "reserved": "Reserved",
+      "sold": "Sold",
+      "unavailable": "Unavailable",
+      "hidden": "Hidden",
+      "completed": "Completed",
+      "unknown": "No status"
+    },
+    "construction": {
+      "planned": "Planned",
+      "under_construction": "Under construction",
+      "completed": "Completed"
+    },
+    "availability": {
+      "available": "App and CRM",
+      "app_only": "App only",
+      "crm_only": "CRM only"
+    },
+    "sale": {
+      "draft": "Draft",
+      "contracted": "Contracted",
+      "paid_up": "Paid up",
+      "handed_over": "Handed over",
+      "cancelled": "Cancelled"
+    },
+    "reservation": {
+      "pending": "Pending",
+      "active": "Active",
+      "converted": "Converted",
+      "expired": "Expired",
+      "cancelled": "Cancelled"
+    },
+    "installment": {
+      "pending": "Due",
+      "paid": "Paid",
+      "canceled": "Cancelled",
+      "overdue": "Overdue",
+      "waived": "Waived",
+      "refunded": "Refunded"
+    },
+    "priceChange": {
+      "pending": "Waiting for approval",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "ownershipSource": {
+      "sale": "Sale",
+      "transfer": "Transfer",
+      "import": "Import"
+    },
+    "statusSource": {
+      "staff": "Staff",
+      "crm": "CRM",
+      "bitrix": "CRM",
+      "reservation": "Reservation",
+      "sale": "Sale",
+      "system": "System"
+    },
+    "serviceRequest": {
+      "new": "New",
+      "triaged": "Triaged",
+      "approved": "Approved",
+      "assigned": "Assigned",
+      "scheduled": "Scheduled",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "closed": "Closed",
+      "rejected": "Rejected",
+      "reopened": "Reopened"
+    },
+    "handover": {
+      "scheduled": "Scheduled",
+      "inspected": "Inspected",
+      "accepted": "Accepted",
+      "accepted_with_snags": "Accepted with open items",
+      "closed": "Closed"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "updated": "Figures refresh when you return to this tab.",
+    "kpi": {
+      "units": "Units",
+      "available": "Available",
+      "salesInProgress": "Sales in progress",
+      "collected": "Collected",
+      "openRequests": "Open service requests"
+    },
+    "charts": {
+      "unitsByStatus": "Units by status",
+      "salesByStatus": "Sales by status",
+      "salesCount": "{count, plural, one {# sale} other {# sales}}"
+    },
+    "needsAction": {
+      "title": "Needs action",
+      "secondApprovals": "Payments waiting for a second approver",
+      "slaBreached": "Service requests past their SLA",
+      "overdueMaintenance": "Overdue maintenance tasks",
+      "deadEvents": "Integration events that gave up",
+      "allClear": "Nothing needs your attention right now."
+    },
+    "noWidgets": "Your role has no dashboard figures. Use the menu to open your work."
+  },
+  "units": {
+    "title": "Units",
+    "subtitle": "Units are created by the CRM sync; edit details and status here.",
+    "import": "Import units",
+    "filters": {
+      "search": "Number, code or CRM id",
+      "project": "Project",
+      "building": "Building",
+      "status": "Status",
+      "type": "Type",
+      "priceFrom": "Price from",
+      "priceTo": "Price to",
+      "active": "Active",
+      "activeOnly": "Active",
+      "inactiveOnly": "Inactive"
+    },
+    "columns": {
+      "number": "No.",
+      "location": "Project / building",
+      "type": "Type",
+      "status": "Status",
+      "rooms": "Rooms",
+      "area": "Area m²",
+      "price": "Price incl. tax",
+      "updated": "Updated"
+    },
+    "hiddenFromApp": "Hidden from app",
+    "empty": "No units match these filters",
+    "emptyHint": "Try clearing a filter or searching by another number.",
+    "buildingLabel": "Building {code}",
+    "quick": {
+      "title": "Unit {number}"
+    },
+    "detail": {
+      "titleNumber": "Unit {number}",
+      "changeStatus": "Change status",
+      "requestPrice": "Request price change",
+      "linkedReservation": "This unit is reserved. The reservation screen arrives in a later release.",
+      "linkedSale": "This unit is sold. The sale screen arrives in a later release.",
+      "crm": "CRM id {id}",
+      "code": "Code {code}",
+      "version": "Version {version}"
+    },
+    "tabs": {
+      "details": "Details",
+      "statusHistory": "Status history",
+      "prices": "Prices",
+      "ownership": "Ownership",
+      "eligibility": "Eligibility"
+    },
+    "form": {
+      "status": "Status",
+      "type": "Unit type",
+      "rooms": "Rooms",
+      "bathrooms": "Bathrooms",
+      "area": "Total area (m²)",
+      "priceInTax": "Price incl. tax",
+      "priceExTax": "Price excl. tax",
+      "reservationFee": "Reservation fee",
+      "version": "Version",
+      "comments": "Comments",
+      "constructionStatus": "Construction status",
+      "displayOrder": "Display order",
+      "active": "Active (shown in the app)",
+      "readOnlyHint": "Status changes and prices have their own actions above.",
+      "noChanges": "No changes to save.",
+      "saved": "Unit saved.",
+      "notWritable": "This field cannot be changed here.",
+      "wholeNumber": "Enter a whole number.",
+      "decimal": "Enter a number, for example 142.5."
+    },
+    "statusDialog": {
+      "title": "Change unit status",
+      "description": "Reserved and sold are set by reservations and sales. Here you can make a unit available, unavailable or hidden.",
+      "target": "New status",
+      "reasonPlaceholder": "Why is the status changing?",
+      "fromSold": "This unit is sold. Changing it overrides a sale record and is recorded in the audit log.",
+      "fromSoldNoPermission": "This unit is sold. Only staff with the status-override permission can change it.",
+      "submit": "Change status",
+      "done": "Status changed to {status}."
+    },
+    "priceDialog": {
+      "title": "Request a price change",
+      "description": "Nothing changes until a different person approves the request.",
+      "field": "Price field",
+      "fields": {
+        "price_in_tax": "Price incl. tax",
+        "price_ex_tax": "Price excl. tax",
+        "price_total": "Total price",
+        "promotion_price": "Promotion price",
+        "reservation_amount": "Reservation fee"
+      },
+      "current": "Current: {value}",
+      "newValue": "New value (SAR)",
+      "invalidAmount": "Enter an amount such as 598000 or 598000.50.",
+      "reasonPlaceholder": "Why should the price change?",
+      "effectiveFrom": "Effective from (optional)",
+      "submit": "Send for approval",
+      "done": "Request sent. It now waits for another person to approve it."
+    },
+    "history": {
+      "when": "When",
+      "change": "Change",
+      "source": "Source",
+      "reason": "Reason",
+      "by": "By",
+      "staffId": "Staff #{id}",
+      "empty": "No status changes recorded yet."
+    },
+    "prices": {
+      "field": "Field",
+      "old": "Old",
+      "new": "New",
+      "status": "Status",
+      "requestedBy": "Requested by",
+      "effective": "Effective",
+      "requested": "Requested",
+      "empty": "No price-change requests for this unit."
+    },
+    "ownership": {
+      "client": "Owner",
+      "clientId": "Client #{id}",
+      "since": "Since",
+      "until": "Until",
+      "current": "Current",
+      "source": "Source",
+      "empty": "No recorded owner. Legacy sold units without a sale record have no owner here yet."
+    },
+    "eligibility": {
+      "noOwner": "There is no recorded owner, so after-sales eligibility does not apply.",
+      "afterSales": "After-sales service",
+      "warranty": "Warranty",
+      "eligible": "Eligible",
+      "notEligible": "Not eligible",
+      "warranties": "Warranties",
+      "until": "until {date}",
+      "reasons": {
+        "NO_RECORDED_OWNER": "No recorded owner",
+        "NOT_CURRENT_OWNER": "Not the current owner",
+        "NO_ALAWALY_SALE_RECORD": "No Alawaly sale record",
+        "NO_ACTIVE_WARRANTY": "No active warranty",
+        "WARRANTY_TRANSFER_UNDECIDED": "Warranty transfer after resale is undecided",
+        "WARRANTY_NOT_TRANSFERABLE": "Warranty is not transferable"
+      },
+      "categories": {
+        "structural": "Structural",
+        "finishing": "Finishing",
+        "plumbing": "Plumbing",
+        "electrical": "Electrical",
+        "hvac": "Air conditioning",
+        "appliances": "Appliances",
+        "other": "Other"
+      }
+    },
+    "availability": {
+      "title": "Availability",
+      "available": "Can be reserved",
+      "notAvailable": "Cannot be reserved",
+      "fee": "Reservation fee",
+      "hold": "Hold time",
+      "holdHours": "{hours, plural, one {# hour} other {# hours}}",
+      "reasons": {
+        "UNIT_INACTIVE": "The unit is inactive",
+        "ACTIVE_RESERVATION_EXISTS": "An active reservation exists"
+      }
+    }
+  },
+  "owner": {
+    "title": "Owner portal",
+    "tabs": {
+      "label": "Owner navigation",
+      "home": "Home",
+      "units": "Units",
+      "requests": "Requests",
+      "alerts": "Alerts",
+      "more": "More"
+    },
+    "signIn": {
+      "title": "Welcome",
+      "subtitle": "Sign in with the mobile number registered with Alawaly.",
+      "phone": "Mobile number",
+      "phonePlaceholder": "05X XXX XXXX",
+      "invalidPhone": "Enter a Saudi mobile number, for example 05X XXX XXXX.",
+      "hint": "We will send you a 6-digit code by SMS.",
+      "submit": "Send code",
+      "submitting": "Sending…",
+      "staffLink": "Staff sign in"
+    },
+    "verify": {
+      "title": "Enter the code",
+      "subtitle": "We sent a 6-digit code to {phone}.",
+      "subtitleNoPhone": "We sent a 6-digit code to your mobile.",
+      "code": "6-digit code",
+      "note": "The code is valid for 10 minutes and works once.",
+      "submit": "Verify",
+      "submitting": "Checking…",
+      "resend": "Resend code",
+      "resendIn": "Resend in {time}",
+      "resent": "A new code is on its way.",
+      "changeNumber": "Use another number"
+    },
+    "home": {
+      "hello": "Hello, {name}",
+      "helloNoName": "Hello",
+      "nextInstallment": "Next installment",
+      "due": "Due {date}",
+      "noInstallments": "No installments due.",
+      "myUnits": "My units",
+      "unitsCount": "{count, plural, =0 {No units yet} one {# unit} other {# units}}",
+      "openRequests": "Open requests",
+      "requestsCount": "{count, plural, =0 {No open requests} one {# open request} other {# open requests}}",
+      "handover": "Handover",
+      "handoverWaiting": "Waiting for your acceptance",
+      "handoverScheduled": "Scheduled for {date}",
+      "notifications": "Latest notifications",
+      "noNotifications": "You are all caught up.",
+      "newBadge": "New",
+      "welcomeTitle": "Welcome to Alawaly",
+      "welcomeBody": "Your units, payments and service requests will appear here once they are recorded.",
+      "comingNext": "Opens in the next update"
+    },
+    "more": {
+      "title": "More",
+      "language": "Language",
+      "theme": "Appearance",
+      "signOut": "Sign out",
+      "notificationPrefs": "Notification preferences",
+      "notificationPrefsSoon": "Not available yet"
+    }
+  }
+}
