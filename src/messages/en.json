@@ -332,6 +332,23 @@
       "open": "Open",
       "fixed": "Fixed",
       "waived": "Waived"
+    },
+    "serviceType": {
+      "warranty": "Warranty",
+      "paid": "Paid service",
+      "facility": "Facility"
+    },
+    "priority": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "visit": {
+      "scheduled": "Scheduled",
+      "on_site": "On site",
+      "done": "Done",
+      "cancelled": "Cancelled"
     }
   },
   "dashboard": {
@@ -1227,5 +1244,183 @@
       "unit": "Unit number (id)",
       "sale": "Sale number"
     }
+  },
+  "serviceDesk": {
+    "title": "Service desk",
+    "subtitle": "Owner service requests from new to closed. Sort by priority or SLA.",
+    "kpi": {
+      "open": "Open",
+      "slaBreached": "Past SLA",
+      "rating": "Average rating"
+    },
+    "columns": {
+      "id": "#",
+      "title": "Title",
+      "unit": "Unit",
+      "type": "Type",
+      "priority": "Priority",
+      "status": "Status",
+      "sla": "SLA due",
+      "assigned": "Assigned"
+    },
+    "filters": {
+      "status": "Status",
+      "type": "Type",
+      "priority": "Priority",
+      "technician": "Technician",
+      "unit": "Unit number (id)"
+    },
+    "sort": {
+      "priority": "Priority first",
+      "sla": "SLA first",
+      "newest": "Newest first"
+    },
+    "slaNotSet": "No SLA",
+    "overdue": "Overdue",
+    "unassigned": "—",
+    "empty": "Nothing waiting."
+  },
+  "serviceRequest": {
+    "title": "Request #{id}",
+    "actions": {
+      "triage": "Triage",
+      "approve": "Approve",
+      "reject": "Reject",
+      "assign": "Assign",
+      "schedule": "Schedule visit",
+      "start": "Start work",
+      "complete": "Complete",
+      "close": "Close",
+      "reopen": "Reopen"
+    },
+    "done": "Request moved to {status}.",
+    "rejectTitle": "Reject request #{id}?",
+    "rejectBody": "The owner is told the request was not accepted, with your reason.",
+    "reopenTitle": "Reopen request #{id}?",
+    "reopenBody": "The request goes back to triage so the work can be redone.",
+    "assignTitle": "Assign request #{id}",
+    "assignTo": "Assign to",
+    "technician": "Technician",
+    "contractor": "Contractor",
+    "team": "Team (optional)",
+    "chooseOne": "Choose a technician or a contractor.",
+    "scheduleTitle": "Schedule the visit",
+    "when": "Date and time",
+    "completeTitle": "Complete request #{id}",
+    "workNotes": "Work done (notes)",
+    "sections": {
+      "timeline": "Timeline",
+      "visits": "Visits",
+      "info": "Details",
+      "attachments": "Attachments",
+      "materials": "Materials"
+    },
+    "fields": {
+      "unit": "Unit",
+      "owner": "Owner",
+      "type": "Type",
+      "priority": "Priority",
+      "category": "Category",
+      "sla": "SLA due",
+      "warranty": "Warranty",
+      "rating": "Rating",
+      "feedback": "Owner feedback",
+      "rejectReason": "Rejection reason",
+      "description": "Description"
+    },
+    "events": {
+      "created": "Created",
+      "status": "Status changed"
+    },
+    "byClient": "Owner",
+    "byStaff": "Staff #{id}",
+    "noVisits": "No visit scheduled yet.",
+    "noAttachments": "No attachments.",
+    "materials": {
+      "name": "Material",
+      "quantity": "Qty",
+      "unitCost": "Unit cost",
+      "add": "Add material",
+      "added": "Material added.",
+      "empty": "No materials recorded."
+    },
+    "rescheduleVisit": "Reschedule",
+    "visitRescheduled": "Visit rescheduled.",
+    "invalidTransition": "This action is not allowed from the current status. The request was reloaded."
+  },
+  "maintenance": {
+    "title": "Teams, technicians and contractors",
+    "subtitle": "Who does the work. Inactive people stay in history but cannot be assigned.",
+    "tabs": {
+      "technicians": "Technicians",
+      "teams": "Teams",
+      "contractors": "Contractors",
+      "workload": "Workload"
+    },
+    "add": {
+      "technicians": "Add technician",
+      "teams": "Add team",
+      "contractors": "Add contractor"
+    },
+    "edit": {
+      "technicians": "Edit technician",
+      "teams": "Edit team",
+      "contractors": "Edit contractor"
+    },
+    "columns": {
+      "name": "Name",
+      "team": "Team",
+      "specialty": "Specialty",
+      "phone": "Phone",
+      "email": "Email",
+      "contact": "Contact",
+      "active": "Active",
+      "openVisits": "Open visits"
+    },
+    "fields": {
+      "name": "Name",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "team": "Team",
+      "specialty": "Specialty",
+      "phone": "Phone",
+      "email": "Email",
+      "contact": "Contact person",
+      "notes": "Notes",
+      "active": "Active (can be assigned)"
+    },
+    "saved": "Saved.",
+    "created": "Added.",
+    "empty": "Nothing here yet.",
+    "workloadEmpty": "No open visits.",
+    "noTeam": "No team",
+    "phoneInvalid": "Enter a phone number such as +9665XXXXXXXX.",
+    "emailInvalid": "Enter a valid email address."
+  },
+  "templates": {
+    "title": "Notification templates",
+    "subtitle": "What owners receive in their in-app inbox (push delivery is not available yet).",
+    "new": "New template",
+    "editTitle": "Edit template",
+    "columns": {
+      "key": "Key",
+      "title": "Title",
+      "active": "Active"
+    },
+    "fields": {
+      "key": "Key",
+      "keyHint": "e.g. service.approve. It cannot change after creation.",
+      "titleAr": "Title (Arabic)",
+      "titleEn": "Title (English)",
+      "bodyAr": "Message (Arabic)",
+      "bodyEn": "Message (English)",
+      "active": "Active"
+    },
+    "placeholders": "Placeholders you can use",
+    "preview": "Preview with sample values",
+    "saved": "Template saved.",
+    "created": "Template created.",
+    "empty": "No templates yet.",
+    "keyInvalid": "Use lowercase letters, numbers, dots and underscores."
   }
 }

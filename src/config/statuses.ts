@@ -131,3 +131,47 @@ export const SALE_FLOW = ["draft", "contracted", "paid_up", "handed_over"] as co
 
 export const installmentTone = (status: string, state: string | null): Tone =>
   state === "overdue" ? "danger" : state === "waived" || state === "refunded" ? "neutral" : status === "paid" ? "success" : status === "canceled" ? "neutral" : "warning";
+
+export const SERVICE_TYPES = ["warranty", "paid", "facility"] as const;
+export type ServiceType = (typeof SERVICE_TYPES)[number];
+export const isServiceType = (v: unknown): v is ServiceType => SERVICE_TYPES.includes(v as ServiceType);
+
+export const PRIORITIES = ["low", "normal", "high", "urgent"] as const;
+export type Priority = (typeof PRIORITIES)[number];
+export const isPriority = (v: unknown): v is Priority => PRIORITIES.includes(v as Priority);
+export const priorityTone: Record<Priority, Tone> = { low: "neutral", normal: "info", high: "warning", urgent: "danger" };
+
+export const isServiceRequestStatus = (v: unknown): v is ServiceRequestStatus =>
+  SERVICE_REQUEST_STATUSES.includes(v as ServiceRequestStatus);
+export const serviceStatusTone: Record<ServiceRequestStatus, Tone> = {
+  new: "info",
+  triaged: "info",
+  approved: "primary",
+  assigned: "primary",
+  scheduled: "primary",
+  in_progress: "warning",
+  completed: "success",
+  closed: "neutral",
+  rejected: "danger",
+  reopened: "warning",
+};
+
+export const SERVICE_ACTIONS = ["triage", "approve", "reject", "assign", "schedule", "start", "complete", "close", "reopen"] as const;
+export type ServiceAction = (typeof SERVICE_ACTIONS)[number];
+/** Buttons offered per status (wireframe S25); the server still validates (INVALID_TRANSITION). */
+export const serviceActionsFor: Record<ServiceRequestStatus, readonly ServiceAction[]> = {
+  new: ["triage", "reject"],
+  triaged: ["approve", "reject"],
+  approved: ["assign"],
+  assigned: ["schedule"],
+  scheduled: ["start"],
+  in_progress: ["complete"],
+  completed: ["close", "reopen"],
+  closed: ["reopen"],
+  rejected: [],
+  reopened: ["triage"],
+};
+
+export const VISIT_STATUSES = ["scheduled", "on_site", "done", "cancelled"] as const;
+export type VisitStatus = (typeof VISIT_STATUSES)[number];
+export const isVisitStatus = (v: unknown): v is VisitStatus => VISIT_STATUSES.includes(v as VisitStatus);

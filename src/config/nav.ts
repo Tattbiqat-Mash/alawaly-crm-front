@@ -94,15 +94,15 @@ export const NAV: NavGroup[] = [
   {
     key: "afterSales",
     items: [
-      { key: "serviceDesk", href: "/service-requests", icon: Wrench, permissions: ["service.view", "service.manage"], ready: false },
+      { key: "serviceDesk", href: "/service-requests", icon: Wrench, permissions: ["service.view", "service.manage"], ready: true },
       { key: "warranty", href: "/warranty", icon: ShieldCheck, permissions: ["warranty.manage"], ready: true },
-      { key: "teams", href: "/maintenance", icon: HardHat, permissions: ["maint.manage"], ready: false },
+      { key: "teams", href: "/maintenance", icon: HardHat, permissions: ["maint.manage"], ready: true },
       {
         key: "notificationTemplates",
         href: "/notification-templates",
         icon: Bell,
         permissions: ["notifications.manage"],
-        ready: false,
+        ready: true,
       },
     ],
   },

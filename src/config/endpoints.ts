@@ -65,6 +65,17 @@ export const staffEndpoints = {
   refundTransaction: (id: Id) => `/payment-transactions/${id}/refund`,
   reconcile: "/payments/reconcile",
 
+  serviceRequests: "/service-requests",
+  serviceRequest: (id: Id) => `/service-requests/${id}`,
+  serviceRequestAction: (id: Id, action: string) => `/service-requests/${id}/${action}`,
+  serviceAttachmentLink: (attId: Id) => `/service-attachments/${attId}/link`,
+  visit: (id: Id) => `/visits/${id}`,
+  visitMaterials: (id: Id) => `/visits/${id}/materials`,
+  maintenance: (resource: "teams" | "technicians" | "contractors") => `/maintenance/${resource}`,
+  maintenanceItem: (resource: "teams" | "technicians" | "contractors", id: Id) => `/maintenance/${resource}/${id}`,
+  notificationTemplates: "/notification-templates",
+  notificationTemplate: (id: Id) => `/notification-templates/${id}`,
+
   reports: {
     inventorySummary: "/reports/inventory-summary",
     salesSummary: "/reports/sales-summary",
