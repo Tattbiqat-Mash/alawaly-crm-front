@@ -76,7 +76,7 @@ export function DataTable<T>({
   };
 
   return (
-    <div className="relative flex h-full min-h-[380px] flex-1 flex-col overflow-hidden rounded-xl border bg-card">
+    <div className="relative flex h-full min-h-[380px] flex-1 flex-col overflow-hidden rounded-xl border bg-card shadow-2xs">
       {isFetching && !showSkeleton && (
         <div aria-hidden className="absolute inset-x-0 top-0 z-20 h-0.5 overflow-hidden bg-primary/10">
           <div className="h-full w-1/3 animate-[progress_1s_ease-in-out_infinite] bg-primary" />
@@ -85,7 +85,7 @@ export function DataTable<T>({
       <div className="min-h-0 flex-1 overflow-auto" aria-busy={isLoading || isFetching}>
         <table className="w-full caption-bottom text-sm">
           <caption className="sr-only">{caption}</caption>
-          <thead className="sticky top-0 z-10 bg-card shadow-[inset_0_-1px_0_var(--border)]">
+          <thead className="sticky top-0 z-10 bg-card/95 shadow-[inset_0_-1px_0_var(--border)] backdrop-blur-xs">
             <tr>
               {columns.map((col) => {
                 const active = sort && col.sortKey && (sort.value === col.sortKey || sort.value === `-${col.sortKey}`);
@@ -96,7 +96,7 @@ export function DataTable<T>({
                     scope="col"
                     aria-sort={active ? (descending ? "descending" : "ascending") : undefined}
                     className={cn(
-                      "h-10 px-3 text-start align-middle text-xs font-medium whitespace-nowrap text-muted-foreground",
+                      "h-10.5 px-3.5 text-start align-middle text-[11px] font-semibold tracking-wider text-muted-foreground uppercase whitespace-nowrap",
                       col.align === "end" && "text-end",
                       col.className,
                     )}
@@ -105,18 +105,18 @@ export function DataTable<T>({
                       <button
                         type="button"
                         onClick={() => sort.onChange(nextSort(sort.value, col.sortKey!))}
-                        className="-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
+                        className="-mx-1 inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none"
                         aria-label={t("sortBy", { column: col.header })}
                       >
-                        {col.header}
+                        <span>{col.header}</span>
                         {active ? (
                           descending ? (
-                            <ArrowDown aria-hidden className="size-3.5" />
+                            <ArrowDown aria-hidden className="size-3.5 text-primary" />
                           ) : (
-                            <ArrowUp aria-hidden className="size-3.5" />
+                            <ArrowUp aria-hidden className="size-3.5 text-primary" />
                           )
                         ) : (
-                          <ArrowUpDown aria-hidden className="size-3.5 opacity-40" />
+                          <ArrowUpDown aria-hidden className="size-3.5 opacity-35" />
                         )}
                       </button>
                     ) : (
@@ -127,12 +127,12 @@ export function DataTable<T>({
               })}
             </tr>
           </thead>
-          <tbody className={cn(isFetching && !showSkeleton && "opacity-70 transition-opacity")}>
+          <tbody className={cn(isFetching && !showSkeleton && "opacity-75 transition-opacity")}>
             {showSkeleton &&
               Array.from({ length: 8 }, (_, i) => (
-                <tr key={i} className="border-b last:border-0">
+                <tr key={i} className="border-b border-border/70 last:border-0">
                   {columns.map((col) => (
-                    <td key={col.id} className="px-3 py-3">
+                    <td key={col.id} className="px-3.5 py-3.5">
                       <Skeleton className="h-4 w-full max-w-32" />
                     </td>
                   ))}
@@ -150,14 +150,14 @@ export function DataTable<T>({
                   onPointerEnter={onRowIntent ? () => onRowIntent(row) : undefined}
                   onFocus={onRowIntent ? () => onRowIntent(row) : undefined}
                   className={cn(
-                    "border-b transition-colors last:border-0 hover:bg-muted/50",
-                    onRowClick && "cursor-pointer focus-visible:bg-accent focus-visible:outline-none",
+                    "border-b border-border/60 transition-colors last:border-0 hover:bg-muted/40",
+                    onRowClick && "cursor-pointer focus-visible:bg-primary/5 focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:outline-none",
                   )}
                 >
                   {columns.map((col) => (
                     <td
                       key={col.id}
-                      className={cn("px-3 py-2.5 align-middle whitespace-nowrap", col.align === "end" && "text-end", col.className)}
+                      className={cn("px-3.5 py-3 align-middle whitespace-nowrap", col.align === "end" && "text-end", col.className)}
                     >
                       {col.cell(row)}
                     </td>

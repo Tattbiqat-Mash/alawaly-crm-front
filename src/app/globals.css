@@ -55,80 +55,80 @@
 :root {
   --font-stack: var(--font-plex-sans), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
 
-  --background: #f6f7f8;
+  --background: #f8fafc;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
-  --primary: #0b6b61;
+  --primary: #0a5f56;
   --primary-foreground: #ffffff;
-  --secondary: #eef2f2;
+  --secondary: #edf3f2;
   --secondary-foreground: #0f172a;
-  --muted: #f0f3f4;
-  --muted-foreground: #556170;
-  --accent: #e6f1ef;
-  --accent-foreground: #0a4d46;
-  --destructive: #a3262a;
-  --success: #17703a;
-  --warning: #8a5a00;
-  --info: #1d5fa8;
-  --sand: #a87b3a;
-  --border: #e1e6e9;
-  --input: #cfd7dc;
-  --ring: #0b6b61;
-  --chart-1: #0b6b61;
-  --chart-2: #3f9c90;
-  --chart-3: #a87b3a;
-  --chart-4: #556170;
-  --chart-5: #a3262a;
+  --muted: #f1f5f9;
+  --muted-foreground: #52606d;
+  --accent: #e6f2ef;
+  --accent-foreground: #084942;
+  --destructive: #9f2428;
+  --success: #166b37;
+  --warning: #855700;
+  --info: #1b5b9f;
+  --sand: #a37736;
+  --border: #e2e8f0;
+  --input: #cbd5e1;
+  --ring: #0a5f56;
+  --chart-1: #0a5f56;
+  --chart-2: #3a978b;
+  --chart-3: #a37736;
+  --chart-4: #52606d;
+  --chart-5: #9f2428;
   --radius: 0.625rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0f172a;
-  --sidebar-primary: #0b6b61;
+  --sidebar-primary: #0a5f56;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e6f1ef;
-  --sidebar-accent-foreground: #0a4d46;
-  --sidebar-border: #e1e6e9;
-  --sidebar-ring: #0b6b61;
+  --sidebar-accent: #e6f2ef;
+  --sidebar-accent-foreground: #084942;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0a5f56;
 }
 
 .dark {
-  --background: #0c1214;
-  --foreground: #e5ecee;
-  --card: #131b1e;
-  --card-foreground: #e5ecee;
-  --popover: #131b1e;
-  --popover-foreground: #e5ecee;
-  --primary: #3cbfad;
-  --primary-foreground: #04201c;
-  --secondary: #1c262a;
-  --secondary-foreground: #e5ecee;
-  --muted: #182125;
-  --muted-foreground: #9aa8ae;
-  --accent: #19302f;
-  --accent-foreground: #bfe9e2;
+  --background: #090e11;
+  --foreground: #e6edf0;
+  --card: #11181c;
+  --card-foreground: #e6edf0;
+  --popover: #11181c;
+  --popover-foreground: #e6edf0;
+  --primary: #34baaa;
+  --primary-foreground: #041f1b;
+  --secondary: #192429;
+  --secondary-foreground: #e6edf0;
+  --muted: #151e23;
+  --muted-foreground: #94a3aa;
+  --accent: #172d2c;
+  --accent-foreground: #beeae3;
   --destructive: #f07b7b;
   --success: #5ccb87;
   --warning: #e3b45a;
   --info: #7cb4f0;
   --sand: #d9b47a;
-  --border: #253136;
-  --input: #2f3d43;
-  --ring: #3cbfad;
-  --chart-1: #3cbfad;
-  --chart-2: #2a8a7e;
+  --border: #1f2b31;
+  --input: #28373f;
+  --ring: #34baaa;
+  --chart-1: #34baaa;
+  --chart-2: #28887c;
   --chart-3: #d9b47a;
-  --chart-4: #9aa8ae;
+  --chart-4: #94a3aa;
   --chart-5: #f07b7b;
-  --sidebar: #11181b;
-  --sidebar-foreground: #e5ecee;
-  --sidebar-primary: #3cbfad;
-  --sidebar-primary-foreground: #04201c;
-  --sidebar-accent: #19302f;
-  --sidebar-accent-foreground: #bfe9e2;
-  --sidebar-border: #253136;
-  --sidebar-ring: #3cbfad;
+  --sidebar: #0d1417;
+  --sidebar-foreground: #e6edf0;
+  --sidebar-primary: #34baaa;
+  --sidebar-primary-foreground: #041f1b;
+  --sidebar-accent: #172d2c;
+  --sidebar-accent-foreground: #beeae3;
+  --sidebar-border: #1f2b31;
+  --sidebar-ring: #34baaa;
 }
 
 /* Arabic text leads with the Arabic face; both families share IBM Plex metrics. */
@@ -139,17 +139,36 @@ html:lang(ar) {
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-foreground;
   }
   html {
     @apply font-sans;
   }
-  /* Amounts, ids and dates line up in tables. */
+  /* Amounts, ids and dates line up in tables and cards. */
   .num {
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.01em;
   }
+}
+
+/* Subtle modern webkit scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }
 
 /* Indeterminate progress bar used while lists refetch in the background. */

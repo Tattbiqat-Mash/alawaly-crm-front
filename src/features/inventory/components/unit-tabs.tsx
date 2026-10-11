@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { isOwnershipSource, isPriceChangeStatus, isStatusSource, priceChangeTone } from "@/config/statuses";
 import type { Paginated } from "@/lib/api/envelope";
 import { formatDate, formatDateTime } from "@/lib/format/dates";
+import { cn } from "@/lib/utils";
 import { formatMoney } from "@/lib/format/money";
 import { useUnitAvailability, useUnitEligibility, useUnitOwnership, useUnitPriceChanges, useUnitStatusHistory } from "../hooks";
 import { PRICE_FIELDS, type PriceField } from "../types";
@@ -47,7 +48,7 @@ const isEmptyPage = <T,>(p: Paginated<T>) => p.items.length === 0;
 
 function Paged<T>({ page, data, onPage, children }: { page: number; data: Paginated<T>; onPage: (p: number) => void; children: ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-xl border">
+    <div className="overflow-hidden rounded-xl border bg-card shadow-2xs">
       <div className="overflow-x-auto">{children}</div>
       {data.meta.total > data.meta.pageSize && (
         <TablePagination page={page} pageSize={data.meta.pageSize} total={data.meta.total} onPageChange={onPage} onPageSizeChange={() => {}} />
@@ -79,7 +80,7 @@ export function StatusHistoryTab({ unitId }: { unitId: number }) {
             <TableBody>
               {data.items.map((h) => (
                 <TableRow key={h.id}>
-                  <TableCell className="num">{formatDateTime(h.created_at, locale)}</TableCell>
+                  <TableCell className="num text-xs">{formatDateTime(h.created_at, locale)}</TableCell>
                   <TableCell>
                     <span className="inline-flex items-center gap-1.5">
                       <UnitStatusBadge status={h.from_status} />
@@ -87,9 +88,9 @@ export function StatusHistoryTab({ unitId }: { unitId: number }) {
                       <UnitStatusBadge status={h.to_status} />
                     </span>
                   </TableCell>
-                  <TableCell>{isStatusSource(h.source) ? t(`statuses.statusSource.${h.source}`) : h.source}</TableCell>
-                  <TableCell className="max-w-64 truncate whitespace-normal">{h.reason ?? "—"}</TableCell>
-                  <TableCell className="num">{h.actor_id ? t("units.history.staffId", { id: h.actor_id }) : "—"}</TableCell>
+                  <TableCell className="text-xs">{isStatusSource(h.source) ? t(`statuses.statusSource.${h.source}`) : h.source}</TableCell>
+                  <TableCell className="max-w-64 truncate whitespace-normal text-xs">{h.reason ?? "—"}</TableCell>
+                  <TableCell className="num text-xs">{h.actor_id ? t("units.history.staffId", { id: h.actor_id }) : "—"}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -126,9 +127,9 @@ export function PricesTab({ unitId }: { unitId: number }) {
             <TableBody>
               {data.items.map((p) => (
                 <TableRow key={p.id}>
-                  <TableCell>{fieldLabel(p.field)}</TableCell>
+                  <TableCell className="font-medium">{fieldLabel(p.field)}</TableCell>
                   <TableCell className="num text-end text-muted-foreground">{formatMoney(p.old_value, locale)}</TableCell>
-                  <TableCell className="num text-end font-medium">{formatMoney(p.new_value, locale)}</TableCell>
+                  <TableCell className="num text-end font-semibold text-foreground">{formatMoney(p.new_value, locale)}</TableCell>
                   <TableCell>
                     {isPriceChangeStatus(p.status) ? (
                       <StatusBadge tone={priceChangeTone[p.status]}>{t(`statuses.priceChange.${p.status}`)}</StatusBadge>
@@ -136,9 +137,9 @@ export function PricesTab({ unitId }: { unitId: number }) {
                       <StatusBadge>{p.status}</StatusBadge>
                     )}
                   </TableCell>
-                  <TableCell className="num">{p.requested_by ? t("units.history.staffId", { id: p.requested_by }) : "—"}</TableCell>
-                  <TableCell className="num">{formatDate(p.effective_from, locale)}</TableCell>
-                  <TableCell className="num">{formatDateTime(p.created_at, locale)}</TableCell>
+                  <TableCell className="num text-xs">{p.requested_by ? t("units.history.staffId", { id: p.requested_by }) : "—"}</TableCell>
+                  <TableCell className="num text-xs">{formatDate(p.effective_from, locale)}</TableCell>
+                  <TableCell className="num text-xs">{formatDateTime(p.created_at, locale)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -157,7 +158,7 @@ export function OwnershipTab({ unitId }: { unitId: number }) {
   return (
     <TabState query={query} isEmpty={isEmptyPage} empty={t("units.ownership.empty")}>
       {(data) => (
-        <div className="overflow-x-auto rounded-xl border">
+        <div className="overflow-x-auto rounded-xl border bg-card shadow-2xs">
           <Table>
             <TableHeader>
               <TableRow>
@@ -170,12 +171,12 @@ export function OwnershipTab({ unitId }: { unitId: number }) {
             <TableBody>
               {data.items.map((o) => (
                 <TableRow key={o.id}>
-                  <TableCell className="num">{t("units.ownership.clientId", { id: o.client_id })}</TableCell>
-                  <TableCell className="num">{formatDate(o.from_date, locale)}</TableCell>
-                  <TableCell className="num">
+                  <TableCell className="num font-medium">{t("units.ownership.clientId", { id: o.client_id })}</TableCell>
+                  <TableCell className="num text-xs">{formatDate(o.from_date, locale)}</TableCell>
+                  <TableCell className="num text-xs">
                     {o.to_date ? formatDate(o.to_date, locale) : <StatusBadge tone="success">{t("units.ownership.current")}</StatusBadge>}
                   </TableCell>
-                  <TableCell>{isOwnershipSource(o.source) ? t(`statuses.ownershipSource.${o.source}`) : o.source}</TableCell>
+                  <TableCell className="text-xs">{isOwnershipSource(o.source) ? t(`statuses.ownershipSource.${o.source}`) : o.source}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -199,10 +200,17 @@ const WARRANTY_CATEGORIES = ["structural", "finishing", "plumbing", "electrical"
 function Verdict({ label, ok }: { label: string; ok: boolean }) {
   const t = useTranslations("units.eligibility");
   return (
-    <div className="flex items-center justify-between rounded-lg border p-3">
-      <span className="text-sm">{label}</span>
-      <span className={ok ? "inline-flex items-center gap-1 text-sm text-success" : "inline-flex items-center gap-1 text-sm text-destructive"}>
-        {ok ? <CircleCheck aria-hidden className="size-4" /> : <CircleX aria-hidden className="size-4" />}
+    <div className="flex items-center justify-between rounded-xl border bg-card p-3.5 shadow-2xs">
+      <span className="text-sm font-medium text-foreground">{label}</span>
+      <span
+        className={cn(
+          "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1",
+          ok
+            ? "bg-success/10 text-success ring-success/20"
+            : "bg-destructive/10 text-destructive ring-destructive/20",
+        )}
+      >
+        {ok ? <CircleCheck aria-hidden className="size-3.5" /> : <CircleX aria-hidden className="size-3.5" />}
         {ok ? t("eligible") : t("notEligible")}
       </span>
     </div>
@@ -273,24 +281,33 @@ export function AvailabilityCard({ unitId }: { unitId: number }) {
   if (!query.allowed) return null;
 
   return (
-    <section className="rounded-xl border bg-card p-4">
-      <h2 className="mb-3 text-sm font-medium">{t("units.availability.title")}</h2>
+    <section className="rounded-xl border bg-card p-5 shadow-2xs">
+      <h2 className="mb-3.5 text-sm font-semibold tracking-tight text-foreground">{t("units.availability.title")}</h2>
       {query.isLoading ? (
         <Skeleton className="h-20 w-full" />
       ) : query.error ? (
         <ErrorState compact error={query.error} onRetry={() => query.refetch()} />
       ) : query.data ? (
-        <dl className="grid gap-2 text-sm">
+        <dl className="grid gap-2.5 text-sm">
           <div className="flex items-center gap-2">
-            {query.data.available ? (
-              <CircleCheck aria-hidden className="size-4 text-success" />
-            ) : (
-              <CircleX aria-hidden className="size-4 text-destructive" />
-            )}
-            <span className="font-medium">{query.data.available ? t("units.availability.available") : t("units.availability.notAvailable")}</span>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1",
+                query.data.available
+                  ? "bg-success/10 text-success ring-success/20"
+                  : "bg-destructive/10 text-destructive ring-destructive/20",
+              )}
+            >
+              {query.data.available ? (
+                <CircleCheck aria-hidden className="size-3.5" />
+              ) : (
+                <CircleX aria-hidden className="size-3.5" />
+              )}
+              <span>{query.data.available ? t("units.availability.available") : t("units.availability.notAvailable")}</span>
+            </span>
           </div>
           {query.data.reasons.length > 0 && (
-            <ul className="list-disc ps-5 text-muted-foreground">
+            <ul className="list-disc ps-5 text-xs text-muted-foreground">
               {query.data.reasons.map((r) => (
                 <li key={r}>
                   {AVAILABILITY_REASONS.includes(r as (typeof AVAILABILITY_REASONS)[number])
@@ -300,13 +317,13 @@ export function AvailabilityCard({ unitId }: { unitId: number }) {
               ))}
             </ul>
           )}
-          <div className="flex justify-between border-t pt-2">
+          <div className="flex justify-between border-t border-border/80 pt-2.5 text-xs">
             <dt className="text-muted-foreground">{t("units.availability.fee")}</dt>
-            <dd className="num">{formatMoney(query.data.reservation_amount, locale)}</dd>
+            <dd className="num font-semibold text-foreground">{formatMoney(query.data.reservation_amount, locale)}</dd>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between text-xs">
             <dt className="text-muted-foreground">{t("units.availability.hold")}</dt>
-            <dd className="num">{query.data.hold_hours === null ? "—" : t("units.availability.holdHours", { hours: query.data.hold_hours })}</dd>
+            <dd className="num text-foreground">{query.data.hold_hours === null ? "—" : t("units.availability.holdHours", { hours: query.data.hold_hours })}</dd>
           </div>
         </dl>
       ) : null}

@@ -33,7 +33,7 @@ export function OwnerMore() {
 
   return (
     <div className="grid gap-4">
-      <ul className="divide-y rounded-2xl border bg-card">
+      <ul className="divide-y divide-border/60 rounded-2xl border bg-card shadow-2xs">
         <Row icon={<Languages className="size-5" />} label={t("language")}>
           <LocaleSwitch variant="outline" />
         </Row>
@@ -44,8 +44,13 @@ export function OwnerMore() {
           <span className="text-xs text-muted-foreground">{t("notificationPrefsSoon")}</span>
         </Row>
       </ul>
-      <Button variant="destructive" className="h-12 text-base" disabled={signOut.isPending} onClick={() => signOut.mutate()}>
-        <LogOut data-icon="inline-start" className="rtl:rotate-180" />
+      <Button
+        variant="destructive"
+        className="h-12 text-sm font-semibold shadow-2xs transition-all hover:bg-destructive/90"
+        disabled={signOut.isPending}
+        onClick={() => signOut.mutate()}
+      >
+        <LogOut className="size-4 rtl:rotate-180" />
         {t("signOut")}
       </Button>
     </div>

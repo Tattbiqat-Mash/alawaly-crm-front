@@ -171,28 +171,28 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-5">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 rounded-xl border bg-muted/20 p-4 shadow-2xs sm:grid-cols-2 lg:grid-cols-4">
         <ReadOnlyField label={t("units.form.status")} value={<UnitStatusBadge status={unit.status} />} />
-        <ReadOnlyField label={t("units.form.priceInTax")} value={<span className="num">{formatMoney(unit.price_in_tax, locale)}</span>} />
-        <ReadOnlyField label={t("units.form.reservationFee")} value={<span className="num">{formatMoney(unit.reservation_amount, locale)}</span>} />
-        <ReadOnlyField label={t("units.form.version")} value={<span className="num">{unit.version}</span>} />
+        <ReadOnlyField label={t("units.form.priceInTax")} value={<span className="num font-bold text-foreground">{formatMoney(unit.price_in_tax, locale)}</span>} />
+        <ReadOnlyField label={t("units.form.reservationFee")} value={<span className="num font-semibold text-foreground">{formatMoney(unit.reservation_amount, locale)}</span>} />
+        <ReadOnlyField label={t("units.form.version")} value={<span className="num font-mono text-muted-foreground">v{unit.version}</span>} />
       </div>
       <p className="-mt-2 text-xs text-muted-foreground">{t("units.form.readOnlyHint")}</p>
 
       {changedFields.length > 0 && (
-        <p role="status" className="rounded-lg border border-info/25 bg-info/10 px-3 py-2 text-sm text-info">
+        <p role="status" className="rounded-lg border border-info/25 bg-info/10 px-3.5 py-2.5 text-sm text-info">
           {t("errors.conflict.changed")} {new Intl.ListFormat(locale, { type: "conjunction" }).format(changedFields)}
         </p>
       )}
 
-      <fieldset disabled={!canEdit || update.isPending} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <fieldset disabled={!canEdit || update.isPending} className="grid gap-4.5 sm:grid-cols-2 lg:grid-cols-3">
         <Field id="unit_type_id" label={labels.unit_type_id} error={err("unit_type_id")}>
           <Controller
             control={form.control}
             name="unit_type_id"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange} disabled={!canEdit}>
-                <SelectTrigger {...fieldA11y("unit_type_id", err("unit_type_id"))} className="w-full">
+                <SelectTrigger {...fieldA11y("unit_type_id", err("unit_type_id"))} className="h-9 w-full shadow-2xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -213,7 +213,7 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
             name="construction_status"
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange} disabled={!canEdit}>
-                <SelectTrigger {...fieldA11y("construction_status", err("construction_status"))} className="w-full">
+                <SelectTrigger {...fieldA11y("construction_status", err("construction_status"))} className="h-9 w-full shadow-2xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -229,21 +229,21 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
           />
         </Field>
         <Field id="total_area" label={labels.total_area} error={err("total_area")}>
-          <Input {...fieldA11y("total_area", err("total_area"))} inputMode="decimal" dir="ltr" {...form.register("total_area")} />
+          <Input {...fieldA11y("total_area", err("total_area"))} className="h-9 shadow-2xs" inputMode="decimal" dir="ltr" {...form.register("total_area")} />
         </Field>
         <Field id="rooms" label={labels.rooms} error={err("rooms")}>
-          <Input {...fieldA11y("rooms", err("rooms"))} inputMode="numeric" dir="ltr" {...form.register("rooms")} />
+          <Input {...fieldA11y("rooms", err("rooms"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("rooms")} />
         </Field>
         <Field id="bathrooms" label={labels.bathrooms} error={err("bathrooms")}>
-          <Input {...fieldA11y("bathrooms", err("bathrooms"))} inputMode="numeric" dir="ltr" {...form.register("bathrooms")} />
+          <Input {...fieldA11y("bathrooms", err("bathrooms"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("bathrooms")} />
         </Field>
         <Field id="display_order" label={labels.display_order} error={err("display_order")}>
-          <Input {...fieldA11y("display_order", err("display_order"))} inputMode="numeric" dir="ltr" {...form.register("display_order")} />
+          <Input {...fieldA11y("display_order", err("display_order"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("display_order")} />
         </Field>
         <Field id="comments" label={labels.comments} error={err("comments")} className="sm:col-span-2 lg:col-span-3">
-          <Textarea {...fieldA11y("comments", err("comments"))} rows={3} {...form.register("comments")} />
+          <Textarea {...fieldA11y("comments", err("comments"))} rows={3} className="shadow-2xs" {...form.register("comments")} />
         </Field>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 rounded-lg border bg-muted/20 px-3 py-2">
           <Controller
             control={form.control}
             name="active"
@@ -251,7 +251,7 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
               <Checkbox id="active" checked={field.value} onCheckedChange={(v) => field.onChange(v === true)} disabled={!canEdit} />
             )}
           />
-          <Label htmlFor="active">{labels.active}</Label>
+          <Label htmlFor="active" className="cursor-pointer font-medium text-foreground">{labels.active}</Label>
           {err("active") && <span className="text-xs text-destructive">{err("active")}</span>}
         </div>
       </fieldset>
@@ -259,7 +259,7 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
       <FormError>{formError}</FormError>
 
       {canEdit && (
-        <div className="flex items-center justify-end gap-2 border-t pt-4">
+        <div className="flex items-center justify-end gap-2.5 border-t pt-4">
           <Button
             type="button"
             variant="outline"

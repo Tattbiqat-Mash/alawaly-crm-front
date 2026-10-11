@@ -27,9 +27,9 @@ export function TablePagination({ page, pageSize, total, onPageChange, onPageSiz
   return (
     <nav
       aria-label={t("pageOf", { page: current, pages })}
-      className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t px-3 py-2 text-sm"
+      className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t bg-muted/15 px-4 py-2 text-xs md:text-sm"
     >
-      <p className="text-muted-foreground" aria-live="polite">
+      <p className="font-medium text-foreground/80" aria-live="polite">
         {t("total", { total })}
       </p>
       <div className="flex items-center gap-3">

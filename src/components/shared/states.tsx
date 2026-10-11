@@ -25,25 +25,25 @@ export function StatePanel({ icon: Icon, title, description, action, tone = "neu
       role="status"
       className={cn(
         "flex flex-col items-center justify-center text-center",
-        compact ? "gap-2 px-4 py-8" : "gap-3 px-6 py-16",
+        compact ? "gap-2.5 px-4 py-8" : "gap-3.5 px-6 py-14",
         className,
       )}
     >
       <span
         aria-hidden
         className={cn(
-          "inline-flex items-center justify-center rounded-full",
-          compact ? "size-10" : "size-12",
-          tone === "neutral" && "bg-muted text-muted-foreground",
-          tone === "warning" && "bg-warning/10 text-warning",
-          tone === "danger" && "bg-destructive/10 text-destructive",
+          "inline-flex items-center justify-center rounded-xl ring-1 shadow-2xs transition-transform",
+          compact ? "size-10" : "size-12.5",
+          tone === "neutral" && "bg-muted/80 text-muted-foreground ring-border/60",
+          tone === "warning" && "bg-warning/10 text-warning ring-warning/20",
+          tone === "danger" && "bg-destructive/10 text-destructive ring-destructive/20",
         )}
       >
         <Icon className={compact ? "size-5" : "size-6"} />
       </span>
-      <p className={cn("font-medium text-foreground", compact ? "text-sm" : "text-base")}>{title}</p>
-      {description && <div className="max-w-md text-sm text-muted-foreground">{description}</div>}
-      {action && <div className="mt-1">{action}</div>}
+      <p className={cn("font-semibold tracking-tight text-foreground", compact ? "text-sm" : "text-base")}>{title}</p>
+      {description && <div className="max-w-md text-xs leading-relaxed text-muted-foreground md:text-sm">{description}</div>}
+      {action && <div className="mt-1.5">{action}</div>}
     </div>
   );
 }

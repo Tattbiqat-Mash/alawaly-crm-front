@@ -35,42 +35,62 @@ export function UnitQuickSheet({ unit, onClose }: { unit: UnitListItem | null; o
       <SheetContent side={side} className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
         {unit && (
           <>
-            <SheetHeader className="border-b">
-              <SheetTitle>{t("units.quick.title", { number: unit.unit_number ?? `#${unit.id}` })}</SheetTitle>
-              <SheetDescription>
-                {[lookups.projectName(unit.project_id), lookups.buildingName(unit.building_id)].filter(Boolean).join(" · ")}
-              </SheetDescription>
-            </SheetHeader>
-            <dl className="min-h-0 flex-1 overflow-y-auto px-4 py-2">
-              <Row label={t("units.columns.status")}>
+            <SheetHeader className="border-b bg-muted/20 px-5 py-4">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <SheetTitle className="text-lg font-bold tracking-tight">
+                    {t("units.quick.title", { number: unit.unit_number ?? `#${unit.id}` })}
+                  </SheetTitle>
+                  <SheetDescription className="mt-1 text-xs">
+                    {[lookups.projectName(unit.project_id), lookups.buildingName(unit.building_id)].filter(Boolean).join(" · ")}
+                  </SheetDescription>
+                </div>
                 <UnitStatusBadge status={unit.status} />
-              </Row>
-              <Row label={t("units.columns.type")}>{lookups.typeName(unit.unit_type_id) || "—"}</Row>
-              <Row label={t("units.columns.rooms")}>
-                <span className="num">{unit.rooms ?? "—"}</span>
-              </Row>
-              <Row label={t("units.form.bathrooms")}>
-                <span className="num">{unit.bathrooms ?? "—"}</span>
-              </Row>
-              <Row label={t("units.columns.area")}>
-                <span className="num">{formatDecimal(unit.total_area, locale)}</span>
-              </Row>
-              <Row label={t("units.form.priceInTax")}>
-                <span className="num">{formatMoney(unit.price_in_tax, locale)}</span>
-              </Row>
-              <Row label={t("units.form.reservationFee")}>
-                <span className="num">{formatMoney(unit.reservation_amount, locale)}</span>
-              </Row>
-              <Row label={t("units.filters.active")}>{isOn(unit.active) ? t("common.yes") : t("common.no")}</Row>
-              <Row label={t("units.columns.updated")}>
-                <span className="num">{formatDateTime(unit.updated_at, locale)}</span>
-              </Row>
-            </dl>
-            <SheetFooter className="border-t">
-              <Button asChild>
+              </div>
+            </SheetHeader>
+            <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+              {/* Quick specs grid */}
+              <div className="mb-4 grid grid-cols-2 gap-2.5">
+                <div className="rounded-xl border bg-card p-3 shadow-2xs">
+                  <span className="text-[11px] font-medium text-muted-foreground">{t("units.form.priceInTax")}</span>
+                  <p className="num mt-1 text-base font-bold text-foreground">{formatMoney(unit.price_in_tax, locale)}</p>
+                </div>
+                <div className="rounded-xl border bg-card p-3 shadow-2xs">
+                  <span className="text-[11px] font-medium text-muted-foreground">{t("units.columns.area")}</span>
+                  <p className="num mt-1 text-base font-bold text-foreground">
+                    {formatDecimal(unit.total_area, locale)} <span className="text-xs font-normal text-muted-foreground">m²</span>
+                  </p>
+                </div>
+                <div className="rounded-xl border bg-card p-3 shadow-2xs">
+                  <span className="text-[11px] font-medium text-muted-foreground">{t("units.columns.rooms")}</span>
+                  <p className="num mt-1 text-base font-semibold text-foreground">{unit.rooms ?? "—"}</p>
+                </div>
+                <div className="rounded-xl border bg-card p-3 shadow-2xs">
+                  <span className="text-[11px] font-medium text-muted-foreground">{t("units.form.bathrooms")}</span>
+                  <p className="num mt-1 text-base font-semibold text-foreground">{unit.bathrooms ?? "—"}</p>
+                </div>
+              </div>
+
+              <dl className="divide-y rounded-xl border bg-card px-3 shadow-2xs">
+                <Row label={t("units.columns.type")}>{lookups.typeName(unit.unit_type_id) || "—"}</Row>
+                <Row label={t("units.form.reservationFee")}>
+                  <span className="num font-semibold">{formatMoney(unit.reservation_amount, locale)}</span>
+                </Row>
+                <Row label={t("units.filters.active")}>
+                  <span className={isOn(unit.active) ? "text-success font-medium" : "text-muted-foreground"}>
+                    {isOn(unit.active) ? t("common.yes") : t("common.no")}
+                  </span>
+                </Row>
+                <Row label={t("units.columns.updated")}>
+                  <span className="num text-xs text-muted-foreground">{formatDateTime(unit.updated_at, locale)}</span>
+                </Row>
+              </dl>
+            </div>
+            <SheetFooter className="border-t bg-muted/10 p-4">
+              <Button asChild size="lg" className="w-full font-medium">
                 <Link href={`/units/${unit.id}`} prefetch>
                   {t("common.openFullView")}
-                  <ArrowUpRight data-icon="inline-end" className="rtl:-scale-x-100" />
+                  <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                 </Link>
               </Button>
             </SheetFooter>

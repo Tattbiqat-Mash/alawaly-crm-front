@@ -47,7 +47,7 @@ function AdminNavLinks({ collapsed, onNavigate }: Props) {
       {visibleNav(can).map((group) => (
         <div key={group.key} className="flex flex-col gap-0.5">
           {!collapsed && (
-            <p className="px-2 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+            <p className="px-2.5 pb-1 text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
               {t(`groups.${group.key}`)}
             </p>
           )}
@@ -61,15 +61,21 @@ function AdminNavLinks({ collapsed, onNavigate }: Props) {
                 onClick={onNavigate}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm transition-colors",
-                  "focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none",
+                  "group relative flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm font-medium transition-all",
+                  "focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none",
                   active
-                    ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/80 hover:bg-muted hover:text-sidebar-foreground",
+                    ? "bg-primary/10 font-semibold text-primary shadow-xs ring-1 ring-primary/20"
+                    : "text-muted-foreground hover:bg-muted/80 hover:text-foreground",
                   collapsed && "justify-center px-0",
                 )}
               >
-                <item.icon aria-hidden className="size-4 shrink-0" />
+                <item.icon
+                  aria-hidden
+                  className={cn(
+                    "size-4 shrink-0 transition-transform group-hover:scale-105",
+                    active ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
+                  )}
+                />
                 {collapsed ? <span className="sr-only">{label}</span> : <span className="truncate">{label}</span>}
               </Link>
             );

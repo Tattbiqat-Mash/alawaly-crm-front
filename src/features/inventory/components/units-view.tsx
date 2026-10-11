@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { Download, Loader2, Upload } from "lucide-react";
+import { Building2, Download, Loader2, Upload } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -64,9 +64,17 @@ export function UnitsView() {
       header: t("units.columns.number"),
       sortKey: "unit_number",
       cell: (u) => (
-        <div className="flex flex-col">
-          <span className="num font-medium">{u.unit_number ?? `#${u.id}`}</span>
-          {u.unit_code && <span className="text-xs text-muted-foreground">{u.unit_code}</span>}
+        <div className="flex items-center gap-2.5">
+          <span
+            aria-hidden
+            className="grid size-7.5 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20"
+          >
+            <Building2 className="size-3.5" />
+          </span>
+          <div className="flex flex-col">
+            <span className="num font-semibold text-foreground">{u.unit_number ?? `#${u.id}`}</span>
+            {u.unit_code && <span className="font-mono text-xs text-muted-foreground">{u.unit_code}</span>}
+          </div>
         </div>
       ),
     },
@@ -75,7 +83,7 @@ export function UnitsView() {
       header: t("units.columns.location"),
       cell: (u) => (
         <div className="flex flex-col">
-          <span>{lookups.projectName(u.project_id) || "—"}</span>
+          <span className="font-medium text-foreground">{lookups.projectName(u.project_id) || "—"}</span>
           <span className="text-xs text-muted-foreground">{lookups.buildingName(u.building_id)}</span>
         </div>
       ),
@@ -85,31 +93,36 @@ export function UnitsView() {
       header: t("units.columns.type"),
       cell: (u) => (
         <div className="flex items-center gap-2">
-          <span>{lookups.typeName(u.unit_type_id) || "—"}</span>
+          <span className="font-medium text-foreground/90">{lookups.typeName(u.unit_type_id) || "—"}</span>
           {(u.unit_type_id === null || !isOn(u.active)) && <StatusBadge tone="warning">{t("units.hiddenFromApp")}</StatusBadge>}
         </div>
       ),
     },
     { id: "status", header: t("units.columns.status"), sortKey: "status", cell: (u) => <UnitStatusBadge status={u.status} /> },
-    { id: "rooms", header: t("units.columns.rooms"), align: "end", cell: (u) => <span className="num">{u.rooms ?? "—"}</span> },
+    { id: "rooms", header: t("units.columns.rooms"), align: "end", cell: (u) => <span className="num font-medium text-foreground/90">{u.rooms ?? "—"}</span> },
     {
       id: "area",
       header: t("units.columns.area"),
       align: "end",
-      cell: (u) => <span className="num">{formatDecimal(u.total_area, locale)}</span>,
+      cell: (u) => (
+        <span className="num font-medium text-foreground/90">
+          {formatDecimal(u.total_area, locale)}{" "}
+          <span className="text-[11px] font-normal text-muted-foreground">m²</span>
+        </span>
+      ),
     },
     {
       id: "price",
       header: t("units.columns.price"),
       align: "end",
       sortKey: "price_in_tax",
-      cell: (u) => <span className="num">{formatMoney(u.price_in_tax, locale)}</span>,
+      cell: (u) => <span className="num font-semibold text-foreground">{formatMoney(u.price_in_tax, locale)}</span>,
     },
     {
       id: "updated",
       header: t("units.columns.updated"),
       sortKey: "updated_at",
-      cell: (u) => <span className="num text-muted-foreground">{formatDate(u.updated_at, locale)}</span>,
+      cell: (u) => <span className="num text-xs text-muted-foreground">{formatDate(u.updated_at, locale)}</span>,
     },
   ];
 

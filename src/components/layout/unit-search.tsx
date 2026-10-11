@@ -19,15 +19,27 @@ export function UnitSearch() {
   return (
     <form
       role="search"
-      className="relative w-full max-w-sm"
+      className="relative w-full max-w-xs md:max-w-sm"
       onSubmit={(e) => {
         e.preventDefault();
         const q = String(new FormData(e.currentTarget).get("q") ?? "").trim();
         router.push(q ? `/units?q=${encodeURIComponent(q)}` : "/units");
       }}
     >
-      <Search aria-hidden className="pointer-events-none absolute start-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-      <Input name="q" type="search" aria-label={t("searchUnits")} placeholder={t("searchUnits")} className="h-9 ps-8" />
+      <Search aria-hidden className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors peer-focus:text-primary" />
+      <Input
+        name="q"
+        type="search"
+        aria-label={t("searchUnits")}
+        placeholder={t("searchUnits")}
+        className="peer h-9 bg-muted/40 ps-9 pe-12 text-xs transition-all focus:bg-background md:text-sm"
+      />
+      <kbd
+        aria-hidden
+        className="pointer-events-none absolute end-2.5 top-1/2 hidden -translate-y-1/2 rounded border bg-muted/80 px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground sm:inline-block"
+      >
+        /
+      </kbd>
     </form>
   );
 }

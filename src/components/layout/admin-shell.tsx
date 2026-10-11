@@ -71,16 +71,19 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b bg-card px-3 md:px-4">
+        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-card/90 px-3 backdrop-blur-md md:px-5">
           <Button variant="ghost" size="icon" className="md:hidden" aria-label={t("menu")} onClick={() => setMobileOpen(true)}>
             <Menu />
           </Button>
           <div className="min-w-0 flex-1">
             <UnitSearch />
           </div>
-          <ThemeToggle />
-          <LocaleSwitch />
-          <UserMenu />
+          <div className="flex items-center gap-1.5">
+            <ThemeToggle />
+            <LocaleSwitch />
+            <div className="ms-1 h-5 w-px bg-border/80" />
+            <UserMenu />
+          </div>
         </header>
         <main id="main" tabIndex={-1} className="flex min-h-0 flex-1 flex-col overflow-y-auto outline-none">
           {children}
