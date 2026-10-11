@@ -88,6 +88,22 @@ export const staffEndpoints = {
   incidents: "/incidents",
   incidentAction: (id: Id, action: "investigate" | "resolve" | "close") => `/incidents/${id}/${action}`,
 
+  rentalMandates: "/rental-mandates",
+  rentalMandate: (id: Id) => `/rental-mandates/${id}`,
+  mandateDocument: (id: Id) => `/rental-mandates/${id}/document`,
+  mandateAction: (id: Id, action: "activate" | "end" | "revoke") => `/rental-mandates/${id}/${action}`,
+  mandateTenants: (id: Id) => `/rental-mandates/${id}/tenants`,
+  mandateLeases: (id: Id) => `/rental-mandates/${id}/leases`,
+  mandateStatements: (id: Id) => `/rental-mandates/${id}/statements`,
+  mandateServiceRequests: (id: Id) => `/rental-mandates/${id}/service-requests`,
+  tenant: (id: Id) => `/tenants/${id}`,
+  leases: "/leases",
+  lease: (id: Id) => `/leases/${id}`,
+  leaseAction: (id: Id, action: "activate" | "end" | "terminate" | "renew") => `/leases/${id}/${action}`,
+  leaseInspections: (id: Id) => `/leases/${id}/inspections`,
+  rentItems: "/rent-items",
+  rentItemAction: (id: Id, action: "record" | "waive") => `/rent-items/${id}/${action}`,
+
   reports: {
     inventorySummary: "/reports/inventory-summary",
     salesSummary: "/reports/sales-summary",

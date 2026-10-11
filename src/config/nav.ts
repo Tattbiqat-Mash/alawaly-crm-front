@@ -117,11 +117,11 @@ export const NAV: NavGroup[] = [
   {
     key: "rentals",
     items: [
-      { key: "mandates", href: "/rentals/mandates", icon: FileText, permissions: ["rental.view", "rental.manage"], ready: false },
-      { key: "tenants", href: "/rentals/tenants", icon: Users, permissions: ["rental.manage"], ready: false },
-      { key: "leases", href: "/rentals/leases", icon: Layers, permissions: ["rental.view", "rental.manage"], ready: false },
-      { key: "rentCollection", href: "/rentals/rent", icon: Wallet, permissions: ["rental.view", "rental.manage"], ready: false },
-      { key: "statements", href: "/rentals/statements", icon: Receipt, permissions: ["rental.view", "rental.manage"], ready: false },
+      { key: "mandates", href: "/rentals/mandates", icon: FileText, permissions: ["rental.view", "rental.manage"], ready: true },
+      { key: "tenants", href: "/rentals/tenants", icon: Users, permissions: ["rental.manage"], ready: true },
+      { key: "leases", href: "/rentals/leases", icon: Layers, permissions: ["rental.view", "rental.manage"], ready: true },
+      { key: "rentCollection", href: "/rentals/rent", icon: Wallet, permissions: ["rental.view", "rental.manage"], ready: true },
+      { key: "statements", href: "/rentals/statements", icon: Receipt, permissions: ["rental.view", "rental.manage"], ready: true },
     ],
   },
   {

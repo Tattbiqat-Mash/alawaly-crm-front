@@ -366,6 +366,47 @@
       "investigating": "Investigating",
       "resolved": "Resolved",
       "closed": "Closed"
+    },
+    "mandate": {
+      "draft": "Draft",
+      "active": "Active",
+      "ended": "Ended",
+      "revoked": "Revoked"
+    },
+    "mandateMode": {
+      "services_only": "Services only",
+      "full_management": "Full management"
+    },
+    "lease": {
+      "draft": "Draft",
+      "active": "Active",
+      "ended": "Ended",
+      "terminated": "Terminated"
+    },
+    "rent": {
+      "pending": "Due",
+      "paid": "Received",
+      "overdue": "Overdue",
+      "waived": "Waived"
+    },
+    "frequency": {
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "semi_annual": "Every 6 months",
+      "annual": "Yearly"
+    },
+    "inspection": {
+      "move_in": "Move-in",
+      "move_out": "Move-out",
+      "periodic": "Periodic"
+    },
+    "capability": {
+      "service_requests": "Service requests",
+      "view_statements": "Statements",
+      "manage_tenants": "Tenants",
+      "manage_leases": "Leases",
+      "collect_rent": "Rent",
+      "inspections": "Inspections"
     }
   },
   "dashboard": {
@@ -1572,5 +1613,207 @@
     "updated": "Incident updated.",
     "empty": "No incidents match these filters.",
     "assetMismatch": "The asset must belong to the chosen facility."
+  },
+  "rentals": {
+    "mandatePicker": "Mandate",
+    "pickMandate": "Choose a mandate first.",
+    "mandateLabel": "#{id} · Unit #{unit} · {mode}",
+    "scopeBanner": {
+      "CAPABILITY_NOT_GRANTED": "This mandate does not allow this. Shown read-only.",
+      "MANDATE_NOT_ACTIVE": "This mandate is not active. Shown read-only.",
+      "MANDATE_OUTSIDE_VALIDITY": "This mandate is outside its validity period. Shown read-only."
+    },
+    "notGranted": "The mandate does not include {capability}. Shown read-only."
+  },
+  "mandates": {
+    "title": "Rental mandates",
+    "subtitle": "An owner lets Alawaly manage the unit: services only, or full management of tenants, leases and rent.",
+    "new": "New mandate",
+    "columns": {
+      "id": "#",
+      "unit": "Unit",
+      "owner": "Owner",
+      "mode": "Mode",
+      "valid": "Valid",
+      "status": "Status",
+      "capabilities": "Allows",
+      "document": "Signed document"
+    },
+    "filters": {
+      "status": "Status",
+      "mode": "Mode",
+      "unit": "Unit number (id)"
+    },
+    "validRange": "{from} → {to}",
+    "openEnded": "open-ended",
+    "empty": "No mandates match these filters.",
+    "detailTitle": "Mandate #{id}",
+    "fields": {
+      "unit": "Unit number (id)",
+      "owner": "Owner (client number)",
+      "ownerHint": "Must be the unit's recorded owner.",
+      "mode": "Mode",
+      "validFrom": "Valid from",
+      "validTo": "Valid until (optional)"
+    },
+    "created": "Mandate created as a draft. Upload the signed document, then activate.",
+    "steps": {
+      "create": "1. Created",
+      "document": "2. Signed document",
+      "activate": "3. Active"
+    },
+    "hasDocument": "Uploaded",
+    "noDocument": "Not uploaded",
+    "upload": "Upload signed document",
+    "uploaded": "Document uploaded.",
+    "activate": "Activate",
+    "activated": "Mandate activated.",
+    "end": "End",
+    "revoke": "Revoke",
+    "endTitle": "End mandate #{id}?",
+    "endBody": "Alawaly stops managing the unit for this owner. This is blocked while a lease is active.",
+    "revokeTitle": "Revoke mandate #{id}?",
+    "revokeBody": "The mandate is withdrawn immediately. This is blocked while a lease is active.",
+    "ended": "Mandate ended.",
+    "revoked": "Mandate revoked.",
+    "raiseRequest": "Raise a service request",
+    "requestTitle": "Service request for the managed unit",
+    "requestCategory": "Category",
+    "requestTitleField": "Title",
+    "requestCreated": "Service request #{id} created."
+  },
+  "tenants": {
+    "title": "Tenants",
+    "subtitle": "Tenants of a managed unit. Contact details are personal data: share them only when needed.",
+    "add": "Add tenant",
+    "edit": "Edit tenant",
+    "columns": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "active": "Active"
+    },
+    "fields": {
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "note": "Note",
+      "active": "Active"
+    },
+    "saved": "Tenant saved.",
+    "created": "Tenant added.",
+    "empty": "No tenants on this mandate."
+  },
+  "leases": {
+    "title": "Leases",
+    "subtitle": "Leases under a mandate. Activating a lease generates its rent schedule.",
+    "new": "New lease",
+    "columns": {
+      "id": "#",
+      "unit": "Unit",
+      "tenant": "Tenant",
+      "period": "Period",
+      "rent": "Rent",
+      "frequency": "Frequency",
+      "status": "Status"
+    },
+    "filters": {
+      "status": "Status",
+      "mandate": "Mandate number"
+    },
+    "empty": "No leases match these filters.",
+    "detailTitle": "Lease #{id}",
+    "tabs": {
+      "schedule": "Rent schedule",
+      "inspections": "Inspections"
+    },
+    "fields": {
+      "mandate": "Mandate",
+      "tenant": "Tenant",
+      "start": "Start date",
+      "end": "End date",
+      "rent": "Rent per period (SAR)",
+      "frequency": "Frequency",
+      "deposit": "Deposit (SAR, optional)"
+    },
+    "created": "Lease created as a draft.",
+    "activate": "Activate",
+    "activated": "Lease activated; the rent schedule was generated.",
+    "end": "End",
+    "endTitle": "End lease #{id}?",
+    "endBody": "The lease ends normally.",
+    "ended": "Lease ended.",
+    "terminate": "Terminate",
+    "terminateTitle": "Terminate lease #{id}?",
+    "terminateBody": "The lease stops early and future unpaid rent is waived.",
+    "terminated": "Lease terminated.",
+    "renew": "Renew",
+    "renewTitle": "Renew lease #{id}",
+    "renewBody": "Creates the next lease as a draft, starting after this one ends.",
+    "newEnd": "New end date",
+    "newRent": "New rent per period (optional)",
+    "renewed": "Renewal created as lease #{id}.",
+    "inspect": "Record inspection",
+    "inspectTitle": "Record an inspection",
+    "inspectionType": "Type",
+    "inspectedOn": "Date",
+    "room": "Room",
+    "condition": "Condition",
+    "addRoom": "Add room",
+    "inspectionNotes": "Notes",
+    "inspected": "Inspection recorded.",
+    "noInspections": "No inspections yet.",
+    "noSchedule": "The schedule is generated when the lease is activated.",
+    "endAfterStart": "The end date must be after the start date."
+  },
+  "rent": {
+    "title": "Rent collection",
+    "subtitle": "Tracking only: recording a payment here does not collect money.",
+    "overdueOnly": "Overdue only",
+    "columns": {
+      "due": "Due",
+      "lease": "Lease",
+      "amount": "Amount",
+      "status": "Status",
+      "paidOn": "Paid on",
+      "reference": "Reference",
+      "actions": "Actions"
+    },
+    "filters": {
+      "lease": "Lease number",
+      "status": "Status"
+    },
+    "record": "Record received",
+    "recordTitle": "Record rent received",
+    "paidOn": "Received on",
+    "paidOnFuture": "The date cannot be in the future.",
+    "reference": "Reference",
+    "recorded": "Rent recorded as received.",
+    "waive": "Waive",
+    "waiveTitle": "Waive this rent item?",
+    "waiveBody": "The tenant will not owe this amount. The reason is kept on the record.",
+    "waived": "Rent item waived.",
+    "empty": "No rent items match these filters."
+  },
+  "statements": {
+    "title": "Owner statements",
+    "subtitle": "What was expected, collected and outstanding for a mandate over a period.",
+    "generate": "Generate statement",
+    "generating": "Generating…",
+    "from": "From",
+    "to": "To",
+    "generated": "Statement ready.",
+    "refreshNote": "Generating the same period again refreshes the existing statement.",
+    "kpi": {
+      "expected": "Expected",
+      "collected": "Collected",
+      "outstanding": "Outstanding",
+      "overdue": "Overdue",
+      "waived": "Waived"
+    },
+    "previous": "Previous statements",
+    "period": "{from} → {to}",
+    "generatedAt": "Generated {date}",
+    "empty": "No statements yet for this mandate."
   }
 }
