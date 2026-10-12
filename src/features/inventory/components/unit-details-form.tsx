@@ -185,7 +185,7 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
         </p>
       )}
 
-      <fieldset disabled={!canEdit || update.isPending} className="grid gap-4.5 sm:grid-cols-2 lg:grid-cols-3">
+      <fieldset disabled={!canEdit || update.isPending} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Field id="unit_type_id" label={labels.unit_type_id} error={err("unit_type_id")}>
           <Controller
             control={form.control}
@@ -229,31 +229,34 @@ export function UnitDetailsForm({ data }: { data: VersionedUnit }) {
           />
         </Field>
         <Field id="total_area" label={labels.total_area} error={err("total_area")}>
-          <Input {...fieldA11y("total_area", err("total_area"))} className="h-9 shadow-2xs" inputMode="decimal" dir="ltr" {...form.register("total_area")} />
+          <Input {...fieldA11y("total_area", err("total_area"))} className="h-9 shadow-2xs num" inputMode="decimal" dir="ltr" {...form.register("total_area")} />
         </Field>
         <Field id="rooms" label={labels.rooms} error={err("rooms")}>
-          <Input {...fieldA11y("rooms", err("rooms"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("rooms")} />
+          <Input {...fieldA11y("rooms", err("rooms"))} className="h-9 shadow-2xs num" inputMode="numeric" dir="ltr" {...form.register("rooms")} />
         </Field>
         <Field id="bathrooms" label={labels.bathrooms} error={err("bathrooms")}>
-          <Input {...fieldA11y("bathrooms", err("bathrooms"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("bathrooms")} />
+          <Input {...fieldA11y("bathrooms", err("bathrooms"))} className="h-9 shadow-2xs num" inputMode="numeric" dir="ltr" {...form.register("bathrooms")} />
         </Field>
         <Field id="display_order" label={labels.display_order} error={err("display_order")}>
-          <Input {...fieldA11y("display_order", err("display_order"))} className="h-9 shadow-2xs" inputMode="numeric" dir="ltr" {...form.register("display_order")} />
+          <Input {...fieldA11y("display_order", err("display_order"))} className="h-9 shadow-2xs num" inputMode="numeric" dir="ltr" {...form.register("display_order")} />
         </Field>
-        <Field id="comments" label={labels.comments} error={err("comments")} className="sm:col-span-2 lg:col-span-3">
-          <Textarea {...fieldA11y("comments", err("comments"))} rows={3} className="shadow-2xs" {...form.register("comments")} />
-        </Field>
-        <div className="flex items-center gap-2.5 rounded-lg border bg-muted/20 px-3 py-2">
+        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-card p-3 shadow-2xs transition-colors hover:border-primary/30 sm:col-span-2 lg:col-span-1">
           <Controller
             control={form.control}
             name="active"
             render={({ field }) => (
-              <Checkbox id="active" checked={field.value} onCheckedChange={(v) => field.onChange(v === true)} disabled={!canEdit} />
+              <Checkbox id="active" checked={field.value} onCheckedChange={(v) => field.onChange(v === true)} disabled={!canEdit} className="size-4.5" />
             )}
           />
-          <Label htmlFor="active" className="cursor-pointer font-medium text-foreground">{labels.active}</Label>
-          {err("active") && <span className="text-xs text-destructive">{err("active")}</span>}
+          <div className="flex flex-col">
+            <Label htmlFor="active" className="cursor-pointer text-xs font-semibold text-foreground">{labels.active}</Label>
+            <span className="text-[11px] text-muted-foreground">{t("units.filters.activeOnly")}</span>
+          </div>
+          {err("active") && <span className="ms-auto text-xs text-destructive">{err("active")}</span>}
         </div>
+        <Field id="comments" label={labels.comments} error={err("comments")} className="sm:col-span-2 lg:col-span-3">
+          <Textarea {...fieldA11y("comments", err("comments"))} rows={3} className="shadow-2xs leading-relaxed" {...form.register("comments")} />
+        </Field>
       </fieldset>
 
       <FormError>{formError}</FormError>

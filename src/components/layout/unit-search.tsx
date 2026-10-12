@@ -26,13 +26,13 @@ export function UnitSearch() {
         router.push(q ? `/units?q=${encodeURIComponent(q)}` : "/units");
       }}
     >
-      <Search aria-hidden className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors peer-focus:text-primary" />
+      <Search aria-hidden className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground transition-colors peer-focus:text-primary" />
       <Input
         name="q"
         type="search"
         aria-label={t("searchUnits")}
         placeholder={t("searchUnits")}
-        className="peer h-9 bg-muted/40 ps-9 pe-12 text-xs transition-all focus:bg-background md:text-sm"
+        className="peer h-8 bg-muted/40 ps-8 pe-10 text-xs transition-all focus:bg-background md:text-xs"
       />
       <kbd
         aria-hidden

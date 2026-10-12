@@ -17,7 +17,7 @@ export function FilterBar({ children }: { children: ReactNode }) {
   const t = useTranslations("common");
   return (
     <div
-      className="flex flex-wrap items-center gap-2.5 rounded-xl border bg-card/60 p-3 shadow-2xs backdrop-blur-xs"
+      className="flex flex-wrap items-center gap-2 rounded-xl border bg-card/60 p-2 shadow-2xs backdrop-blur-xs sm:p-2.5"
       role="group"
       aria-label={t("filters")}
     >
@@ -45,11 +45,11 @@ export function FilterSelect({
       <SelectTrigger
         aria-label={label}
         className={cn(
-          "h-9 min-w-36 bg-background shadow-2xs transition-colors",
+          "h-8 min-w-32 bg-background shadow-2xs transition-colors text-xs",
           isSelected && "border-primary/50 bg-primary/5 font-medium text-foreground",
         )}
       >
-        <span className={cn("text-xs", isSelected ? "font-semibold text-primary" : "text-muted-foreground")}>{label}:</span>
+        <span className={cn("text-[11px]", isSelected ? "font-semibold text-primary" : "text-muted-foreground")}>{label}:</span>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -98,8 +98,8 @@ export function SearchFilter({
 }) {
   const [draft, setDraft] = useDebouncedParam(value, onChange);
   return (
-    <div className={cn("relative w-full sm:w-60", className)}>
-      <Search aria-hidden className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+    <div className={cn("relative w-full sm:w-56", className)}>
+      <Search aria-hidden className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="search"
         inputMode={inputMode}
@@ -107,7 +107,7 @@ export function SearchFilter({
         onChange={(e) => setDraft(inputMode === "numeric" ? e.target.value.replace(/\D/g, "") : e.target.value)}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="h-9 bg-background ps-9 pe-3 text-xs shadow-2xs md:text-sm"
+        className="h-8 bg-background ps-8 pe-3 text-xs shadow-2xs md:text-xs"
       />
     </div>
   );
@@ -118,10 +118,10 @@ export function ResetFilters({ count, onReset }: { count: number; onReset: () =>
   const t = useTranslations("common");
   if (count === 0) return null;
   return (
-    <Button variant="ghost" size="sm" className="h-9 gap-1.5 text-muted-foreground hover:text-foreground" onClick={onReset}>
-      <X className="size-3.5" />
+    <Button variant="ghost" size="sm" className="h-8 gap-1.5 text-xs text-muted-foreground hover:text-foreground" onClick={onReset}>
+      <X className="size-3" />
       <span>{t("reset")}</span>
-      <span className="grid size-4.5 place-items-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">{count}</span>
+      <span className="grid size-4 place-items-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">{count}</span>
     </Button>
   );
 }

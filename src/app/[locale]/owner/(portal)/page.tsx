@@ -23,7 +23,7 @@ async function Greeting() {
   } catch {
     name = null;
   }
-  return <p className="text-xl font-semibold">{name ? t("hello", { name }) : t("helloNoName")}</p>;
+  return <p className="text-lg font-bold tracking-tight text-foreground sm:text-xl">{name ? t("hello", { name }) : t("helloNoName")}</p>;
 }
 
 // O03 — Owner home.
@@ -32,8 +32,8 @@ export default async function OwnerHomePage() {
   return (
     <>
       <OwnerHeader title={t("tabs.home")} />
-      <div className="grid gap-4 p-4">
-        <Suspense fallback={<Skeleton className="h-7 w-40" />}>
+      <div className="grid gap-3.5 py-2 sm:gap-4 sm:py-3">
+        <Suspense fallback={<Skeleton className="h-6 w-36" />}>
           <Greeting />
         </Suspense>
         <OwnerHome />

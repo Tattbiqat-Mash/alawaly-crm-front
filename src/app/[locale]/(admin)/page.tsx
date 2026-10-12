@@ -14,7 +14,15 @@ export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
   return (
     <PageContainer>
-      <PageHeader title={t("title")} description={t("updated")} />
+      <PageHeader
+        title={t("title")}
+        description={
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span aria-hidden className="size-1.5 rounded-full bg-emerald-500 pulse-dot" />
+            <span>{t("updated")}</span>
+          </span>
+        }
+      />
       <Dashboard />
     </PageContainer>
   );

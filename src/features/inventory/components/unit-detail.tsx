@@ -80,13 +80,13 @@ export function UnitDetail({ id }: { id: number }) {
         actions={
           <>
             {can("pricing.request") && (
-              <Button variant="outline" onClick={() => setPriceOpen(true)}>
+              <Button variant="outline" size="sm" onClick={() => setPriceOpen(true)}>
                 <BadgeDollarSign data-icon="inline-start" />
                 {t("units.detail.requestPrice")}
               </Button>
             )}
             {can("inventory.status") && (
-              <Button onClick={() => setStatusOpen(true)}>
+              <Button size="sm" onClick={() => setStatusOpen(true)}>
                 <ArrowLeftRight data-icon="inline-start" />
                 {t("units.detail.changeStatus")}
               </Button>
@@ -96,23 +96,23 @@ export function UnitDetail({ id }: { id: number }) {
       />
 
       {(unit.status === "reserved" || unit.status === "sold") && (
-        <p className="flex items-center gap-2 rounded-lg border bg-muted/50 px-3 py-2 text-sm text-muted-foreground">
-          <Info aria-hidden className="size-4 shrink-0" />
+        <p className="flex items-center gap-2 rounded-lg border bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground">
+          <Info aria-hidden className="size-3.5 shrink-0" />
           {unit.status === "reserved" ? t("units.detail.linkedReservation") : t("units.detail.linkedSale")}
         </p>
       )}
 
-      <Tabs value={tab} onValueChange={(v) => setTab(v as (typeof TABS)[number])} className="gap-4">
+      <Tabs value={tab} onValueChange={(v) => setTab(v as (typeof TABS)[number])} className="gap-3">
         <TabsList className="w-full justify-start overflow-x-auto sm:w-fit">
           {TABS.map((key) => (
-            <TabsTrigger key={key} value={key}>
+            <TabsTrigger key={key} value={key} className="text-xs">
               {t(`units.tabs.${key}`)}
             </TabsTrigger>
           ))}
         </TabsList>
         <TabsContent value="details">
-          <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
-            <section className="rounded-xl border bg-card p-4 md:p-5">
+          <div className="grid gap-3.5 xl:grid-cols-[1fr_330px]">
+            <section className="rounded-xl border bg-card p-3.5 sm:p-4 md:p-5">
               <UnitDetailsForm data={data} />
             </section>
             <AvailabilityCard unitId={unit.id} />

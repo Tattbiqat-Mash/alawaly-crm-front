@@ -16,12 +16,14 @@ import { formatDate } from "@/lib/format/dates";
 import { isOn } from "@/lib/format/localized";
 import { formatDecimal, formatMoney } from "@/lib/format/money";
 import { inventoryApi } from "../api";
-import { usePrefetchUnit, useUnits, useUnitsListState } from "../hooks";
+import { CLEARED_UNIT_FILTERS, usePrefetchUnit, useUnits, useUnitsListState, type UnitsListState } from "../hooks";
 import type { UnitListItem } from "../types";
+import { UnitsSitePlan } from "./site-plan/units-site-plan";
 import { UnitQuickSheet } from "./unit-quick-sheet";
 import { UnitStatusBadge } from "./unit-status-badge";
 import { UnitsFilters } from "./units-filters";
 import { useInventoryLookups } from "./use-lookups";
+import { ViewSwitch } from "./view-switch";
 
 /** Header actions: CSV export (reports.view) and import (S06, not built yet). */
 export function UnitsActions() {
@@ -53,15 +55,38 @@ export function UnitsActions() {
   );
 }
 
-// S03 — Units.
+// S03 — Units: one filter bar over two views, the table and the site plan. Both open the same quick view.
 export function UnitsView() {
+  const [state, setState] = useUnitsListState();
+  const [selected, setSelected] = useState<UnitListItem | null>(null);
+
+  return (
+    <>
+      <UnitsFilters state={state} setState={setState} trailing={<ViewSwitch value={state.view} onChange={(view) => setState({ view })} />} />
+      {state.view === "plan" ? (
+        <UnitsSitePlan state={state} setState={setState} selectedId={selected?.id ?? null} onSelect={setSelected} />
+      ) : (
+        <UnitsTable state={state} setState={setState} onSelect={setSelected} />
+      )}
+      <UnitQuickSheet unit={selected} onClose={() => setSelected(null)} />
+    </>
+  );
+}
+
+function UnitsTable({
+  state,
+  setState,
+  onSelect,
+}: {
+  state: UnitsListState;
+  setState: (patch: Partial<UnitsListState>) => void;
+  onSelect: (unit: UnitListItem) => void;
+}) {
   const t = useTranslations();
   const locale = useLocale();
-  const [state, setState] = useUnitsListState();
   const units = useUnits(state);
   const lookups = useInventoryLookups();
   const prefetchUnit = usePrefetchUnit();
-  const [selected, setSelected] = useState<UnitListItem | null>(null);
 
   const columns: Column<UnitListItem>[] = [
     {
@@ -132,52 +157,42 @@ export function UnitsView() {
   ];
 
   return (
-    <>
-      <UnitsFilters state={state} setState={setState} />
-      <DataTable
-        caption={t("units.title")}
-        columns={columns}
-        rows={units.data?.items}
-        getRowId={(u) => u.id}
-        getRowLabel={(u) => t("units.quick.title", { number: u.unit_number ?? `#${u.id}` })}
-        isLoading={units.isLoading}
-        isFetching={units.isFetching}
-        error={units.error}
-        onRetry={() => units.refetch()}
-        onRowClick={setSelected}
-        onRowIntent={(u) => prefetchUnit(u.id)}
-        sort={{ value: state.sort, onChange: (sort) => setState({ sort, page: 1 }) }}
-        pagination={
-          units.data
-            ? {
-                page: units.data.meta.page,
-                pageSize: units.data.meta.pageSize,
-                total: units.data.meta.total,
-                onPageChange: (page) => setState({ page }),
-                onPageSizeChange: (pageSize) => setState({ pageSize, page: 1 }),
-              }
-            : undefined
-        }
-        empty={
-          <EmptyState
-            compact
-            title={t("units.empty")}
-            description={t("units.emptyHint")}
-            action={
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() =>
-                  setState({ q: null, project: null, building: null, status: null, type: null, priceMin: null, priceMax: null, active: null, page: 1 })
-                }
-              >
-                {t("common.reset")}
-              </Button>
+    <DataTable
+      caption={t("units.title")}
+      columns={columns}
+      rows={units.data?.items}
+      getRowId={(u) => u.id}
+      getRowLabel={(u) => t("units.quick.title", { number: u.unit_number ?? `#${u.id}` })}
+      isLoading={units.isLoading}
+      isFetching={units.isFetching}
+      error={units.error}
+      onRetry={() => units.refetch()}
+      onRowClick={onSelect}
+      onRowIntent={(u) => prefetchUnit(u.id)}
+      sort={{ value: state.sort, onChange: (sort) => setState({ sort, page: 1 }) }}
+      pagination={
+        units.data
+          ? {
+              page: units.data.meta.page,
+              pageSize: units.data.meta.pageSize,
+              total: units.data.meta.total,
+              onPageChange: (page) => setState({ page }),
+              onPageSizeChange: (pageSize) => setState({ pageSize, page: 1 }),
             }
-          />
-        }
-      />
-      <UnitQuickSheet unit={selected} onClose={() => setSelected(null)} />
-    </>
+          : undefined
+      }
+      empty={
+        <EmptyState
+          compact
+          title={t("units.empty")}
+          description={t("units.emptyHint")}
+          action={
+            <Button variant="outline" size="sm" onClick={() => setState(CLEARED_UNIT_FILTERS)}>
+              {t("common.reset")}
+            </Button>
+          }
+        />
+      }
+    />
   );
 }

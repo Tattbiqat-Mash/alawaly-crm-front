@@ -37,7 +37,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           collapsed ? "w-16" : "w-60",
         )}
       >
-        <div className={cn("flex h-14 shrink-0 items-center border-b", collapsed ? "justify-center" : "px-4")}>
+        <div className={cn("flex h-12 shrink-0 items-center border-b", collapsed ? "justify-center" : "px-4")}>
           <Link href="/" aria-label="Alawaly">
             <Brand compact={collapsed} />
           </Link>
@@ -61,7 +61,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side={startSide} className="w-72 gap-0 p-0">
-          <SheetTitle className="flex h-14 items-center border-b px-4">
+          <SheetTitle className="flex h-12 items-center border-b px-4">
             <Brand />
           </SheetTitle>
           <div className="min-h-0 flex-1 overflow-y-auto">
@@ -71,7 +71,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-card/90 px-3 backdrop-blur-md md:px-5">
+        <header className="sticky top-0 z-20 flex h-12 shrink-0 items-center gap-2 border-b bg-card/90 px-3 backdrop-blur-md md:px-5">
           <Button variant="ghost" size="icon" className="md:hidden" aria-label={t("menu")} onClick={() => setMobileOpen(true)}>
             <Menu />
           </Button>
@@ -81,7 +81,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-1.5">
             <ThemeToggle />
             <LocaleSwitch />
-            <div className="ms-1 h-5 w-px bg-border/80" />
+            <div className="ms-1 h-4 w-px bg-border/80" />
             <UserMenu />
           </div>
         </header>
@@ -96,7 +96,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 /** Standard page padding; `fill` lets a table take the remaining height. */
 export function PageContainer({ children, fill, className }: { children: ReactNode; fill?: boolean; className?: string }) {
   return (
-    <div className={cn("mx-auto flex w-full max-w-[1600px] flex-col gap-4 p-4 md:p-6", fill && "min-h-0 flex-1", className)}>
+    <div className={cn("mx-auto flex w-full max-w-[1600px] flex-col gap-3 px-3 py-2.5 sm:px-4 sm:py-3 md:px-6 md:py-3.5", fill && "min-h-0 flex-1", className)}>
       {children}
     </div>
   );

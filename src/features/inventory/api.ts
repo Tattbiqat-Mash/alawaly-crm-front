@@ -1,7 +1,7 @@
 import type { AxiosResponse } from "axios";
 import { staffEndpoints } from "@/config/endpoints";
 import { staffApi } from "@/lib/api/client";
-import { unwrapList, type Envelope, type ListEnvelope } from "@/lib/api/envelope";
+import { pageCount, unwrapList, type Envelope, type ListEnvelope } from "@/lib/api/envelope";
 import { downloadFile } from "@/lib/api/files";
 import { idempotencyHeader } from "@/lib/api/idempotency";
 import { MAX_PAGE_SIZE, toSearchParams, type ListParams } from "@/lib/api/params";
@@ -34,8 +34,21 @@ const versioned = (res: AxiosResponse<Envelope<Unit>>): VersionedUnit => ({
   etag: (res.headers.etag as string | undefined) ?? `"${res.data.data.version}"`,
 });
 
+/** Pages the site plan reads at most (100 units each); narrower filters cover larger projects. */
+export const SITE_PLAN_MAX_PAGES = 20;
+
 export const inventoryApi = {
   listUnits: (params: ListParams) => list<UnitListItem>(ep.units, params),
+
+  /** Every unit matching `params`, up to SITE_PLAN_MAX_PAGES pages: the site plan draws whole buildings. */
+  listAllUnits: async (params: ListParams) => {
+    const page = (n: number) => list<UnitListItem>(ep.units, { ...params, page: n, pageSize: MAX_PAGE_SIZE });
+    const first = await page(1);
+    const pages = Math.min(pageCount(first.meta), SITE_PLAN_MAX_PAGES);
+    const rest = await Promise.all(Array.from({ length: pages - 1 }, (_, i) => page(i + 2)));
+    const items = [first, ...rest].flatMap((p) => p.items);
+    return { items, total: first.meta.total, truncated: first.meta.total > items.length };
+  },
 
   getUnit: (id: number) => staffApi.get<Envelope<Unit>>(ep.unit(id)).then(versioned),
 

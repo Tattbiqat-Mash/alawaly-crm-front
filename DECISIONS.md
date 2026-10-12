@@ -66,6 +66,7 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | B37 | O15: a tap marks the notification read; `service.*` with `service_id` opens that request, `warranty.*` opens warranties, others only mark read. |
 | B38 | O16: statements load when the mandate lists `view_statements` or is `full_management`; otherwise (or on `MANDATE_SCOPE`) a short explanation shows. |
 | B39 | O07 cancel and O10 accept ask for confirmation without a reason: both endpoints take no body and the owner is acting on their own record. |
+| B40 | S03 site plan (`?view=plan`) draws each building as a front elevation. It reads **every** unit of the chosen project (pages of 100, at most 20 pages; beyond that a notice asks to pick a building) and, when other filters are set, a second filtered list whose ids stay lit while the rest are dimmed, so the server still applies every filter. A unit's floor is `floor_num`; when that is empty (as in all recorded examples) it is read from "floor + two-digit door" numbers (`1205` → 12); anything else goes to a "floor not recorded" row. Buildings are topped up to `floors_count`. Confirm floor numbering with the backend. |
 
 ## Docs vs API (API wins)
 

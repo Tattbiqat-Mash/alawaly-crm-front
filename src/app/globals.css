@@ -30,6 +30,8 @@
   --color-warning: var(--warning);
   --color-info: var(--info);
   --color-sand: var(--sand);
+  --color-sand-muted: var(--sand-muted);
+  --color-sand-border: var(--sand-border);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -73,13 +75,15 @@
   --success: #166b37;
   --warning: #855700;
   --info: #1b5b9f;
-  --sand: #a37736;
+  --sand: #966727;
+  --sand-muted: #faf5ee;
+  --sand-border: #ebd8bf;
   --border: #e2e8f0;
   --input: #cbd5e1;
   --ring: #0a5f56;
   --chart-1: #0a5f56;
   --chart-2: #3a978b;
-  --chart-3: #a37736;
+  --chart-3: #966727;
   --chart-4: #52606d;
   --chart-5: #9f2428;
   --radius: 0.625rem;
@@ -113,6 +117,8 @@
   --warning: #e3b45a;
   --info: #7cb4f0;
   --sand: #d9b47a;
+  --sand-muted: #221c13;
+  --sand-border: #423521;
   --border: #1f2b31;
   --input: #28373f;
   --ring: #34baaa;
@@ -179,6 +185,34 @@ html:lang(ar) {
   to {
     transform: translateX(300%);
   }
+}
+
+/* Subtle live pulse indicator for active / online states */
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Clear affordance for clickable cards and widgets */
+.clickable-widget {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+.clickable-widget:hover {
+  transform: translateY(-1.5px);
+}
+.clickable-widget:active {
+  transform: translateY(0) scale(0.99);
 }
 
 @media (prefers-reduced-motion: reduce) {

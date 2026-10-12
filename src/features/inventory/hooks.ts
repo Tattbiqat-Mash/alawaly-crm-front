@@ -1,7 +1,7 @@
 "use client";
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { parseAsString, useQueryStates } from "nuqs";
+import { parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
 import { useMemo } from "react";
 import { clampPageSize, listParsers } from "@/components/shared/data-table/list-params";
 import type { Permission } from "@/config/permissions";
@@ -24,11 +24,15 @@ export const inventoryKeys = {
   unitTypes: ["unit-types", "all"] as const,
 };
 
-/** Units list state lives in the URL (shareable, refresh-safe). */
+export const UNITS_VIEWS = ["table", "plan"] as const;
+export type UnitsViewMode = (typeof UNITS_VIEWS)[number];
+
+/** Units list state lives in the URL (shareable, refresh-safe), including the table/plan view. */
 export function useUnitsListState() {
   return useQueryStates(
     {
       ...listParsers,
+      view: parseAsStringLiteral(UNITS_VIEWS).withDefault("table"),
       q: parseAsString,
       project: parseAsString,
       building: parseAsString,
@@ -44,21 +48,29 @@ export function useUnitsListState() {
 
 export type UnitsListState = ReturnType<typeof useUnitsListState>[0];
 
+export const CLEARED_UNIT_FILTERS = {
+  q: null,
+  project: null,
+  building: null,
+  status: null,
+  type: null,
+  priceMin: null,
+  priceMax: null,
+  active: null,
+  page: 1,
+} satisfies Partial<UnitsListState>;
+
+/** Filters that pick units inside the chosen project/building (the plan dims what they leave out). */
+export const hasNarrowingFilters = (s: UnitsListState) => Boolean(s.q || s.status || s.type || s.priceMin || s.priceMax || s.active);
+
+const unitFilterParams = (s: UnitsListState) => ({
+  filter: { project_id: s.project, building_id: s.building, status: s.status, unit_type_id: s.type, active: s.active },
+  extra: { q: s.q, price_min: s.priceMin, price_max: s.priceMax },
+});
+
 export function useUnits(state: UnitsListState) {
   const params = useMemo(
-    () => ({
-      page: state.page,
-      pageSize: clampPageSize(state.pageSize),
-      sort: state.sort,
-      filter: {
-        project_id: state.project,
-        building_id: state.building,
-        status: state.status,
-        unit_type_id: state.type,
-        active: state.active,
-      },
-      extra: { q: state.q, price_min: state.priceMin, price_max: state.priceMax },
-    }),
+    () => ({ page: state.page, pageSize: clampPageSize(state.pageSize), sort: state.sort, ...unitFilterParams(state) }),
     [state],
   );
   return useQuery({
@@ -69,7 +81,39 @@ export function useUnits(state: UnitsListState) {
   });
 }
 
-export const useDuplicates = () => useQuery({ queryKey: ["units-duplicates"], queryFn: inventoryApi.duplicates });
+/**
+ * Units for the site plan. `scope` is every unit of the chosen project (or building), so buildings
+ * are drawn whole; `matches` holds the ids the other filters keep (null when nothing narrows).
+ * The server applies the filters in both cases, exactly as for the table.
+ */
+export function useSitePlanUnits(state: UnitsListState) {
+  const narrowed = hasNarrowingFilters(state);
+  const scopeParams = useMemo(
+    () => ({ sort: "unit_number", filter: { project_id: state.project, building_id: state.building } }),
+    [state.project, state.building],
+  );
+  const matchParams = useMemo(() => ({ sort: "unit_number", ...unitFilterParams(state) }), [state]);
+
+  const scope = useQuery({
+    queryKey: ["units", "plan", scopeParams],
+    queryFn: () => inventoryApi.listAllUnits(scopeParams),
+    enabled: state.project !== null || state.building !== null,
+    staleTime: 30_000,
+  });
+  const match = useQuery({
+    queryKey: ["units", "plan", matchParams],
+    queryFn: () => inventoryApi.listAllUnits(matchParams),
+    enabled: narrowed,
+    staleTime: 30_000,
+    // Typing in search keeps the current highlight until the new one arrives.
+    placeholderData: keepPreviousData,
+  });
+
+  const matches = useMemo(() => (narrowed && match.data ? new Set(match.data.items.map((u) => u.id)) : null), [narrowed, match.data]);
+  return { scope, match, matches, narrowed };
+}
+
+export const useDuplicates =() => useQuery({ queryKey: ["units-duplicates"], queryFn: inventoryApi.duplicates });
 
 export const useProjects = () =>
   useQuery({ queryKey: inventoryKeys.projects, queryFn: inventoryApi.projects, staleTime: LOOKUP_STALE });

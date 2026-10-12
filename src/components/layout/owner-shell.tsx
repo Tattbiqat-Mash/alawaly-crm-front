@@ -6,6 +6,7 @@ import { Suspense, type ReactNode } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { LocaleSwitch } from "./locale-switch";
+import { ThemeToggle } from "./theme-toggle";
 
 type Tab = { key: "home" | "units" | "requests" | "alerts" | "more"; href: string; icon: LucideIcon; ready: boolean };
 
@@ -39,7 +40,7 @@ function TabBar({ pathname }: { pathname: string | null }) {
       aria-label={t("owner.tabs.label")}
       className="fixed inset-x-0 bottom-0 z-30 border-t bg-card/90 pb-[env(safe-area-inset-bottom)] shadow-xs backdrop-blur-md supports-[backdrop-filter]:bg-card/85"
     >
-      <ul className="mx-auto grid max-w-md grid-cols-5">
+      <ul className="mx-auto grid max-w-md grid-cols-5 md:max-w-xl">
         {TABS.map((tab) => {
           const active = pathname !== null && (tab.href === "/owner" ? pathname === "/owner" : pathname.startsWith(tab.href));
           const content = (
@@ -50,7 +51,7 @@ function TabBar({ pathname }: { pathname: string | null }) {
               </span>
             </>
           );
-          const cls = "flex h-16 flex-col items-center justify-center gap-1.5 transition-colors";
+          const cls = "flex h-14 md:h-16 flex-col items-center justify-center gap-1.5 transition-colors";
           return (
             <li key={tab.key}>
               {tab.ready ? (
@@ -76,29 +77,32 @@ function TabBar({ pathname }: { pathname: string | null }) {
   );
 }
 
-/** Phone header: optional back link, title and the language switch. */
+/** Phone/Web header: optional back link, title and the language switch. */
 export function OwnerHeader({ title, backHref }: { title: ReactNode; backHref?: string }) {
   const t = useTranslations("common");
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/90 px-3 backdrop-blur-md">
+    <header className="sticky top-0 z-20 flex h-11 items-center gap-2 border-b bg-background/90 px-3 backdrop-blur-md md:h-12 md:px-5">
       {backHref ? (
-        <Link href={backHref} aria-label={t("back")} className="grid size-9 place-items-center rounded-lg transition-colors hover:bg-muted">
-          <ChevronLeft className="size-5 rtl:rotate-180" />
+        <Link href={backHref} aria-label={t("back")} className="grid size-8 place-items-center rounded-lg transition-colors hover:bg-muted md:size-9">
+          <ChevronLeft className="size-4 rtl:rotate-180 md:size-5" />
         </Link>
       ) : (
         <span className="w-1" />
       )}
-      <h1 className="min-w-0 flex-1 truncate text-base font-bold tracking-tight text-foreground">{title}</h1>
-      <LocaleSwitch />
+      <h1 className="min-w-0 flex-1 truncate text-sm font-bold tracking-tight text-foreground sm:text-base">{title}</h1>
+      <div className="flex items-center gap-1">
+        <ThemeToggle />
+        <LocaleSwitch />
+      </div>
     </header>
   );
 }
 
-/** Mobile-first column (360px and up), centred on larger screens, with room for the tab bar. */
+/** Web-first layout expanding to max-w-5xl on desktop, with mobile-friendly centering and safe area. */
 export function OwnerShell({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-background">
-      <div className="flex-1 px-4 pt-3 pb-[calc(4.5rem+env(safe-area-inset-bottom))]">{children}</div>
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-background transition-all md:max-w-5xl">
+      <div className="flex-1 px-3.5 pt-2.5 pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-4">{children}</div>
       <OwnerTabBar />
     </div>
   );

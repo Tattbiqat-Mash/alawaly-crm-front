@@ -1,18 +1,21 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { FilterBar, FilterSelect, ResetFilters, SearchFilter, useDebouncedParam } from "@/components/shared/filters";
 import { Input } from "@/components/ui/input";
 import { UNIT_STATUSES } from "@/config/statuses";
 import { localizedName } from "@/lib/format/localized";
-import type { UnitsListState } from "../hooks";
+import { cn } from "@/lib/utils";
+import { CLEARED_UNIT_FILTERS, type UnitsListState } from "../hooks";
 import { useInventoryLookups } from "./use-lookups";
 
 type SetState = (patch: Partial<UnitsListState>) => void;
 
 const decimalOnly = (v: string) => v.replace(/[^\d.]/g, "");
 
-export function UnitsFilters({ state, setState }: { state: UnitsListState; setState: SetState }) {
+/** `trailing` sits at the end of the bar (the table/plan switch). */
+export function UnitsFilters({ state, setState, trailing }: { state: UnitsListState; setState: SetState; trailing?: ReactNode }) {
   const t = useTranslations();
   const locale = useLocale();
   const lookups = useInventoryLookups();
@@ -60,8 +63,20 @@ export function UnitsFilters({ state, setState }: { state: UnitsListState; setSt
           { value: "0", label: t("units.filters.inactiveOnly") },
         ]}
       />
-      <div className="flex items-center gap-1.5 rounded-lg border bg-background px-2.5 py-0.5 shadow-2xs">
-        <span className="text-xs text-muted-foreground whitespace-nowrap">{t("units.columns.price")}:</span>
+      <div
+        className={cn(
+          "flex h-8 items-center gap-1.5 rounded-lg border bg-background px-2.5 shadow-2xs transition-colors",
+          (Boolean(priceMin) || Boolean(priceMax)) && "border-primary/50 bg-primary/5 text-foreground",
+        )}
+      >
+        <span
+          className={cn(
+            "text-[11px] whitespace-nowrap",
+            Boolean(priceMin) || Boolean(priceMax) ? "font-semibold text-primary" : "text-muted-foreground",
+          )}
+        >
+          {t("units.columns.price")}:
+        </span>
         <Input
           inputMode="decimal"
           dir="ltr"
@@ -69,7 +84,7 @@ export function UnitsFilters({ state, setState }: { state: UnitsListState; setSt
           onChange={(e) => setPriceMin(decimalOnly(e.target.value))}
           placeholder={t("units.filters.priceFrom")}
           aria-label={t("units.filters.priceFrom")}
-          className="h-7 w-20 border-0 bg-transparent px-1 text-xs shadow-none focus-visible:ring-0 md:text-xs"
+          className="h-6 w-16 border-0 bg-transparent px-1 text-center text-xs shadow-none focus-visible:ring-0 md:text-xs num"
         />
         <span aria-hidden className="text-muted-foreground/60">
           –
@@ -81,15 +96,11 @@ export function UnitsFilters({ state, setState }: { state: UnitsListState; setSt
           onChange={(e) => setPriceMax(decimalOnly(e.target.value))}
           placeholder={t("units.filters.priceTo")}
           aria-label={t("units.filters.priceTo")}
-          className="h-7 w-20 border-0 bg-transparent px-1 text-xs shadow-none focus-visible:ring-0 md:text-xs"
+          className="h-6 w-16 border-0 bg-transparent px-1 text-center text-xs shadow-none focus-visible:ring-0 md:text-xs num"
         />
       </div>
-      <ResetFilters
-        count={activeCount}
-        onReset={() =>
-          setState({ q: null, project: null, building: null, status: null, type: null, priceMin: null, priceMax: null, active: null, page: 1 })
-        }
-      />
+      <ResetFilters count={activeCount} onReset={() => setState(CLEARED_UNIT_FILTERS)} />
+      {trailing}
     </FilterBar>
   );
 }

@@ -31,10 +31,10 @@ export function Field({
 }) {
   return (
     <div className={cn("grid gap-1.5", className)}>
-      <Label htmlFor={id}>
+      <Label htmlFor={id} className="text-xs font-semibold text-foreground/90">
         {label}
         {required && (
-          <span aria-hidden className="text-destructive">
+          <span aria-hidden className="ms-1 text-destructive font-bold">
             *
           </span>
         )}
@@ -46,7 +46,7 @@ export function Field({
         </p>
       )}
       {error && (
-        <p id={`${id}-error`} role="alert" className="text-xs text-destructive">
+        <p id={`${id}-error`} role="alert" className="text-xs text-destructive font-medium">
           {error}
         </p>
       )}
@@ -57,9 +57,9 @@ export function Field({
 /** Read-only value in the same rhythm as editable fields. */
 export function ReadOnlyField({ label, value, className }: { label: ReactNode; value: ReactNode; className?: string }) {
   return (
-    <div className={cn("grid gap-1.5", className)}>
-      <span className="text-sm font-medium text-muted-foreground">{label}</span>
-      <span className="flex min-h-8 items-center rounded-lg bg-muted/60 px-2.5 text-sm">{value}</span>
+    <div className={cn("grid gap-1", className)}>
+      <span className="text-xs font-medium text-muted-foreground">{label}</span>
+      <span className="flex min-h-8 items-center rounded-lg border border-border/60 bg-background/80 px-2.5 text-xs sm:text-sm shadow-2xs">{value}</span>
     </div>
   );
 }

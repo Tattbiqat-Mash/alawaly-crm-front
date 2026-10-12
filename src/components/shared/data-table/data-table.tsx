@@ -96,7 +96,7 @@ export function DataTable<T>({
                     scope="col"
                     aria-sort={active ? (descending ? "descending" : "ascending") : undefined}
                     className={cn(
-                      "h-10.5 px-3.5 text-start align-middle text-[11px] font-semibold tracking-wider text-muted-foreground uppercase whitespace-nowrap",
+                      "h-9 px-3 text-start align-middle text-[11px] font-semibold tracking-wider text-muted-foreground uppercase whitespace-nowrap",
                       col.align === "end" && "text-end",
                       col.className,
                     )}
@@ -105,18 +105,21 @@ export function DataTable<T>({
                       <button
                         type="button"
                         onClick={() => sort.onChange(nextSort(sort.value, col.sortKey!))}
-                        className="-mx-1 inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none"
+                        className={cn(
+                          "-mx-1 inline-flex items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none",
+                          active && "font-bold text-foreground",
+                        )}
                         aria-label={t("sortBy", { column: col.header })}
                       >
                         <span>{col.header}</span>
                         {active ? (
                           descending ? (
-                            <ArrowDown aria-hidden className="size-3.5 text-primary" />
+                            <ArrowDown aria-hidden className="size-3 text-primary stroke-[2.5]" />
                           ) : (
-                            <ArrowUp aria-hidden className="size-3.5 text-primary" />
+                            <ArrowUp aria-hidden className="size-3 text-primary stroke-[2.5]" />
                           )
                         ) : (
-                          <ArrowUpDown aria-hidden className="size-3.5 opacity-35" />
+                          <ArrowUpDown aria-hidden className="size-3 opacity-35" />
                         )}
                       </button>
                     ) : (
@@ -132,7 +135,7 @@ export function DataTable<T>({
               Array.from({ length: 8 }, (_, i) => (
                 <tr key={i} className="border-b border-border/70 last:border-0">
                   {columns.map((col) => (
-                    <td key={col.id} className="px-3.5 py-3.5">
+                    <td key={col.id} className="px-3 py-2.5">
                       <Skeleton className="h-4 w-full max-w-32" />
                     </td>
                   ))}
@@ -150,14 +153,20 @@ export function DataTable<T>({
                   onPointerEnter={onRowIntent ? () => onRowIntent(row) : undefined}
                   onFocus={onRowIntent ? () => onRowIntent(row) : undefined}
                   className={cn(
-                    "border-b border-border/60 transition-colors last:border-0 hover:bg-muted/40",
-                    onRowClick && "cursor-pointer focus-visible:bg-primary/5 focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:outline-none",
+                    "group/row border-b border-border/60 transition-colors last:border-0",
+                    onRowClick
+                      ? "cursor-pointer hover:bg-primary/[0.04] focus-visible:bg-primary/5 focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:outline-none"
+                      : "hover:bg-muted/40",
                   )}
                 >
                   {columns.map((col) => (
                     <td
                       key={col.id}
-                      className={cn("px-3.5 py-3 align-middle whitespace-nowrap", col.align === "end" && "text-end", col.className)}
+                      className={cn(
+                        "px-3 py-2.5 align-middle whitespace-nowrap",
+                        col.align === "end" && "text-end tabular-nums num",
+                        col.className,
+                      )}
                     >
                       {col.cell(row)}
                     </td>
@@ -166,8 +175,8 @@ export function DataTable<T>({
               ))}
           </tbody>
         </table>
-        {showError && <ErrorState error={error} onRetry={onRetry} compact />}
-        {showEmpty && empty}
+        {showError && <div className="p-6"><ErrorState error={error} onRetry={onRetry} compact /></div>}
+        {showEmpty && <div className="flex min-h-[240px] items-center justify-center p-6">{empty}</div>}
       </div>
       {pagination && <TablePagination {...pagination} />}
     </div>
