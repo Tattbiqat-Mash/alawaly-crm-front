@@ -13,8 +13,8 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 | A4 | BFF forwards only `Accept-Language`, `Content-Type`, `Idempotency-Key`, `If-Match` up, and only `Content-Type`, `Content-Disposition`, `ETag`, `Idempotent-Replayed`, `Retry-After` down. | Smallest surface; nothing else leaks either way. |
 | A5 | Cross-site writes to the BFF are refused (Origin/host check) on top of `SameSite=Lax`. | Cookie sessions need CSRF protection. |
 | A6 | On upstream 401 the BFF clears that session's cookie; the browser does a **full** navigation to sign-in (`?next=` for staff). | A full navigation also drops every cached query of the ended session. |
-| A7 | `[locale]` route segment with `localePrefix: "as-needed"`: Arabic (default) keeps the wireframe URLs (`/units`), English is `/en/units`. Locale is read with `next/root-params`. | Each locale gets a prerendered static shell under Cache Components (fast first paint). |
-| A8 | Session reads and URL-reading client components sit behind small `<Suspense>` boundaries. | Required by Cache Components; the rest of each page prerenders. |
+| A7 | `[locale]` route segment with `localePrefix: "as-needed"`: Arabic (default) keeps the wireframe URLs (`/units`), English is `/en/units`. Locale is read with `next/root-params`. | Each locale gets its own prerendered pages. (Cache Components is off for now; see Environment.) |
+| A8 | Session reads and URL-reading client components sit behind small `<Suspense>` boundaries. | Written for Cache Components, kept so it can be turned back on; they also let pages stream. |
 | A9 | Mock mode (`API_MOCKS=1`) answers from the **recorded Frontend Guide examples** inside the BFF. Real API is the default. Tests can ask for a recorded status with `x-mock-status`. | The browser code path is identical in both modes; no MSW service worker needed. |
 | A10 | `api-spec/guide-examples.json` (168 endpoints, 220 examples) is extracted from the Frontend Guide by `pnpm api:extract <guide.html>`. Types are written per feature from these recorded responses. | `openapi-v2.json` was not available locally. If it is added to `api-spec/`, generate types with openapi-typescript and cross-check. |
 | A11 | No chart library on the dashboard: CSS bars. | Keeps the first load small; a chart library can be lazy-loaded later if needed. |
@@ -101,4 +101,7 @@ Rule of thumb from the brief: **the API wins**; record the gap here instead of g
 ## Environment
 
 - Live API: `https://system.alawaly.tattbiqat.com/api/v2` (checked: unauthenticated `GET /me` → 401 `UNAUTHENTICATED`, wrong login → 401 `INVALID_CREDENTIALS`).
-- `pnpm cf:build` (OpenNext for Cloudflare) fails on native Windows with "Access is denied" on pnpm's linked folders (worse inside OneDrive). Build in WSL or CI (Linux). `pnpm build` works on Windows.
+- `pnpm cf:build` (OpenNext for Cloudflare) fails on native Windows with "Access is denied" on pnpm's linked folders (worse inside OneDrive). Build in WSL or CI (Linux). `pnpm build` works on Windows. Outside OneDrive with `nodeLinker: hoisted` it builds on Windows too.
+- Cloudflare (OpenNext 1.20.10, Next 16.4), two fixes, both needed or every page answers `error code: 1101`:
+  - `patches/@opennextjs__cloudflare@1.20.10.patch` adds `preview-props.json` to the manifests OpenNext inlines. Next 16.4 reads it on startup; without it: `Unexpected loadManifest(/.next/server/preview-props.json) call!`. Drop the patch once an OpenNext release includes it (`pnpm` refuses a patch that no longer applies on upgrade).
+  - `cacheComponents` and `partialPrefetching` are off. With them on, every page render hangs in workerd ("Worker's code had hung"). Re-test with `pnpm cf:build` + `wrangler dev` before turning them back on.

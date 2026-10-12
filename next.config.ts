@@ -4,8 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Cache Components (and partialPrefetching, which builds on it) stay off: on Cloudflare
+  // Workers (OpenNext 1.20, Next 16.4) every page render hangs and the Worker returns 1101.
+  // See DECISIONS.md (Environment) before turning them back on.
   turbopack: {
     rules: {
       "*.css": {

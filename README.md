@@ -1,6 +1,6 @@
 # Alawaly — staff app and owner portal
 
-Next.js 16 (App Router, Cache Components) frontend for the Alawaly REST API (`/api/v2`).
+Next.js 16 (App Router) frontend for the Alawaly REST API (`/api/v2`).
 Staff app at `/…`, owner portal at `/owner/…`. Arabic first (RTL), English at `/en/…`.
 
 ## Run
