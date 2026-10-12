@@ -8,9 +8,10 @@ async function signIn(page: Page) {
   await page.getByRole("button", { name: "إرسال الرمز" }).click();
   await page.getByLabel("رمز من 6 أرقام").fill("755599");
   await expect(page.getByText("مرحبًا، Layla Al-Harbi")).toBeVisible();
-  // Let the post-sign-in navigation settle before tapping anything.
+  // Let the post-sign-in navigation settle before tapping anything. Not "networkidle": without
+  // Cache Components the router keeps one segment prefetch open, so the network never idles.
   await expect(page).toHaveURL(/\/owner$/);
-  await page.waitForLoadState("networkidle");
+  await expect(page.getByText("أحدث الإشعارات")).toBeVisible();
 }
 
 test("O04 → O05: my units, then a unit with its service shortcuts", async ({ page }) => {

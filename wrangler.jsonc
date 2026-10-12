@@ -4,6 +4,9 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
+  // next-themes inlines its script with Function#toString(); esbuild's keep_names would add
+  // __name() calls to it, which crash in the browser and skip the theme before first paint.
+  "keep_names": false,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

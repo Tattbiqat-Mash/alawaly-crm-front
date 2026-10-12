@@ -27,7 +27,7 @@ const initials = (name: string) =>
 export function UserMenu() {
   const t = useTranslations();
   const locale = useLocale();
-  const { data: me } = useMe();
+  const me = useMe();
   // A full navigation also drops every cached query.
   const logout = useLogout(() => window.location.assign(locale === "ar" ? "/login" : `/${locale}/login`));
 

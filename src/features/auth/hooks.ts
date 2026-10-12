@@ -3,24 +3,30 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { hasPermission, type Permission } from "@/config/permissions";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { authApi } from "./api";
 import type { Me } from "./types";
 
 export const meQueryKey = ["me"] as const;
 
-/** The signed-in staff profile. Refreshed on window focus so role changes show up. */
+/**
+ * The signed-in staff profile. Refreshed on window focus so role changes show up.
+ * Undefined until hydration ends: the server never has it, and a Suspense boundary that
+ * hydrates after the query resolved would otherwise render something else than its HTML.
+ */
 export function useMe() {
-  return useQuery({
+  const { data } = useQuery({
     queryKey: meQueryKey,
     queryFn: authApi.me,
     staleTime: 5 * 60_000,
     refetchOnWindowFocus: true,
   });
+  return useHydrated() ? data : undefined;
 }
 
 /** `can()` hides or disables controls; the API still enforces every permission (403 is handled). */
 export function usePermissions() {
-  const { data } = useMe();
+  const data = useMe();
   const permissions = data?.permissions;
   const can = useCallback(
     (required: Permission | readonly Permission[]) => hasPermission(permissions, required),
