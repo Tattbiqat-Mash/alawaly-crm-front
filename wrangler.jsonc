@@ -9,13 +9,12 @@
     "binding": "ASSETS"
   },
   "vars": {
-    "NEXT_PRIVATE_MINIMAL_MODE": "1",
     // Server-only: the BFF forwards /bff/* here. Override per environment.
     "API_BASE_URL": "https://system.alawaly.tattbiqat.com"
   },
   "observability": {
     "logs": {
-      "enabled": false,
+      "enabled": true,
       "invocation_logs": true
     }
   }
