@@ -23,7 +23,9 @@ import { UnitQuickSheet } from "./unit-quick-sheet";
 import { UnitStatusBadge } from "./unit-status-badge";
 import { UnitsFilters } from "./units-filters";
 import { useInventoryLookups } from "./use-lookups";
-import { ViewSwitch } from "./view-switch";
+
+// Square icon buttons while the page header is narrow (phones, tablets beside the sidebar); the label stays for screen readers.
+const iconWhenTight = "@max-2xl:w-7 @max-2xl:px-0!";
 
 /** Header actions: CSV export (reports.view) and import (S06, not built yet). */
 export function UnitsActions() {
@@ -37,18 +39,26 @@ export function UnitsActions() {
 
   return (
     <>
+      {(can("inventory.import") || can("reports.view")) && <span aria-hidden className="mx-0.5 h-4 w-px bg-border" />}
       {can("inventory.import") && (
-        <Button variant="outline" asChild>
-          <Link href="/units/import">
+        <Button variant="outline" size="sm" className={iconWhenTight} asChild>
+          <Link href="/units/import" title={t("units.import")}>
             <Upload data-icon="inline-start" />
-            {t("units.import")}
+            <span className="@max-2xl:sr-only">{t("units.import")}</span>
           </Link>
         </Button>
       )}
       {can("reports.view") && (
-        <Button variant="outline" onClick={() => exportUnits.mutate()} disabled={exportUnits.isPending}>
+        <Button
+          variant="outline"
+          size="sm"
+          className={iconWhenTight}
+          title={t("common.export")}
+          onClick={() => exportUnits.mutate()}
+          disabled={exportUnits.isPending}
+        >
           {exportUnits.isPending ? <Loader2 data-icon="inline-start" className="animate-spin" /> : <Download data-icon="inline-start" />}
-          {exportUnits.isPending ? t("common.exporting") : t("common.export")}
+          <span className="@max-2xl:sr-only">{exportUnits.isPending ? t("common.exporting") : t("common.export")}</span>
         </Button>
       )}
     </>
@@ -62,7 +72,7 @@ export function UnitsView() {
 
   return (
     <>
-      <UnitsFilters state={state} setState={setState} trailing={<ViewSwitch value={state.view} onChange={(view) => setState({ view })} />} />
+      <UnitsFilters state={state} setState={setState} />
       {state.view === "plan" ? (
         <UnitsSitePlan state={state} setState={setState} selectedId={selected?.id ?? null} onSelect={setSelected} />
       ) : (

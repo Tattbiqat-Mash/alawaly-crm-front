@@ -12,6 +12,7 @@ export function PageHeader({
   breadcrumbsLabel,
   actions,
   meta,
+  compact,
   className,
 }: {
   title: ReactNode;
@@ -20,8 +21,46 @@ export function PageHeader({
   breadcrumbsLabel?: string;
   actions?: ReactNode;
   meta?: ReactNode;
+  /** One short row: breadcrumbs lead into the title, the description becomes a hover hint. For table-first pages. */
+  compact?: boolean;
   className?: string;
 }) {
+  if (compact) {
+    const parents = breadcrumbs?.slice(0, -1) ?? [];
+    return (
+      // One line at every width: the actions never wrap, an open search gives way instead. It is also a size
+      // container, so actions can drop their labels when the header (not the screen) is narrow, e.g. beside the sidebar.
+      <header className={cn("@container relative flex min-h-7 items-center justify-between gap-x-3", className)}>
+        <div className="flex max-w-1/2 shrink-0 items-center gap-1 text-[11px] text-muted-foreground/80">
+          {parents.length > 0 && (
+            <nav aria-label={breadcrumbsLabel} className="contents max-sm:hidden">
+              {parents.map((crumb, i) => (
+                <span key={`${crumb.label}-${i}`} className="flex items-center gap-1">
+                  {crumb.href ? (
+                    <Link href={crumb.href} className="transition-colors hover:text-foreground focus-visible:underline">
+                      {crumb.label}
+                    </Link>
+                  ) : (
+                    <span>{crumb.label}</span>
+                  )}
+                  <ChevronRight aria-hidden className="size-2.5 text-muted-foreground/50 rtl:rotate-180" />
+                </span>
+              ))}
+            </nav>
+          )}
+          <h1
+            className="truncate text-sm font-bold tracking-tight text-foreground"
+            title={typeof description === "string" ? description : undefined}
+          >
+            {title}
+          </h1>
+          {description && <p className="sr-only">{description}</p>}
+        </div>
+        {actions && <div className="flex min-w-0 items-center justify-end gap-1.5">{actions}</div>}
+      </header>
+    );
+  }
+
   return (
     <header className={cn("flex flex-col gap-1 pb-0.5", className)}>
       {breadcrumbs && breadcrumbs.length > 0 && (

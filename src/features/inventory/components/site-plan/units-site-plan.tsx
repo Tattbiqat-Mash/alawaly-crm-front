@@ -111,33 +111,54 @@ function ProjectScene({
 
   return (
     <>
-      {/* Where am I: back to projects, project and building, size of the scope, zoom */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b px-3 py-2 sm:px-4">
-        <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => setState({ project: null, building: null, page: 1 })}>
+      {/* One slim row: back to projects, project and building, size of the scope, status key, zoom */}
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 border-b px-2 py-1 sm:px-3">
+        <Button
+          variant="ghost"
+          size="xs"
+          className="text-muted-foreground max-sm:w-6 max-sm:px-0!"
+          title={t("units.plan.allProjects")}
+          onClick={() => setState({ project: null, building: null, page: 1 })}
+        >
           <ArrowLeft data-icon="inline-start" className="rtl:rotate-180" />
-          {t("units.plan.allProjects")}
+          <span className="max-sm:sr-only">{t("units.plan.allProjects")}</span>
         </Button>
-        <span aria-hidden className="h-5 w-px bg-border" />
-        <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <h2 className="truncate text-sm font-semibold tracking-tight text-foreground">{projectName || t("units.plan.noProjectName")}</h2>
+        <span aria-hidden className="h-4 w-px bg-border" />
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <h2 className="truncate text-xs font-semibold tracking-tight text-foreground">{projectName || t("units.plan.noProjectName")}</h2>
           {focused && (
             <button
               type="button"
               onClick={() => setState({ building: null, page: 1 })}
               aria-label={t("units.plan.showAllBuildings")}
-              className="inline-flex h-6 items-center gap-1 rounded-full border border-primary/30 bg-primary/10 ps-2.5 pe-1.5 text-[11px] font-medium text-primary transition-colors hover:bg-primary/15"
+              className="inline-flex h-5 items-center gap-1 rounded-full border border-primary/30 bg-primary/10 ps-2 pe-1 text-[11px] font-medium text-primary transition-colors hover:bg-primary/15"
             >
               {lookups.buildingName(focused.id)}
               <X aria-hidden className="size-3" />
             </button>
           )}
           {units && (
-            <span className="num text-xs text-muted-foreground">
+            <span className="num text-[11px] text-muted-foreground max-sm:hidden">
               {!focused && <>{t("units.plan.buildings", { count: buildings.filter((b) => b.id !== null).length })} · </>}
               {t("units.plan.units", { count: scope.data?.total ?? units.length })}
             </span>
           )}
         </div>
+        {units && units.length > 0 && (
+          <>
+            <span aria-hidden className="h-4 w-px bg-border max-sm:hidden" />
+            <Legend
+              counts={counts}
+              active={state.status}
+              onToggle={(status) => setState({ status: state.status === status ? null : status, page: 1 })}
+              summary={
+                matchedInScope !== null
+                  ? t("units.plan.matchSummary", { matched: formatCount(matchedInScope, locale), total: formatCount(units.length, locale) })
+                  : null
+              }
+            />
+          </>
+        )}
         <div className="ms-auto flex items-center gap-0.5 rounded-lg border bg-muted/60 p-0.5" role="group" aria-label={t("units.plan.zoom")}>
           <Button variant="ghost" size="icon-xs" disabled={zoomIndex === 0} onClick={() => setZoom(PLAN_ZOOMS[zoomIndex - 1])} aria-label={t("units.plan.zoomOut")}>
             <ZoomOut />
@@ -153,19 +174,6 @@ function ProjectScene({
           </Button>
         </div>
       </div>
-
-      {units && units.length > 0 && (
-        <Legend
-          counts={counts}
-          active={state.status}
-          onToggle={(status) => setState({ status: state.status === status ? null : status, page: 1 })}
-          summary={
-            matchedInScope !== null
-              ? t("units.plan.matchSummary", { matched: formatCount(matchedInScope, locale), total: formatCount(units.length, locale) })
-              : null
-          }
-        />
-      )}
 
       <div
         className="relative min-h-0 flex-1 overflow-auto bg-linear-to-b from-accent/60 via-background/40 to-background"
@@ -202,7 +210,7 @@ function ProjectScene({
           <div
             role="region"
             aria-label={t("units.plan.stage", { project: projectName })}
-            className="flex min-h-full flex-wrap items-end justify-center-safe gap-x-12 gap-y-14 px-8 pt-8 pb-10"
+            className="flex min-h-full flex-wrap items-end justify-center-safe gap-x-6 gap-y-10 px-4 pt-5 pb-6 sm:gap-x-12 sm:gap-y-14 sm:px-8 sm:pt-8 sm:pb-10"
           >
             {buildings.map((b) => (
               <BuildingElevation
@@ -223,7 +231,7 @@ function ProjectScene({
   );
 }
 
-/** Status key with counts; each entry also toggles the status filter. */
+/** Status key with counts, inline in the scene's top row; each entry also toggles the status filter. */
 function Legend({
   counts,
   active,
@@ -240,19 +248,20 @@ function Legend({
   const shown = PLAN_STATUS_ORDER.filter((s) => counts[s] > 0 || s === active);
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b px-3 py-2 sm:px-4">
-      <StatusBar counts={counts} className="w-24 shrink-0" />
-      <ul className="flex flex-wrap items-center gap-1.5" aria-label={t("units.plan.legend")}>
+    // Phones: its own swipeable line under the title row, edge to edge.
+    <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 max-sm:order-last max-sm:-mx-2 max-sm:w-[calc(100%+1rem)] max-sm:flex-nowrap max-sm:overflow-x-auto max-sm:px-2 max-sm:pb-0.5 max-sm:[scrollbar-width:none] max-sm:*:shrink-0 max-sm:[&::-webkit-scrollbar]:hidden">
+      <StatusBar counts={counts} className="h-1 w-16 shrink-0" />
+      <ul className="flex flex-wrap items-center gap-1 max-sm:flex-nowrap max-sm:*:shrink-0" aria-label={t("units.plan.legend")}>
         {shown.map((status) => {
           const label = t(`statuses.unit.${status}`);
           const content = (
             <>
-              <span aria-hidden className={cn("size-2 rounded-full", swatchTone[status])} />
+              <span aria-hidden className={cn("size-1.5 rounded-full", swatchTone[status])} />
               {label}
               <span className="num font-semibold text-foreground">{formatCount(counts[status], locale)}</span>
             </>
           );
-          const chip = "inline-flex h-6 items-center gap-1.5 rounded-full border px-2.5 text-[11px] text-muted-foreground";
+          const chip = "inline-flex h-5 items-center gap-1 rounded-full border px-2 text-[11px] text-muted-foreground";
           return (
             <li key={status}>
               {status === "unknown" ? (
@@ -275,14 +284,14 @@ function Legend({
           );
         })}
       </ul>
-      {summary && <span className="num ms-auto text-xs font-medium text-primary">{summary}</span>}
+      {summary && <span className="num text-[11px] font-medium text-primary">{summary}</span>}
     </div>
   );
 }
 
 function PlanSkeleton() {
   return (
-    <div aria-hidden className="flex min-h-full items-end justify-center-safe gap-12 overflow-hidden px-8 pt-8 pb-10">
+    <div aria-hidden className="flex min-h-full items-end justify-center-safe gap-6 overflow-hidden px-4 pt-5 pb-6 sm:gap-12 sm:px-8 sm:pt-8 sm:pb-10">
       {["h-56", "h-80", "h-64"].map((h, i) => (
         <div key={i} className="flex flex-col items-center gap-3">
           <Skeleton className="h-10 w-32 rounded-lg" />
