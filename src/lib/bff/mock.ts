@@ -1,8 +1,10 @@
 import "server-only";
+import addendum from "../../../api-spec/addendum-examples.json";
 import guide from "../../../api-spec/guide-examples.json";
 
-// Opt-in mock mode (API_MOCKS=1): answers from the responses recorded in the Frontend Guide,
-// so the browser code path is identical to the real API. Used by tests and while v2 is not deployed.
+// Opt-in mock mode (API_MOCKS=1): answers from the responses recorded in the Frontend Guide and
+// the API brief addendum (newer, so it wins), so the browser code path is identical to the real
+// API. Used by tests and while v2 is not deployed.
 
 type RecordedExample = {
   title: string;
@@ -10,7 +12,7 @@ type RecordedExample = {
 };
 type RecordedEndpoint = { method: string; path: string; examples: RecordedExample[] };
 
-const endpoints = guide as RecordedEndpoint[];
+const endpoints = [...(addendum as RecordedEndpoint[]), ...(guide as RecordedEndpoint[])];
 
 const compiled = endpoints
   .map((e) => ({
@@ -29,8 +31,15 @@ function stripPlaceholders(body: unknown): unknown {
   return body;
 }
 
+const findEndpoint = (method: string, apiPath: string) => compiled.find((e) => e.method === method && e.regex.test(apiPath));
+
 export function mockResponse(method: string, apiPath: string, requestHeaders: Headers): Response {
-  const endpoint = compiled.find((e) => e.method === method && e.regex.test(apiPath));
+  const endpoint =
+    findEndpoint(method, apiPath) ??
+    // /unit-templates is the same resource as /unit-styles.
+    findEndpoint(method, apiPath.replace(/^\/unit-templates/, "/unit-styles")) ??
+    // GET …/features answers with the list PUT …/features sets.
+    (method === "GET" && apiPath.endsWith("/features") ? findEndpoint("PUT", apiPath) : undefined);
   if (!endpoint) {
     return Response.json(
       { error: { code: "NOT_FOUND", message: `No recorded example for ${method} ${apiPath}` } },

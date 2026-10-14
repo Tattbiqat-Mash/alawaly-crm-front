@@ -54,7 +54,8 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
       className={`${plexSans.variable} ${plexArabic.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="min-h-full">
+      {/* Extensions (e.g. Grammarly) add attributes to <body> before hydration; this ignores only body's own attributes. */}
+      <body className="min-h-full" suppressHydrationWarning>
         <NextIntlClientProvider>
           <Providers dir={dir}>{children}</Providers>
         </NextIntlClientProvider>

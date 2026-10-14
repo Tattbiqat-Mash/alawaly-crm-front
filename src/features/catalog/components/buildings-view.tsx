@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Copy, Plus } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { DataTable, type Column } from "@/components/shared/data-table/data-table";
@@ -11,12 +11,14 @@ import { Button } from "@/components/ui/button";
 import { usePermissions } from "@/features/auth/hooks";
 import { useInventoryLookups } from "@/features/inventory/components/use-lookups";
 import type { Building } from "@/features/inventory/types";
+import { useRouter } from "@/i18n/navigation";
 import { localizedField, localizedName } from "@/lib/format/localized";
 import { useBuildingsList, useBuildingsState } from "../hooks";
 import { ActiveBadge } from "./active-badge";
-import { BuildingFormSheet } from "./building-form-sheet";
+import { BuildingCreateSheet } from "./building-create-sheet";
+import { CloneBuildingDialog } from "./clone-building-dialog";
 
-// S09 — Buildings. The project filter lives in the URL.
+// S09 — Buildings. The project filter lives in the URL; a row opens the building page.
 export function BuildingsView() {
   const t = useTranslations();
   const locale = useLocale();
@@ -25,7 +27,9 @@ export function BuildingsView() {
   const lookups = useInventoryLookups();
   const [state, setState] = useBuildingsState();
   const list = useBuildingsList(state);
-  const [sheet, setSheet] = useState<null | "new" | Building>(null);
+  const router = useRouter();
+  const [creating, setCreating] = useState(false);
+  const [cloning, setCloning] = useState<Building | null>(null);
   const set = (patch: Partial<typeof state>) => setState({ ...patch, page: 1 });
 
   const columns: Column<Building>[] = [
@@ -39,6 +43,29 @@ export function BuildingsView() {
       cell: (b) => <span dir="auto">{localizedField(b, "address", locale) || "—"}</span>,
     },
     { id: "active", header: t("buildings.columns.active"), cell: (b) => <ActiveBadge value={b.active} /> },
+    ...(canEdit
+      ? [
+          {
+            id: "clone",
+            header: t("buildings.clone.title"),
+            align: "end" as const,
+            cell: (b: Building) => (
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={t("buildings.clone.titleFor", { code: b.building_code ?? b.id })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCloning(b);
+                }}
+                onKeyDown={(e) => e.stopPropagation()}
+              >
+                <Copy />
+              </Button>
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -63,7 +90,7 @@ export function BuildingsView() {
           <ResetFilters count={[state.project, state.active].filter(Boolean).length} onReset={() => setState({ project: null, active: null, page: 1 })} />
         </FilterBar>
         {canEdit && (
-          <Button onClick={() => setSheet("new")}>
+          <Button onClick={() => setCreating(true)}>
             <Plus data-icon="inline-start" />
             {t("buildings.new")}
           </Button>
@@ -79,19 +106,13 @@ export function BuildingsView() {
         isFetching={list.isFetching}
         error={list.error}
         onRetry={() => list.refetch()}
-        onRowClick={(b) => setSheet(b)}
+        onRowClick={(b) => router.push(`/buildings/${b.id}`)}
+        onRowIntent={(b) => router.prefetch(`/buildings/${b.id}`)}
         pagination={paginationProps(list.data?.meta, setState)}
         empty={<EmptyState compact title={t("buildings.empty")} />}
       />
-      {sheet !== null && (
-        <BuildingFormSheet
-          key={sheet === "new" ? "new" : sheet.id}
-          building={sheet === "new" ? undefined : sheet}
-          defaultProject={state.project}
-          canEdit={canEdit}
-          onClose={() => setSheet(null)}
-        />
-      )}
+      {creating && <BuildingCreateSheet defaultProject={state.project} onClose={() => setCreating(false)} />}
+      {cloning && <CloneBuildingDialog building={cloning} open onOpenChange={(o) => !o && setCloning(null)} />}
     </>
   );
 }

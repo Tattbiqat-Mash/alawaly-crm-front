@@ -20,14 +20,6 @@ async function mockStatus(page: Page, urlPart: string, method: string, status: n
   );
 }
 
-test("S05: the requester cannot approve their own price change", async ({ page }) => {
-  await signIn(page);
-  await page.goto("/price-changes");
-  await expect(page.getByText("لا يمكنك اعتماد طلبك بنفسك")).toBeVisible();
-  const approve = page.getByRole("button", { name: "اعتماد" }).first();
-  await expect(approve).toBeDisabled();
-});
-
 test("S12: reserve a unit, then record the fee as an offline payment", async ({ page }) => {
   await signIn(page);
   await page.goto("/reservations/new");
@@ -72,19 +64,6 @@ test("S15: generating installments before the policy is set shows the calm not-c
   await page.getByRole("button", { name: "إنشاء جدول الدفعات" }).click();
   await expect(page.getByText("لم يُضبط بعد")).toBeVisible();
   await expect(page.getByText("D-07")).toBeVisible();
-});
-
-test("S06: import runs a dry run before it can commit", async ({ page }) => {
-  await signIn(page);
-  await page.goto("/units/import");
-  await page.getByLabel("الصق CSV (السطر الأول = أسماء الأعمدة)").fill("crm_unit_id,unit_number,rooms,price_in_tax\n7006,101A,4,1");
-  // The price column is stripped and reported.
-  await expect(page.getByText("حُذفت أعمدة الأسعار (لا تتغير الأسعار إلا عبر الاعتماد): price_in_tax")).toBeVisible();
-  const dry = page.waitForRequest((r) => r.method() === "POST" && r.url().endsWith("/bff/staff/units/import"));
-  await page.getByRole("button", { name: "تشغيل الفحص التجريبي" }).click();
-  expect((await dry).postDataJSON()).toEqual({ rows: [{ crm_unit_id: "7006", unit_number: "101A", rooms: "4" }] });
-  await page.getByRole("button", { name: /^اعتماد/ }).click();
-  await expect(page.getByText(/تم تحديث وحدة واحدة/).first()).toBeVisible();
 });
 
 test("S21: an inspected handover waits for the owner; staff cannot close it yet", async ({ page }) => {

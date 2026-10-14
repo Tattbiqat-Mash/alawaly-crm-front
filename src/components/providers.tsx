@@ -28,7 +28,15 @@ export function Providers({ children, dir }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
       <NuqsAdapter>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          // The anti-flash script only matters in the SSR HTML. A locale switch re-mounts this layout on the
+          // client, where React 19 warns about <script>; a data-block type keeps it inert and silent there.
+          scriptProps={{ type: typeof window === "undefined" ? "text/javascript" : "application/json" }}
+        >
           <Direction.Provider dir={dir}>
             <TooltipProvider delayDuration={300}>
               {children}

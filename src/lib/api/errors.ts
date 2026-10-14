@@ -40,6 +40,11 @@ export const KNOWN_ERROR_CODES = [
   "UPSTREAM_UNAVAILABLE",
   "CODE_SESSION_EXPIRED",
   "NETWORK_ERROR",
+  // Inventory addendum (features, templates, floors, clone).
+  "DUPLICATE_FEATURE",
+  "DUPLICATE_UNIT_NUMBER",
+  "DUPLICATE_UNIT_CODE",
+  "DUPLICATE_BUILDING_CODE",
 ] as const;
 
 export type KnownErrorCode = (typeof KNOWN_ERROR_CODES)[number];

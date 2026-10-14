@@ -7,9 +7,9 @@ import { idempotencyHeader } from "@/lib/api/idempotency";
 import { MAX_PAGE_SIZE, toSearchParams, type ListParams } from "@/lib/api/params";
 import type {
   Availability,
-  DuplicateGroup,
   Building,
   Eligibility,
+  Feature,
   OwnershipRecord,
   PriceChange,
   PriceChangeInput,
@@ -24,6 +24,12 @@ import type {
 } from "./types";
 
 const ep = staffEndpoints;
+
+/** POST /unit-templates/{id}/units: only the unit's own details; the rest comes from the template. */
+export type NewTemplateUnits = {
+  building_id: number;
+  units: { unit_code: string; unit_number: string; floor_num: number; unit_deed_no?: string; facade_id?: number }[];
+};
 
 const list = <T>(path: string, params: ListParams = {}) =>
   staffApi.get<ListEnvelope<T>>(path, { params: toSearchParams(params) }).then((r) => unwrapList(r.data));
@@ -92,8 +98,16 @@ export const inventoryApi = {
   buildings: () => list<Building>(ep.buildings, { pageSize: MAX_PAGE_SIZE }).then((p) => p.items),
   unitTypes: () => list<UnitType>(ep.unitTypes, { pageSize: MAX_PAGE_SIZE }).then((p) => p.items),
 
-  /** One page of 100 groups covers the report; KPIs use meta.total. */
-  duplicates: () => list<DuplicateGroup>(ep.unitsDuplicates, { pageSize: MAX_PAGE_SIZE }),
+  unitFeatures: (id: number) => staffApi.get<Envelope<Feature[]>>(ep.unitFeatures(id)).then((r) => r.data.data),
+  /** Replaces the list; one that differs from the template is recorded as an override. */
+  setUnitFeatures: (id: number, featureIds: number[]) =>
+    staffApi.put<Envelope<Feature[]>>(ep.unitFeatures(id), { feature_ids: featureIds }).then((r) => r.data.data),
+
+  /** Not idempotent: callers disable the submit while it runs (DUPLICATE_UNIT_CODE on a taken code). */
+  createUnitsFromTemplate: (templateId: number, body: NewTemplateUnits) =>
+    staffApi
+      .post<Envelope<{ unit_ids: number[] }>>(ep.unitTemplateUnits(templateId), body)
+      .then((r) => r.data.data),
 
   exportUnits: () => downloadFile(staffApi, ep.exports("units"), "units.csv"),
 };

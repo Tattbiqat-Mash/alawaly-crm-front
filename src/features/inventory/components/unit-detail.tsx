@@ -14,6 +14,7 @@ import { useUnit } from "../hooks";
 import { ChangeStatusDialog } from "./change-status-dialog";
 import { PriceChangeDialog } from "./price-change-dialog";
 import { UnitDetailsForm } from "./unit-details-form";
+import { UnitFeaturesCard } from "./unit-features-card";
 import { UnitStatusBadge } from "./unit-status-badge";
 import { AvailabilityCard, EligibilityTab, OwnershipTab, PricesTab, StatusHistoryTab } from "./unit-tabs";
 import { useInventoryLookups } from "./use-lookups";
@@ -115,7 +116,10 @@ export function UnitDetail({ id }: { id: number }) {
             <section className="rounded-xl border bg-card p-3.5 sm:p-4 md:p-5">
               <UnitDetailsForm data={data} />
             </section>
-            <AvailabilityCard unitId={unit.id} />
+            <div className="grid content-start gap-3.5">
+              <AvailabilityCard unitId={unit.id} />
+              <UnitFeaturesCard unitId={unit.id} />
+            </div>
           </div>
         </TabsContent>
         <TabsContent value="statusHistory">

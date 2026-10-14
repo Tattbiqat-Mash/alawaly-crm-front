@@ -70,7 +70,8 @@
     "notes": "Notes",
     "open": "Open",
     "id": "#",
-    "notAvailableApi": "Not available in the API yet."
+    "notAvailableApi": "Not available in the API yet.",
+    "remove": "Remove"
   },
   "table": {
     "rowsPerPage": "Rows per page",
@@ -100,11 +101,9 @@
     "items": {
       "dashboard": "Dashboard",
       "units": "Units",
-      "priceApprovals": "Price approvals",
-      "importUnits": "Import units",
-      "duplicates": "Duplicates",
       "projects": "Projects",
       "buildings": "Buildings",
+      "unitTemplates": "Unit templates",
       "unitTypes": "Unit types",
       "reservations": "Reservations",
       "sales": "Sales",
@@ -184,7 +183,11 @@
       "OPEN_SNAGS": "Some handover items are still open.",
       "NO_CURRENT_OWNER": "This unit has no current owner.",
       "SAME_OWNER": "The new owner is the same as the current owner.",
-      "ALREADY_APPLIED": "This import was already applied."
+      "ALREADY_APPLIED": "This import was already applied.",
+      "DUPLICATE_FEATURE": "A feature with this name already exists for this type.",
+      "DUPLICATE_UNIT_NUMBER": "A unit number is used twice on the same floor. Nothing was created.",
+      "DUPLICATE_UNIT_CODE": "One or more unit codes already exist. Nothing was created.",
+      "DUPLICATE_BUILDING_CODE": "This building code already exists or is longer than 30 characters."
     },
     "generic": "Something went wrong.",
     "correlation": "Reference: {id}",
@@ -444,7 +447,6 @@
   "units": {
     "title": "Units",
     "subtitle": "Units are created by the CRM sync; edit details and status here.",
-    "import": "Import units",
     "view": {
       "label": "View",
       "table": "Table",
@@ -515,7 +517,21 @@
       "saved": "Unit saved.",
       "notWritable": "This field cannot be changed here.",
       "wholeNumber": "Enter a whole number.",
-      "decimal": "Enter a number, for example 142.5."
+      "decimal": "Enter a number, for example 142.5.",
+      "number": "Unit number",
+      "code": "Unit code",
+      "floor": "Floor",
+      "deed": "Deed number",
+      "template": "Unit template",
+      "facade": "Facade",
+      "finishing": "Finishing",
+      "entrances": "Entrances",
+      "buildingArea": "Built area (m²)",
+      "terraceArea": "Terrace area (m²)",
+      "availabilityDate": "Available from",
+      "featured": "Featured",
+      "descriptionAr": "Description (Arabic)",
+      "descriptionEn": "Description (English)"
     },
     "statusDialog": {
       "title": "Change unit status",
@@ -642,6 +658,32 @@
       "zoomOut": "Smaller units",
       "openHint": "Click for details",
       "truncated": "Showing the first {shown} of {total} units. Choose a building to see the rest."
+    },
+    "add": {
+      "short": "Add unit",
+      "title": "Add a unit",
+      "description": "The unit takes the shared data from its template; enter only its own details.",
+      "template": "Unit template",
+      "templateHint": "Type, rooms, areas, prices, media and features come from the template.",
+      "chooseTemplate": "Choose a template",
+      "project": "Project",
+      "anyProject": "All projects",
+      "building": "Building",
+      "chooseBuilding": "Choose a building",
+      "floor": "Floor",
+      "floorInvalid": "Enter a floor number (0 = ground).",
+      "number": "Unit number",
+      "code": "Unit code",
+      "codeSuggested": "Leave empty to use {code}.",
+      "deed": "Deed number",
+      "facade": "Facade",
+      "submit": "Add unit",
+      "created": "Unit created.",
+      "open": "Open"
+    },
+    "features": {
+      "title": "Unit features",
+      "hint": "Differs from the template? It is kept as this unit's own list."
     }
   },
   "owner": {
@@ -733,63 +775,6 @@
     "approved": "Price change approved.",
     "rejected": "Price change rejected."
   },
-  "unitImport": {
-    "title": "Import units",
-    "subtitle": "Update existing units in bulk. A dry run checks every row first; only a clean file can be committed. Prices cannot be imported.",
-    "steps": {
-      "add": "1. Add rows",
-      "check": "2. Check (dry run)",
-      "commit": "3. Commit"
-    },
-    "pasteLabel": "Paste CSV (first line = column names)",
-    "pasteHint": "Required column: crm_unit_id. Up to 1,000 rows. You can also choose a .csv file.",
-    "chooseFile": "Choose CSV file",
-    "rowsParsed": "{count, plural, one {# row ready} other {# rows ready}}",
-    "tooMany": "Too many rows ({count}). The limit is 1,000 per import.",
-    "missingCrmId": "The first line must include a crm_unit_id column.",
-    "noRows": "Add at least one row.",
-    "priceColumnsRemoved": "Price columns were removed (prices change only through approvals): {columns}",
-    "runCheck": "Run dry run",
-    "checking": "Checking…",
-    "summary": {
-      "valid": "Valid rows",
-      "invalid": "Invalid rows",
-      "skipped": "Skipped",
-      "ambiguous": "Ambiguous matches"
-    },
-    "columns": {
-      "row": "Row",
-      "crmId": "CRM id",
-      "result": "Result"
-    },
-    "allValid": "Every row passed the check.",
-    "commitBlocked": "Fix the invalid rows and run the check again before committing.",
-    "commit": "Commit {count, plural, one {# valid row} other {# valid rows}}",
-    "committing": "Committing…",
-    "applied": "{count, plural, one {# unit updated} other {# units updated}}.",
-    "ambiguousNote": "Ambiguous matches: the unit with the lowest id is updated.",
-    "fileError": "That file could not be read as CSV text."
-  },
-  "duplicates": {
-    "title": "Duplicate units",
-    "subtitle": "Units that share a CRM id. Resolving them is a controlled data operation, not a button.",
-    "kpi": {
-      "groups": "Groups",
-      "resolvable": "Resolvable",
-      "decision": "Need a decision"
-    },
-    "columns": {
-      "crmId": "CRM id",
-      "members": "Units",
-      "class": "Class",
-      "unitIds": "Unit ids"
-    },
-    "classes": {
-      "deferred": "Needs a business decision"
-    },
-    "deferredHint": "Deferred: the units have conflicting statuses, so a business decision is needed before merging.",
-    "empty": "No duplicates. Every CRM id belongs to one unit."
-  },
   "projects": {
     "title": "Projects",
     "new": "New project",
@@ -800,7 +785,8 @@
       "availability": "Availability",
       "complete": "Complete",
       "active": "Active",
-      "updated": "Updated"
+      "updated": "Updated",
+      "open": "Go to"
     },
     "fields": {
       "status": "Status",
@@ -808,13 +794,65 @@
       "displayOrder": "Display order",
       "featured": "Featured",
       "active": "Active",
-      "complete": "Completion %"
+      "complete": "Completion %",
+      "code": "Project code",
+      "countryId": "Country id",
+      "cityId": "City id",
+      "country": "Country",
+      "city": "City",
+      "addressEn": "Address (English)",
+      "location": "Location (lat,lng)",
+      "developerId": "Developer id",
+      "developer": "Developer",
+      "license": "License number",
+      "totalArea": "Total area (m²)",
+      "startDate": "Development start",
+      "endDate": "Development end",
+      "deliveryDate": "Estimated delivery",
+      "descriptionEn": "Description (English)",
+      "image": "Cover image (path or URL)",
+      "media": "Gallery",
+      "documents": "Documents",
+      "documentName": "Document name",
+      "documentUrl": "Path or URL",
+      "features": "Project features",
+      "stageStart": "Stage start date",
+      "stage": "Current stage"
     },
     "statusHint": "Use the status values your CRM uses, e.g. ongoing.",
     "empty": "No projects yet.",
     "saved": "Project saved.",
     "created": "Project created.",
-    "percentInvalid": "Enter a number from 0 to 100."
+    "percentInvalid": "Enter a number from 0 to 100.",
+    "sections": {
+      "basics": "Basics",
+      "location": "Location",
+      "development": "Development",
+      "description": "Description",
+      "media": "Images and documents",
+      "features": "Features",
+      "stages": "Stages",
+      "details": "Project details"
+    },
+    "buildingsLink": "Buildings",
+    "unitsLink": "Units",
+    "sitePlan": "Site plan",
+    "locationInvalid": "Enter latitude,longitude, for example 24.7136,46.6753.",
+    "locationHint": "Latitude,longitude, for example 24.7136,46.6753.",
+    "featuredNeedsFeatures": "A featured project needs at least one feature.",
+    "endBeforeStart": "The end date is before the start date.",
+    "addDocument": "Add document",
+    "stagesHint": "Leave empty and a first stage is created automatically.",
+    "addStage": "Add stage",
+    "stats": {
+      "buildings": "Buildings",
+      "units": "Units"
+    },
+    "noStages": "No stages yet.",
+    "currentStage": "Current",
+    "buildingsTitle": "{count, plural, =0 {Buildings} one {# building} other {# buildings}}",
+    "noBuildings": "No buildings in this project yet.",
+    "noBuildingsHint": "Add a building and place unit templates on its floors."
   },
   "buildings": {
     "title": "Buildings",
@@ -833,12 +871,153 @@
       "floors": "Floors",
       "addressAr": "Address (Arabic)",
       "addressEn": "Address (English)",
-      "active": "Active"
+      "active": "Active",
+      "stage": "Stage",
+      "features": "Building features",
+      "unitCodePattern": "Unit code pattern"
     },
     "empty": "No buildings match these filters.",
     "saved": "Building saved.",
     "created": "Building created.",
-    "projectRequired": "Choose a project."
+    "projectRequired": "Choose a project.",
+    "newHint": "Place unit templates on each floor to create the units with the building.",
+    "codeTooLong": "Use 30 characters or fewer.",
+    "currentStageDefault": "Project's current stage",
+    "floorsCountHint": "Grows to the highest floor used below.",
+    "unitCodePatternHint": "Placeholders: {building}, {floor}, {unit}, {n}. Empty = {building}-F{floor}-U{unit}.",
+    "createdWithUnits": "{count, plural, one {Building created with # unit.} other {Building created with # units.}}",
+    "createWithUnits": "{count, plural, =0 {Create} one {Create # unit} other {Create # units}}",
+    "floorsCount": "{count, plural, one {# floor} other {# floors}}",
+    "unitsOf": "Units of building {code}",
+    "addTemplates": "Add templates to floors",
+    "addTemplatesHint": "Numbering continues after the highest unit on each floor; the floor count grows when needed.",
+    "detailsTitle": "Building details",
+    "floorsTitle": "Floors and units",
+    "noFloors": "No floors yet.",
+    "noFloorsHint": "Use “Add templates to floors” to create units.",
+    "floorLabel": "Floor {floor}",
+    "unitsCount": "{count, plural, =0 {No units} one {# unit} other {# units}}",
+    "emptyFloor": "No units on this floor.",
+    "noTemplate": "No template",
+    "unitsAdded": "{count, plural, one {# unit created.} other {# units created.}}",
+    "floorsEditor": {
+      "title": "Floors and unit templates",
+      "hint": "For each floor (or range of floors with the same layout) choose the templates and how many units of each.",
+      "incomplete": "Complete every floor row: floor numbers, a template and a count of at least 1.",
+      "tooMany": "At most {max} units per request. Split the floors into several steps.",
+      "empty": "Add at least one floor.",
+      "floorRow": "Floor row {n}",
+      "from": "From floor",
+      "to": "To floor",
+      "floor": "Floor",
+      "singleFloor": "Single floor",
+      "floorRange": "Range of floors",
+      "removeFloor": "Remove floor row",
+      "template": "Unit template",
+      "loadingTemplates": "Loading templates…",
+      "chooseTemplate": "Choose a template",
+      "count": "Units",
+      "removeTemplate": "Remove template",
+      "addTemplate": "Add template",
+      "noTemplates": "No active unit templates yet. Create one under Unit templates.",
+      "addFloor": "Add floor",
+      "unitsTotal": "{count, plural, one {# unit} other {# units}} (max {max})"
+    },
+    "clone": {
+      "title": "Duplicate",
+      "titleFor": "Duplicate building {code}",
+      "description": "Copies building {code} with all its units. Copies start available, with no owner or deed.",
+      "copies": "Copies",
+      "copiesInvalid": "Enter a number from 1 to {max}.",
+      "buildingPattern": "Building code pattern",
+      "buildingPatternHint": "Placeholders: {source}, {n}. Codes must be unique and at most 30 characters.",
+      "unitPattern": "Unit code pattern",
+      "unitPatternHint": "Placeholders: {building}, {floor}, {unit}, {n}.",
+      "submit": "Duplicate",
+      "done": "{count, plural, one {# copy created.} other {# copies created.}}",
+      "unitsCreated": "{count, plural, one {# unit} other {# units}}"
+    }
+  },
+  "unitTemplates": {
+    "title": "Unit templates",
+    "subtitle": "Shared data units inherit: type, rooms, areas, prices, media and features.",
+    "new": "New template",
+    "editTitle": "Edit unit template",
+    "search": "Search code or name",
+    "empty": "No unit templates match.",
+    "emptyHint": "Create a template, then add units from it.",
+    "columns": {
+      "code": "Code",
+      "name": "Name",
+      "type": "Unit type",
+      "bedrooms": "Beds",
+      "bathrooms": "Baths",
+      "area": "Area",
+      "price": "Price incl. tax",
+      "units": "Units",
+      "active": "Active"
+    },
+    "fields": {
+      "code": "Template code",
+      "type": "Unit type",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "entrances": "Entrances",
+      "area": "Area (m²)",
+      "buildingArea": "Built area (m²)",
+      "terraceArea": "Terrace area (m²)",
+      "priceExTax": "Price excl. tax (SAR)",
+      "priceInTax": "Price incl. tax (SAR)",
+      "descriptionAr": "Description (Arabic)",
+      "descriptionEn": "Description (English)",
+      "images": "Images",
+      "plans": "Plans",
+      "features": "Unit features",
+      "active": "Active"
+    },
+    "moneyInvalid": "Enter an amount, for example 575000 or 575000.50.",
+    "created": "Template created.",
+    "saved": "{count, plural, =0 {Template saved.} one {Template saved; # linked unit updated.} other {Template saved; # linked units updated.}}",
+    "pricesNotPropagated": "Prices are saved on the template only. Existing units keep their prices.",
+    "linkedUnits": "{count, plural, =0 {No units use this template yet.} one {# unit uses this template.} other {# units use this template.}}",
+    "addUnit": "Add unit from template",
+    "propagationHint": "Saving updates every linked unit that has not overridden that field. Prices are never pushed to existing units.",
+    "priceHint": "Applies to new units only."
+  },
+  "features": {
+    "title": "Features",
+    "types": {
+      "project": "Project",
+      "building": "Building",
+      "unit": "Unit"
+    },
+    "selected": "Selected features",
+    "remove": "Remove {name}",
+    "noneSelected": "No features selected.",
+    "search": "Search features",
+    "noMatches": "No matching features.",
+    "nameAr": "Arabic name",
+    "nameEn": "English name",
+    "add": "Add",
+    "cancelAdd": "Cancel new feature",
+    "quickAdd": "New feature",
+    "quickAddNamed": "New feature “{name}”",
+    "added": "Feature “{name}” added.",
+    "savedOn": "Features saved.",
+    "columns": {
+      "name": "Name",
+      "type": "Applies to",
+      "active": "Active"
+    },
+    "new": "New feature",
+    "editTitle": "Edit feature",
+    "empty": "No features yet.",
+    "created": "Feature created.",
+    "saved": "Feature saved.",
+    "activeLabel": "Active (offered when picking features)",
+    "retireHint": "Features are never deleted: clear Active to retire one.",
+    "retired": "Retired feature",
+    "retiredHint": "{count, plural, one {# retired feature is still selected. Remove it before saving.} other {# retired features are still selected. Remove them before saving.}}"
   },
   "unitTypes": {
     "title": "Unit types and lookups",
@@ -2230,5 +2409,17 @@
       "warranties": "My warranties",
       "rentals": "Rentals"
     }
+  },
+  "media": {
+    "none": "No images yet.",
+    "cover": "Cover",
+    "open": "Open image {n} of {total}",
+    "position": "{n} / {total}",
+    "previous": "Previous image",
+    "next": "Next image",
+    "remove": "Remove {name}",
+    "add": "Add",
+    "addPlaceholder": "Image path or URL",
+    "openOriginal": "Open {name}"
   }
 }

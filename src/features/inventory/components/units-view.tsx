@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { Building2, Download, Loader2, Upload } from "lucide-react";
+import { Building2, Download, Loader2, Plus } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -11,13 +11,13 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { usePermissions } from "@/features/auth/hooks";
 import { useErrorMessage } from "@/hooks/use-error-message";
-import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/format/dates";
 import { isOn } from "@/lib/format/localized";
 import { formatDecimal, formatMoney } from "@/lib/format/money";
 import { inventoryApi } from "../api";
 import { CLEARED_UNIT_FILTERS, usePrefetchUnit, useUnits, useUnitsListState, type UnitsListState } from "../hooks";
 import type { UnitListItem } from "../types";
+import { AddUnitDialog } from "./add-unit-dialog";
 import { UnitsSitePlan } from "./site-plan/units-site-plan";
 import { UnitQuickSheet } from "./unit-quick-sheet";
 import { UnitStatusBadge } from "./unit-status-badge";
@@ -27,11 +27,12 @@ import { useInventoryLookups } from "./use-lookups";
 // Square icon buttons while the page header is narrow (phones, tablets beside the sidebar); the label stays for screen readers.
 const iconWhenTight = "@max-2xl:w-7 @max-2xl:px-0!";
 
-/** Header actions: CSV export (reports.view) and import (S06, not built yet). */
+/** Header actions: add a unit from a template (inventory.edit) and CSV export (reports.view). */
 export function UnitsActions() {
   const t = useTranslations();
   const { can } = usePermissions();
   const errorMessage = useErrorMessage();
+  const [adding, setAdding] = useState(false);
   const exportUnits = useMutation({
     mutationFn: inventoryApi.exportUnits,
     onError: (e) => toast.error(errorMessage(e)),
@@ -39,14 +40,15 @@ export function UnitsActions() {
 
   return (
     <>
-      {(can("inventory.import") || can("reports.view")) && <span aria-hidden className="mx-0.5 h-4 w-px bg-border" />}
-      {can("inventory.import") && (
-        <Button variant="outline" size="sm" className={iconWhenTight} asChild>
-          <Link href="/units/import" title={t("units.import")}>
-            <Upload data-icon="inline-start" />
-            <span className="@max-2xl:sr-only">{t("units.import")}</span>
-          </Link>
-        </Button>
+      {(can("inventory.edit") || can("reports.view")) && <span aria-hidden className="mx-0.5 h-4 w-px bg-border" />}
+      {can("inventory.edit") && (
+        <>
+          <Button size="sm" className={iconWhenTight} title={t("units.add.short")} onClick={() => setAdding(true)}>
+            <Plus data-icon="inline-start" />
+            <span className="@max-2xl:sr-only">{t("units.add.short")}</span>
+          </Button>
+          <AddUnitDialog open={adding} onOpenChange={setAdding} />
+        </>
       )}
       {can("reports.view") && (
         <Button

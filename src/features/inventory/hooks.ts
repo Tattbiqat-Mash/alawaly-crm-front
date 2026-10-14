@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { clampPageSize, listParsers } from "@/components/shared/data-table/list-params";
 import type { Permission } from "@/config/permissions";
 import { usePermissions } from "@/features/auth/hooks";
-import { inventoryApi } from "./api";
+import { inventoryApi, type NewTemplateUnits } from "./api";
 import type { PriceChangeInput, StatusChangeInput, UnitPatch, VersionedUnit } from "./types";
 
 const LOOKUP_STALE = 5 * 60_000;
@@ -19,6 +19,7 @@ export const inventoryKeys = {
   ownership: (id: number) => ["unit", id, "ownership"] as const,
   eligibility: (id: number, clientId: number | null) => ["unit", id, "eligibility", clientId] as const,
   availability: (id: number) => ["unit", id, "availability"] as const,
+  features: (id: number) => ["unit", id, "features"] as const,
   projects: ["projects", "all"] as const,
   buildings: ["buildings", "all"] as const,
   unitTypes: ["unit-types", "all"] as const,
@@ -112,8 +113,6 @@ export function useSitePlanUnits(state: UnitsListState) {
   const matches = useMemo(() => (narrowed && match.data ? new Set(match.data.items.map((u) => u.id)) : null), [narrowed, match.data]);
   return { scope, match, matches, narrowed };
 }
-
-export const useDuplicates =() => useQuery({ queryKey: ["units-duplicates"], queryFn: inventoryApi.duplicates });
 
 export const useProjects = () =>
   useQuery({ queryKey: inventoryKeys.projects, queryFn: inventoryApi.projects, staleTime: LOOKUP_STALE });
@@ -212,5 +211,32 @@ export function useUnitSearch(q: string, statuses: readonly string[] = []) {
     enabled: term.length > 0,
     placeholderData: keepPreviousData,
     staleTime: 15_000,
+  });
+}
+
+export const useUnitFeatures = (id: number) =>
+  useQuery({ queryKey: inventoryKeys.features(id), queryFn: () => inventoryApi.unitFeatures(id) });
+
+export function useSetUnitFeatures(id: number) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (featureIds: number[]) => inventoryApi.setUnitFeatures(id, featureIds),
+    onSuccess: (features) => {
+      queryClient.setQueryData(inventoryKeys.features(id), features);
+      // A list that differs from the template is an override on the unit row: its version moves on.
+      queryClient.invalidateQueries({ queryKey: inventoryKeys.unit(id), exact: true });
+    },
+  });
+}
+
+/** New units from a template; every list that shows units or floors refreshes. */
+export function useCreateUnitsFromTemplate() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ templateId, body }: { templateId: number; body: NewTemplateUnits }) =>
+      inventoryApi.createUnitsFromTemplate(templateId, body),
+    onSuccess: () => {
+      for (const key of ["units", "floor-templates", "unit-templates", "unit-template", "project"]) queryClient.invalidateQueries({ queryKey: [key] });
+    },
   });
 }

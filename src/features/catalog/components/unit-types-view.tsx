@@ -13,6 +13,7 @@ import type { LookupValue, UnitType } from "@/features/inventory/types";
 import { localizedName } from "@/lib/format/localized";
 import { useLookup, useUnitTypesList, useUnitTypesState } from "../hooks";
 import { ActiveBadge } from "./active-badge";
+import { FeaturesTab } from "./features-tab";
 import { UnitTypeFormSheet } from "./unit-type-form-sheet";
 
 // Lookup tabs from wireframe S10. An unknown type simply returns an empty list.
@@ -43,7 +44,7 @@ function LookupTable({ type }: { type: LookupType }) {
   );
 }
 
-// S10 — Unit types (editable) and CRM lookups (read-only).
+// S10 — Unit types and the feature catalogue (editable), and CRM lookups (read-only: the API has no write for them).
 export function UnitTypesView() {
   const t = useTranslations();
   const locale = useLocale();
@@ -69,10 +70,11 @@ export function UnitTypesView() {
   ];
 
   return (
-    <Tabs value={state.tab} onValueChange={(tab) => setState({ tab, page: 1 })} className="flex min-h-0 flex-1 flex-col gap-3">
+    <Tabs value={state.tab} onValueChange={(tab) => setState({ tab, page: 1, featureType: null })} className="flex min-h-0 flex-1 flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <TabsList className="w-full justify-start overflow-x-auto sm:w-fit">
           <TabsTrigger value="types">{t("unitTypes.typesTab")}</TabsTrigger>
+          <TabsTrigger value="features">{t("features.title")}</TabsTrigger>
           {LOOKUP_TYPES.map((type) => (
             <TabsTrigger key={type} value={type}>
               {t(`unitTypes.lookups.${type}`)}
@@ -101,6 +103,9 @@ export function UnitTypesView() {
           pagination={paginationProps(list.data?.meta, setState)}
           empty={<EmptyState compact title={t("unitTypes.empty")} />}
         />
+      </TabsContent>
+      <TabsContent value="features" className="flex min-h-0 flex-1 flex-col gap-3">
+        <FeaturesTab canEdit={canEdit} />
       </TabsContent>
       {LOOKUP_TYPES.map((type) => (
         <TabsContent key={type} value={type} className="flex min-h-0 flex-1 flex-col gap-3">

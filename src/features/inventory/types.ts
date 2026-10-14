@@ -58,15 +58,32 @@ export type Unit = UnitListItem & {
 /** A unit plus its ETag (equal to `version`), needed for If-Match on edits and status changes. */
 export type VersionedUnit = { unit: Unit; etag: string };
 
-/** Fields the details form may send in PATCH /units/{id} (status, prices, client_id, version are refused). */
+/**
+ * Fields the details form may send in PATCH /units/{id} (status, prices, client_id, version are
+ * refused). On a template-linked unit, a shared field that differs from the template becomes an override.
+ */
 export type UnitPatch = Partial<{
   unit_type_id: number | null;
+  unit_template_id: number | null;
+  unit_number: string | null;
+  unit_code: string | null;
+  floor_num: number | null;
+  unit_deed_no: string | null;
+  facade_id: number | null;
+  finishing_type_id: number | null;
   rooms: number | null;
   bathrooms: number | null;
+  entrances: number | null;
   total_area: string | null;
+  building_area: string | null;
+  terrace_area: string | null;
   construction_status: string | null;
+  availabilty_date: string | null;
   display_order: number | null;
+  is_featured: boolean;
   active: boolean;
+  descriptionAr: string | null;
+  descriptionEn: string | null;
   comments: string | null;
 }>;
 
@@ -176,8 +193,107 @@ export type Availability = {
   hold_hours: number | null;
 };
 
-/** GET /units-duplicates: units sharing a CRM id. class "deferred" = conflicting statuses. */
-export type DuplicateGroup = { crm_unit_id: string; members: number; class: string; unit_ids: number[] };
+/** A named record nested in a project (developer, country, city). */
+export type NamedRef = { id: number; nameAr: string | null; nameEn: string | null };
+
+export type ProjectStage = NamedRef & { active: Flag; project_id: number; start_date: string | null };
+
+export type ProjectDocument = { name: string; url: string };
+
+/** GET /projects/{id}: JSON fields decoded, plus resolved relations, stats and buildings. */
+export type ProjectDetail = Project & {
+  project_code?: string | null;
+  developer_id?: number | null;
+  country_id?: number | null;
+  license_num?: string | null;
+  addressEn?: string | null;
+  location_lang_lat?: string | null;
+  documents?: ProjectDocument[] | null;
+  developing_start_date?: string | null;
+  developing_end_date?: string | null;
+  estimated_delivery_date?: string | null;
+  descriptionEn?: string | null;
+  media?: string[] | null;
+  project_image?: string | null;
+  features?: number[] | null;
+  total_area?: string | null;
+  current_stages?: number | null;
+  created_at?: string;
+  developer?: NamedRef | null;
+  country?: NamedRef | null;
+  city?: NamedRef | null;
+  current_stage?: ProjectStage | null;
+  stages?: ProjectStage[];
+  feature_items?: NamedRef[];
+  stats?: { buildings_count: number; units_count: number; units_by_status: { status: string; count: number }[] | Record<string, number> };
+  buildings?: Building[];
+};
+
+export const FEATURE_TYPES = ["project", "building", "unit"] as const;
+export type FeatureType = (typeof FEATURE_TYPES)[number];
+
+/** GET /features: one catalogue, typed project, building or unit. */
+export type Feature = NamedRef & { feature_type: FeatureType; active: Flag; created_at?: string; updated_at?: string };
+
+/** GET /unit-templates (= unit styles): the data units share. */
+export type UnitTemplate = {
+  id: number;
+  style_code: string | null;
+  nameAr?: string | null;
+  nameEn: string | null;
+  unit_type_id: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  area_m2: string | null;
+  price_in_tax: string | null;
+  active: Flag;
+  updated_at: string;
+  units_count?: number;
+};
+
+/** GET /unit-templates/{id}: JSON fields (unit_media, features) arrive as JSON text. */
+export type UnitTemplateDetail = UnitTemplate & {
+  entrances?: number | null;
+  building_area?: string | null;
+  terrace_area?: string | null;
+  price_ex_tax?: string | null;
+  price_total?: string | null;
+  reservation_amount?: string | null;
+  descriptionAr?: string | null;
+  descriptionEn?: string | null;
+  main_image?: string | null;
+  unit_layout?: string | null;
+  unit_media?: string | UnitMedia | null;
+  features?: string | number[] | null;
+};
+
+export type UnitMedia = { unit_image?: string[]; unit_plan?: string[] };
+
+/** PATCH /unit-templates/{id} meta: prices are stored on the template but never pushed to units. */
+export type TemplateSaveMeta = { units_updated: number; prices_not_propagated: string[] };
+
+/** One floor of a floors payload: a single floor_num, or floor_from..floor_to repeating the layout. */
+export type FloorInput = ({ floor_num: number } | { floor_from: number; floor_to: number }) & {
+  templates: { template_id: number; count: number }[];
+};
+
+/** GET /buildings/{id}/floor-templates: every floor, its units grouped by template. */
+export type FloorLayout = {
+  building_id: number;
+  building_code: string | null;
+  floors_count: number | null;
+  floors: {
+    floor_num: number;
+    templates: {
+      template_id: number | null;
+      style_code: string | null;
+      units_count: number;
+      units: { id: number; unit_number: string | null; unit_code: string | null; status: string | null }[];
+    }[];
+  }[];
+};
+
+export type CloneResult = { building_id: number; building_code: string; units_created: number };
 
 /** GET /lookups/{type}: read-only CRM lookup values. */
 export type LookupValue = { id: number; crm_id: string | null; nameAr: string | null; nameEn: string | null; data_type: string; active: Flag };

@@ -43,7 +43,7 @@ function AdminNavLinks({ collapsed, onNavigate }: Props) {
   if (!ready) return <NavSkeleton />;
 
   const groups = visibleNav(can);
-  // Only the most specific match is active (/units/import highlights "Import", not "Units").
+  // Only the most specific match is active (/payments/refunds highlights "Refunds", not "Transactions").
   const activeHref = groups
     .flatMap((g) => g.items.map((i) => i.href))
     .filter((href) => matches(pathname, href))

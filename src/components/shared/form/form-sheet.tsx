@@ -3,6 +3,7 @@
 import type { FormEventHandler, ReactNode } from "react";
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useEndSide } from "@/hooks/use-end-side";
+import { cn } from "@/lib/utils";
 
 /**
  * Create/edit forms open in a side drawer from the logical end edge, with a scrolling body and
@@ -15,6 +16,7 @@ export function FormSheet({
   description,
   onSubmit,
   footer,
+  wide,
   children,
 }: {
   open: boolean;
@@ -23,12 +25,23 @@ export function FormSheet({
   description?: ReactNode;
   onSubmit: FormEventHandler<HTMLFormElement>;
   footer: ReactNode;
+  /** Long forms with sections (e.g. a full project). */
+  wide?: boolean;
   children: ReactNode;
 }) {
   const side = useEndSide();
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side={side} className="flex w-full flex-col gap-0 p-0 sm:max-w-lg">
+      {/* Same data-side variant as the Sheet's own max width, or it would win on specificity. */}
+      <SheetContent
+        side={side}
+        className={cn(
+          "flex w-full flex-col gap-0 p-0",
+          wide
+            ? "data-[side=left]:sm:max-w-[min(64rem,92vw)] data-[side=right]:sm:max-w-[min(64rem,92vw)]"
+            : "data-[side=left]:sm:max-w-lg data-[side=right]:sm:max-w-lg",
+        )}
+      >
         <form onSubmit={onSubmit} className="contents" noValidate>
           <SheetHeader className="border-b">
             <SheetTitle>{title}</SheetTitle>
