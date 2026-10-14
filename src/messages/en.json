@@ -423,16 +423,22 @@
     "title": "Dashboard",
     "updated": "Figures refresh when you return to this tab.",
     "kpi": {
-      "units": "Units",
-      "available": "Available",
       "salesInProgress": "Sales in progress",
       "collected": "Collected",
       "openRequests": "Open service requests"
     },
     "charts": {
-      "unitsByStatus": "Units by status",
       "salesByStatus": "Sales by status",
-      "salesCount": "{count, plural, one {# sale} other {# sales}}"
+      "salesCount": "{count, plural, one {# sale} other {# sales}}",
+      "salesEmpty": "No sales recorded yet."
+    },
+    "hero": {
+      "title": "Inventory",
+      "total": "Total units",
+      "availableShare": "{percent}% of units are available for sale",
+      "byProject": "Availability by project",
+      "projectAvailable": "{available} of {units} available",
+      "viewUnits": "View units"
     },
     "needsAction": {
       "title": "Needs action",
@@ -657,7 +663,9 @@
       "zoomIn": "Larger units",
       "zoomOut": "Smaller units",
       "openHint": "Click for details",
-      "truncated": "Showing the first {shown} of {total} units. Choose a building to see the rest."
+      "truncated": "Showing the first {shown} of {total} units. Choose a building to see the rest.",
+      "fullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen"
     },
     "add": {
       "short": "Add unit",

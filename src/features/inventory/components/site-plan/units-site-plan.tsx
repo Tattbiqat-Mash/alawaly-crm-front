@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowLeft, Building2, TriangleAlert, X, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowLeft, Building2, Maximize2, Minimize2, TriangleAlert, X, ZoomIn, ZoomOut } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useMemo, useState, type SyntheticEvent } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode, type SyntheticEvent } from "react";
 import { EmptyState, ErrorState } from "@/components/shared/states";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,12 +28,62 @@ type Props = {
 };
 
 /**
+ * Full screen for showing the plan to clients. The whole page goes full screen and the plan covers it,
+ * rather than the plan element itself: the unit sheet portals to <body>, and would be invisible outside
+ * a full-screen element. Leaving by Esc or the browser's own controls is followed via `fullscreenchange`.
+ */
+function useFullscreenPlan() {
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    if (!on) return;
+    const onChange = () => {
+      if (!document.fullscreenElement) setOn(false);
+    };
+    // Browsers without the Fullscreen API (iPhone Safari) still get the covering plan; Esc leaves it there.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !document.fullscreenElement && !document.querySelector("[role=dialog]")) setOn(false);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("fullscreenchange", onChange);
+      document.removeEventListener("keydown", onKey);
+      if (document.fullscreenElement) void document.exitFullscreen().catch(() => {});
+    };
+  }, [on]);
+
+  const toggle = useCallback(() => {
+    if (on) {
+      setOn(false);
+      return;
+    }
+    setOn(true);
+    void document.documentElement.requestFullscreen?.().catch(() => {});
+  }, [on]);
+
+  return { on, toggle };
+}
+
+function FullscreenButton({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+  const t = useTranslations("units.plan");
+  const label = on ? t("exitFullscreen") : t("fullscreen");
+  return (
+    <Button variant="ghost" size="icon-xs" onClick={onToggle} aria-label={label} title={label} aria-pressed={on}>
+      {on ? <Minimize2 /> : <Maximize2 />}
+    </Button>
+  );
+}
+
+/**
  * S03 site plan: the units list drawn as buildings. Without a project it offers the projects;
  * inside one it draws every building floor by floor and lights the units the filters keep.
  */
 export function UnitsSitePlan({ state, setState, selectedId, onSelect }: Props) {
   const plan = useSitePlanUnits(state);
   const inProject = state.project !== null || state.building !== null;
+  const fullscreen = useFullscreenPlan();
+  const fullscreenButton = <FullscreenButton on={fullscreen.on} onToggle={fullscreen.toggle} />;
 
   const matchesByProject = useMemo(() => {
     if (!plan.narrowed || !plan.match.data) return null;
@@ -45,17 +95,28 @@ export function UnitsSitePlan({ state, setState, selectedId, onSelect }: Props) 
   const busy = plan.scope.isFetching || plan.match.isFetching;
 
   return (
-    <div className="relative flex min-h-[380px] flex-1 flex-col overflow-hidden rounded-xl border bg-card shadow-2xs" aria-busy={busy}>
+    <div
+      className={cn(
+        "flex min-h-[380px] flex-1 flex-col overflow-hidden bg-card",
+        // Full screen: above the sidebar and header, below dialogs and sheets (z-50).
+        fullscreen.on ? "fixed inset-0 z-40" : "relative rounded-xl border shadow-2xs",
+      )}
+      aria-busy={busy}
+    >
       {busy && (
         <div aria-hidden className="absolute inset-x-0 top-0 z-20 h-0.5 overflow-hidden bg-primary/10">
           <div className="h-full w-1/3 animate-[progress_1s_ease-in-out_infinite] bg-primary" />
         </div>
       )}
       {inProject ? (
-        <ProjectScene state={state} setState={setState} data={plan} selectedId={selectedId} onSelect={onSelect} />
+        <ProjectScene state={state} setState={setState} data={plan} selectedId={selectedId} onSelect={onSelect} toolbar={fullscreenButton} />
       ) : (
-        <div className="min-h-0 flex-1 overflow-auto">
-          <ProjectGallery matchesByProject={matchesByProject} onOpen={(id) => setState({ project: String(id), building: null, page: 1 })} />
+        <div className="min-h-0 flex-1 overflow-auto overscroll-contain">
+          <ProjectGallery
+            matchesByProject={matchesByProject}
+            onOpen={(id) => setState({ project: String(id), building: null, page: 1 })}
+            action={fullscreenButton}
+          />
         </div>
       )}
     </div>
@@ -68,7 +129,8 @@ function ProjectScene({
   data,
   selectedId,
   onSelect,
-}: Props & { data: ReturnType<typeof useSitePlanUnits> }) {
+  toolbar,
+}: Props & { data: ReturnType<typeof useSitePlanUnits>; toolbar: ReactNode }) {
   const t = useTranslations();
   const locale = useLocale();
   const lookups = useInventoryLookups();
@@ -159,24 +221,27 @@ function ProjectScene({
             />
           </>
         )}
-        <div className="ms-auto flex items-center gap-0.5 rounded-lg border bg-muted/60 p-0.5" role="group" aria-label={t("units.plan.zoom")}>
-          <Button variant="ghost" size="icon-xs" disabled={zoomIndex === 0} onClick={() => setZoom(PLAN_ZOOMS[zoomIndex - 1])} aria-label={t("units.plan.zoomOut")}>
-            <ZoomOut />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            disabled={zoomIndex === PLAN_ZOOMS.length - 1}
-            onClick={() => setZoom(PLAN_ZOOMS[zoomIndex + 1])}
-            aria-label={t("units.plan.zoomIn")}
-          >
-            <ZoomIn />
-          </Button>
+        <div className="ms-auto flex items-center gap-1.5">
+          <div className="flex items-center gap-0.5 rounded-lg border bg-muted/60 p-0.5" role="group" aria-label={t("units.plan.zoom")}>
+            <Button variant="ghost" size="icon-xs" disabled={zoomIndex === 0} onClick={() => setZoom(PLAN_ZOOMS[zoomIndex - 1])} aria-label={t("units.plan.zoomOut")}>
+              <ZoomOut />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              disabled={zoomIndex === PLAN_ZOOMS.length - 1}
+              onClick={() => setZoom(PLAN_ZOOMS[zoomIndex + 1])}
+              aria-label={t("units.plan.zoomIn")}
+            >
+              <ZoomIn />
+            </Button>
+          </div>
+          <div className="flex items-center rounded-lg border bg-muted/60 p-0.5">{toolbar}</div>
         </div>
       </div>
 
       <div
-        className="relative min-h-0 flex-1 overflow-auto bg-linear-to-b from-accent/60 via-background/40 to-background"
+        className="site-sky relative min-h-0 flex-1 overflow-auto overscroll-contain"
         style={zoomStyle[zoom]}
         onPointerOver={showPeek}
         onPointerLeave={hidePeek}
@@ -210,14 +275,15 @@ function ProjectScene({
           <div
             role="region"
             aria-label={t("units.plan.stage", { project: projectName })}
-            className="flex min-h-full flex-wrap items-end justify-center-safe gap-x-6 gap-y-10 px-4 pt-5 pb-6 sm:gap-x-12 sm:gap-y-14 sm:px-8 sm:pt-8 sm:pb-10"
+            className="flex min-h-full flex-wrap items-end justify-center-safe gap-x-1 gap-y-12 px-2 pt-6 pb-8 sm:gap-x-5 sm:gap-y-16 sm:px-6 sm:pt-10 sm:pb-12"
           >
-            {buildings.map((b) => (
+            {buildings.map((b, i) => (
               <BuildingElevation
                 key={b.id ?? "none"}
                 plan={b}
                 title={b.id === null ? t("units.plan.noBuilding") : lookups.buildingName(b.id)}
                 zoom={zoom}
+                index={i}
                 matches={matches}
                 selectedId={selectedId}
                 onFocusBuilding={focused ? undefined : focusBuilding}

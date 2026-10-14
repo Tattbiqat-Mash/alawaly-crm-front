@@ -423,16 +423,22 @@
     "title": "لوحة المعلومات",
     "updated": "تتحدث الأرقام عند عودتك إلى هذه الصفحة.",
     "kpi": {
-      "units": "الوحدات",
-      "available": "المتاحة",
       "salesInProgress": "مبيعات قيد الإجراء",
       "collected": "المحصّل",
       "openRequests": "طلبات خدمة مفتوحة"
     },
     "charts": {
-      "unitsByStatus": "الوحدات حسب الحالة",
       "salesByStatus": "المبيعات حسب الحالة",
-      "salesCount": "{count, plural, =0 {لا مبيعات} one {بيع واحد} two {بيعان} few {# مبيعات} many {# بيعًا} other {# بيع}}"
+      "salesCount": "{count, plural, =0 {لا مبيعات} one {بيع واحد} two {بيعان} few {# مبيعات} many {# بيعًا} other {# بيع}}",
+      "salesEmpty": "لا توجد مبيعات مسجّلة بعد."
+    },
+    "hero": {
+      "title": "المخزون",
+      "total": "إجمالي الوحدات",
+      "availableShare": "{percent}٪ من الوحدات متاحة للبيع",
+      "byProject": "التوفر حسب المشروع",
+      "projectAvailable": "{available} متاحة من {units}",
+      "viewUnits": "عرض الوحدات"
     },
     "needsAction": {
       "title": "بحاجة إلى إجراء",
@@ -657,7 +663,9 @@
       "zoomIn": "تكبير الوحدات",
       "zoomOut": "تصغير الوحدات",
       "openHint": "انقر لعرض التفاصيل",
-      "truncated": "تُعرض أول {shown} من {total} وحدة. اختر مبنى لعرض البقية."
+      "truncated": "تُعرض أول {shown} من {total} وحدة. اختر مبنى لعرض البقية.",
+      "fullscreen": "ملء الشاشة",
+      "exitFullscreen": "إنهاء ملء الشاشة"
     },
     "add": {
       "short": "إضافة وحدة",

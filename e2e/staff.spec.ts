@@ -18,7 +18,7 @@ test("S01 → S02 → S03 → S04: sign in, browse units, open a unit", async ({
   await signIn(page);
 
   // Dashboard widgets from /reports/*
-  await expect(page.getByText("الوحدات حسب الحالة")).toBeVisible();
+  await expect(page.getByText("إجمالي الوحدات")).toBeVisible();
 
   // Units list with paging meta
   await page.getByRole("navigation", { name: "التنقل الرئيسي" }).getByRole("link", { name: "الوحدات", exact: true }).click();

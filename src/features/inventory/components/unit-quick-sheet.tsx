@@ -4,13 +4,16 @@ import { ArrowUpRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
+import { isUnitStatus } from "@/config/statuses";
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useEndSide } from "@/hooks/use-end-side";
 import { Link } from "@/i18n/navigation";
 import { formatDateTime } from "@/lib/format/dates";
 import { isOn } from "@/lib/format/localized";
 import { formatDecimal, formatMoney } from "@/lib/format/money";
+import { cn } from "@/lib/utils";
 import type { UnitListItem } from "../types";
+import { swatchTone } from "./site-plan/unit-tone";
 import { UnitStatusBadge } from "./unit-status-badge";
 import { useInventoryLookups } from "./use-lookups";
 
@@ -35,8 +38,10 @@ export function UnitQuickSheet({ unit, onClose }: { unit: UnitListItem | null; o
       <SheetContent side={side} className="flex w-full flex-col gap-0 p-0 sm:max-w-md">
         {unit && (
           <>
-            <SheetHeader className="border-b bg-muted/20 px-4 py-3 sm:px-5 sm:py-3.5">
-              <div className="flex items-start justify-between gap-2">
+            <SheetHeader className="relative border-b bg-muted/20 px-4 py-3 pt-4 sm:px-5 sm:py-3.5 sm:pt-4.5">
+              <span aria-hidden className={cn("absolute inset-x-0 top-0 h-1", swatchTone[isUnitStatus(unit.status) ? unit.status : "unknown"])} />
+              {/* End padding keeps the status clear of the sheet's close button. */}
+              <div className="flex items-start justify-between gap-2 pe-8">
                 <div>
                   <SheetTitle className="text-base font-bold tracking-tight sm:text-lg">
                     {t("units.quick.title", { number: unit.unit_number ?? `#${unit.id}` })}
@@ -50,10 +55,10 @@ export function UnitQuickSheet({ unit, onClose }: { unit: UnitListItem | null; o
             </SheetHeader>
             <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3 sm:px-5 sm:py-3.5">
               {/* Quick specs grid */}
-              <div className="mb-3.5 grid grid-cols-2 gap-2">
-                <div className="rounded-xl border bg-card p-2.5 shadow-2xs">
-                  <span className="text-[11px] font-medium text-muted-foreground">{t("units.form.priceInTax")}</span>
-                  <p className="num mt-0.5 text-sm font-bold text-foreground sm:text-base">{formatMoney(unit.price_in_tax, locale)}</p>
+              <div className="mb-3.5 grid grid-cols-3 gap-2">
+                <div className="col-span-3 rounded-xl border border-primary/15 bg-linear-to-br from-accent to-card p-3.5 shadow-2xs">
+                  <span className="text-xs font-medium text-muted-foreground">{t("units.form.priceInTax")}</span>
+                  <p className="num mt-1 text-2xl font-bold tracking-tight text-foreground">{formatMoney(unit.price_in_tax, locale)}</p>
                 </div>
                 <div className="rounded-xl border bg-card p-2.5 shadow-2xs">
                   <span className="text-[11px] font-medium text-muted-foreground">{t("units.columns.area")}</span>

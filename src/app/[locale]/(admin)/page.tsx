@@ -18,7 +18,7 @@ export default async function DashboardPage() {
         title={t("title")}
         description={
           <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-            <span aria-hidden className="size-1.5 rounded-full bg-emerald-500 pulse-dot" />
+            <span aria-hidden className="size-1.5 rounded-full bg-success pulse-dot" />
             <span>{t("updated")}</span>
           </span>
         }

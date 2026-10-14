@@ -203,6 +203,100 @@ html:lang(ar) {
   animation: pulse-dot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Site plan scene: a soft daytime sky with a warm horizon; a night sky in dark mode. */
+.site-sky {
+  background:
+    linear-gradient(
+      in oklab to bottom,
+      color-mix(in oklab, var(--info) 13%, var(--background)) 0%,
+      color-mix(in oklab, var(--accent) 70%, var(--background)) 55%,
+      var(--background) 100%
+    );
+}
+.dark .site-sky {
+  background:
+    linear-gradient(in oklab to bottom, #0a1722 0%, var(--background) 75%);
+}
+
+/* Site plan entrance: each building rises from the ground, then its floors light up bottom to top.
+   Every step reads its start from --rise-delay. */
+@keyframes plan-rise {
+  from {
+    opacity: 0;
+    transform: scaleY(0.35);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes plan-light {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes plan-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.plan-rise {
+  transform-origin: bottom;
+  animation: plan-rise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) var(--rise-delay, 0ms) both;
+}
+.plan-light {
+  animation: plan-light 0.35s ease-out var(--rise-delay, 0ms) both;
+}
+.plan-fade {
+  animation: plan-fade 0.4s ease-out var(--rise-delay, 0ms) both;
+}
+
+/* Dashboard entrance: cards rise in one after another, bars grow from the start edge, donut segments draw in. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes donut-draw {
+  from {
+    stroke-dasharray: 0 1000;
+  }
+}
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) var(--rise-delay, 0ms) both;
+}
+.bar-grow {
+  transform-origin: left;
+  animation: bar-grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) var(--rise-delay, 0ms) both;
+}
+[dir="rtl"] .bar-grow {
+  transform-origin: right;
+}
+.donut-draw {
+  animation: donut-draw 1s cubic-bezier(0.2, 0.8, 0.2, 1) var(--rise-delay, 0ms) both;
+}
+
 /* Clear affordance for clickable cards and widgets */
 .clickable-widget {
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
